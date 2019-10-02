@@ -10,43 +10,39 @@
 #### Plataforma 
 - PC
 #### Equipo
----------------
+
   - Integrante 1:
----------------
+  
  Nombre: Germán López Gutiérrez
 
  Email de la urjc: g.lopezg.2017@alumnos.urjc.es
 
  Email de GitHub: gerlogu@gmail.com
  
----------------
 - Integrante 2: 
---------------- 
+
  Nombre: Ignacio Atance Loras
 
  Email de la urjc: i.atance.2017@alumnos.urjc.es
 
  Email de GitHub: ignacio.atance.loras@gmail.com
  
---------------
 - Integrante 3:
----------------
+
 Nombre: Jorge Sánchez Sánchez
 
 Email de la urjc: j.sanchezs.2017@alumnos.urjc.es
 
 Email de GitHub: jorgesanworks@gmail.com
 
----------------
 - Integrante 4:
----------------
+
 Nombre: Alberto Romero Abarca
 
 Email de la urjc: a.romeroa.2017@alumnos.urjc.es
 
 Email de GitHub: romeroabarca.alberto@gmail.com
 
----------------
 #### Trello del grupo
 
 https://trello.com/b/T5xBf1k2/juegos-en-red
