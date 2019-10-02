@@ -15,7 +15,7 @@ Videojuego multijugador
   - Ignacio Atance Loras
   - Jorge Sánchez Sánchez
   - Alberto Romero Abarca
-	- Desarrollo mediante el uso de Phaser 3 en javascript
+- Desarrollo mediante el uso de Phaser 3 en javascript
 #### Influencias
 - Off The Balls
 	- Videojuego
