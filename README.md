@@ -1,5 +1,5 @@
 # Shinobi-no-noboru
-
+- Letra del grupo: C
 ## Principal
 ### Temática
 - Aventura de ninjas en el japón feudal.
@@ -11,12 +11,37 @@
 - PC
 #### Equipo
 - 4 integrantes
-  - Germán López Gutiérrez
-  - Ignacio Atance Loras
-  - Jorge Sánchez Sánchez
-  - Alberto Romero Abarca
-  
-- Desarrollo mediante el uso de Phaser 3 en javascript
+  - Integrante 1:
+
+ Nombre: Germán López Gutiérrez
+
+ Email de la urjc: g.lopezg.2017@alumnos.urjc.es
+
+ Email de GitHub: gerlogu@gmail.com
+
+- Integrante 2: 
+  Nombre: Ignacio Atance Loras
+
+ Email de la urjc: I.atance.2017@alumnos.urjc.es
+
+ Email de GitHub: ignacio.atance.loras@gmail.com
+
+- Integrante 3:
+
+Nombre: Jorge Sánchez Sánchez
+
+Email de la urjc: j.sanchezs.2017@alumnos.urjc.es
+
+Email de GitHub: jorgesanworks@gmail.com
+
+-Integrante 4:
+
+Nombre: Alberto Romero Abarca
+
+Email de la urjc: a.romeroa.2017@alumnos.urjc.es
+
+Email de GitHub: romeroabarca.alberto@gmail.com
+
 #### Influencias
 - Off The Balls
 	- Videojuego
@@ -42,6 +67,10 @@ La partida concluirá cuando uno de los jugadores haya perecido.
 - Partidas rápidas y simples que implican que cualquier clase de jugador pueda entretenerse con el título en cualquier situación.
 
 --------------------
+
+### Aspecto gráfico
+El juego tendrá una estética cartoon, más similar a la de cómic. Tomaremos de referencia los sigientes elementos:
+- Ninja Gaiden: Para la estética de los ninjas
 
 ## Historia y Gameplay
 ### Historia
