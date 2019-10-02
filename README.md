@@ -99,13 +99,13 @@ A medida que avanza la partida, la corriente aumenta, haciendo que los troncos c
 
  - Ninjas 
 ### Sonido
-## Lista de sonidos
+#### Lista de sonidos (Ambiente)
 - Fuera
 	- Música de fondo
 - Dentro
 	- Agua de la cascada
 
-## Lista de sonidos (jugador)
+#### Lista de sonidos (jugador)
 - Movimiento
 	- Salto
 - Caída del personaje
