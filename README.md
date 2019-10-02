@@ -1,14 +1,19 @@
 # Shinobi-no-noboru
 - Letra del grupo: C
+
 ## Principal
+
 ### Temática
 - Aventura de ninjas en el japón feudal.
+
 ### Género
 - Plataformas
 
 ### Características importantes
+
 #### Plataforma 
 - PC
+
 #### Equipo
 
   - Integrante 1:
@@ -60,7 +65,6 @@ Email de GitHub: romeroabarca.alberto@gmail.com
 Un juego de plataformas multijugador centrado en la verticalidad cuyo objetivo es aguantar la escalada de una cascada saltando entre unos troncos que van cayendo de la misma. Al tocarlos estos serían destruidos. La motivación principal es resistir dicho desafío (el cual se irá complicando) y esperar a que sea tu oponente el primero en caer.
 
 ### Descripción del proyecto
-
 Juego multijugador para 2 jugadores ambientado en la época Edo. Los personajes que se manejarán serán ninjas cuyo objetivo es escalar una cascada. Este título gira entorno a la resistencia, el jugador derrotado será aquel que haya caído durante la escalada mientras que el victorioso será el que se haya mantenido en pie cuando esto haya sucedido.
 
 Se jugará en panorámico y los jugadores se encontrarán en la misma cascada. En uno de los laterales se encontrará la distancia recorrida por los jugadores. Mientras tanto, de la parte superior de la pantalla irán apareciendo troncos que utilizará el jugador para saltar de uno en otro para mantenerse en la subida, por lo que también habrá un carácter selectivo en el videojuego que el jugador deberá dominar para aguantar más que su rival y no caer al vacío por un error de cálculo.
@@ -81,12 +85,11 @@ El juego tendrá una estética cartoon, más similar a la de cómic. Tomaremos d
 --------------------
 
 ## Historia y Gameplay
-### Historia
 
+### Historia
 Un grupo de ninjas, en busca de perfeccionar sus habilidades, deciden competir en la escalada de una cascada mejorando así sus reflejos y con la motivación de querer destacar sobre el resto de compañeros ninja.
 
 ### Gameplay
-
 Los jugadores aparecerán en las esquinas de la pantalla y saltarán a un tronco empezando así la partida. Cuando el jugador colisiona con un tronco, su personaje será impulsado hacia arriba, y se deberá controlar la caída haciendo uso de las teclas 'A' y 'D' o las flechas de dirección, moviéndose a la izquierda o a la derecha.
 
 De la parte superior de la pantalla irán cayendo los troncos que los jugadores deberán alcanzar para poder impulsarse y no caer al vacío. A su vez, el tronco con el que colisione un jugador es destruido.
@@ -94,7 +97,6 @@ De la parte superior de la pantalla irán cayendo los troncos que los jugadores 
 A medida que avanza la partida, la corriente aumenta, haciendo que los troncos caigan más rápido, pero el número de troncos disminuirá, hasta que uno de los jugadores caiga finalizando así la partida.
 
 ### Interfaz
-
 In game en una de las esquinas se mostrará la distancia recorrida de los jugadores. Por lo demás, en cuanto a UI no hay más contenido durante la partida. 
 
 El menú inicial contará con una opción para acceder menú opciones para configurar el sonido del juego, otra opción para iniciar una partida en local, otra más para iniciar una partida online y una última para salir del juego.
