@@ -98,6 +98,10 @@ De la parte superior de la pantalla irán cayendo los troncos que los jugadores 
 
 A medida que avanza la partida, la corriente aumenta, haciendo que los troncos caigan más rápido, pero el número de troncos disminuirá, hasta que uno de los jugadores caiga finalizando así la partida.
 
+### Diagrama de estados - Jugador
+
+![SnN - Diagrama de estados](https://user-images.githubusercontent.com/55363746/66085940-e5720c80-e572-11e9-9344-45d69f4b9f60.jpeg)
+
 ### Interfaz
 In game en una de las esquinas se mostrará la distancia recorrida de los jugadores. Por lo demás, en cuanto a UI no hay más contenido durante la partida. 
 
@@ -105,12 +109,8 @@ El menú inicial contará con una opción para acceder menú opciones para confi
 
 ### Diagrama de flujo - Transiciones entre pantallas
 
-
 ![SnN - Diagrama de flujo (Pantallas)](https://user-images.githubusercontent.com/55363746/66076182-881f9080-e55d-11e9-8dd7-81c8907c7e52.png)
 
-### Diagrama de estados - Jugador
-
-![SnN - Diagrama de estados](https://user-images.githubusercontent.com/55363746/66085940-e5720c80-e572-11e9-9344-45d69f4b9f60.jpeg)
 
 --------------------
 
