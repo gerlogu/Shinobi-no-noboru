@@ -108,6 +108,10 @@ El menú inicial contará con una opción para acceder menú opciones para confi
 
 ![SnN - Diagrama de flujo (Pantallas)](https://user-images.githubusercontent.com/55363746/66076182-881f9080-e55d-11e9-8dd7-81c8907c7e52.png)
 
+### Diagrama de estados - Jugador
+
+![SnN - Diagrama de estados (Jugador)](https://user-images.githubusercontent.com/55363746/66085756-6c72b500-e572-11e9-8777-3ea6897146c6.png)
+
 --------------------
 
 ## Assets Necesarios
