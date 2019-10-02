@@ -117,7 +117,7 @@ A medida que avanza la partida, la corriente aumenta, haciendo que los troncos c
 
 - Animaciones de los personajes 
 	- Jugador
-- Salto
-- Caída
+	- Salto
+	- Caída
 
 
