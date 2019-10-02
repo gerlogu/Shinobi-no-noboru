@@ -103,6 +103,10 @@ In game en una de las esquinas se mostrará la distancia recorrida de los jugado
 
 El menú inicial contará con una opción para acceder menú opciones para configurar el sonido del juego, otra opción para iniciar una partida en local, otra más para iniciar una partida online y una última para salir del juego.
 
+### Diagrama de flujo - Transiciones entre pantallas
+
+![SnN (Diagrama de flujo)](https://user-images.githubusercontent.com/55363746/66069638-083ef980-e550-11e9-8681-33a3a2c16f10.png)
+
 --------------------
 
 ## Assets Necesarios
