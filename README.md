@@ -10,7 +10,6 @@
 #### Plataforma 
 - PC
 #### Equipo
-- 4 integrantes
   - Integrante 1:
 
  Nombre: Germán López Gutiérrez
