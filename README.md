@@ -62,7 +62,7 @@ Email de GitHub: romeroabarca.alberto@gmail.com
 	- Inspira: La estética de los ninjas y el tono de los mismos.
 	
 ### The elevator Pitch
-Un juego de plataformas multijugador centrado en la verticalidad cuyo objetivo es aguantar la escalada de una cascada saltando entre unos troncos que van cayendo de la misma. Al tocarlos estos serían destruidos. La motivación principal es resistir dicho desafío (el cual se irá complicando) y esperar a que sea tu oponente el primero en caer.
+Un juego de plataformas multijugador de ninjas centrado en el objetivo de subir una cascada a base de saltos. Es un videojuego centrado en la verticalidad y la resistencia, donde se tendrá que sobrevivir hasta que tu rival sea el primero en morir ya que si no él será quién se lleve la victoria. De la parte superior de la cascada irán cayendo troncos, los cuales serán nuestro medio para mantenernos en la cascada, con el único problema de que al tocarlos estos se destruirán y nosotros saldremos disparados hacia arriba de un salto. En eso consistirá el juego, en ir saltando de tronco en tronco y fijarse en los siguientes, ya que cualquier error de cálculo se verá reflejado en nuestra derrota.
 
 ### Descripción del proyecto
 Juego multijugador para 2 jugadores ambientado en la época Edo. Los personajes que se manejarán serán ninjas cuyo objetivo es escalar una cascada. Este título gira entorno a la resistencia, el jugador derrotado será aquel que haya caído durante la escalada mientras que el victorioso será el que se haya mantenido en pie cuando esto haya sucedido.
@@ -99,15 +99,17 @@ A medida que avanza la partida, la corriente aumenta, haciendo que los troncos c
 ### Interfaz
 In game en una de las esquinas se mostrará la distancia recorrida de los jugadores. Por lo demás, en cuanto a UI no hay más contenido durante la partida. 
 
-El menú inicial contará con una opción para acceder menú opciones para configurar el sonido del juego, otra opción para iniciar una partida en local, otra más para iniciar una partida online y una última para salir del juego.
+El menú inicial contará con una opción para acceder menú opciones para configurar el sonido del juego y ver los controles, otra para iniciar una partida en local, una más para iniciar una partida online y una última para salir del juego.
 
 ### Diagrama de flujo - Transiciones entre pantallas
 
-![SnN (Diagrama de flujo)](https://user-images.githubusercontent.com/55363746/66069638-083ef980-e550-11e9-8681-33a3a2c16f10.png)
+
+![SnN - Diagrama de flujo (Pantallas)](https://user-images.githubusercontent.com/55363746/66076182-881f9080-e55d-11e9-8dd7-81c8907c7e52.png)
 
 --------------------
 
 ## Assets Necesarios
+
 ### 2D
  - Cascada
 
@@ -135,5 +137,29 @@ El menú inicial contará con una opción para acceder menú opciones para confi
 - Animaciones de los personajes 
 	- Salto
 	- Caída
+
+--------------
+
+## Código
+
+### Mecánicas
+
+- Físicas (Para salto y caída del ninja).
+
+- Detección de colisión entre el ninja y el tronco.
+
+- Impulso al detectar la colisión.
+
+- Muerteuerte del jugador.
+
+- Pantalla final (Vencedor y perdedor).
+
+### Interfaz
+
+- Menú de inicio.
+
+- Configuración del volumen.
+
+- Distancia recorrida por los jugadores (in game).
 
 --------------
