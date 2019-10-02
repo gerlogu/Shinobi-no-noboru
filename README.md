@@ -110,7 +110,7 @@ El menú inicial contará con una opción para acceder menú opciones para confi
 
 ### Diagrama de estados - Jugador
 
-![SnN - Diagrama de estados (Jugador)](https://user-images.githubusercontent.com/55363746/66085756-6c72b500-e572-11e9-8777-3ea6897146c6.png)
+![SnN - Diagrama de estados](https://user-images.githubusercontent.com/55363746/66085940-e5720c80-e572-11e9-9344-45d69f4b9f60.jpeg)
 
 --------------------
 
