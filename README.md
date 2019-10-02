@@ -14,7 +14,7 @@ Videojuego multijugador
   - Germán López Gutiérrez
   - Ignacio Atance Loras
   - Jorge Sánchez Sánchez
-  - Alberto Romero Alcázar
+  - Alberto Romero Abarca
 	- Desarrollo mediante el uso de Phaser 3 en javascript
 #### Influencias
 - Off The Balls
