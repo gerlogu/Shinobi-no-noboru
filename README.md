@@ -33,13 +33,17 @@ Email de la urjc: j.sanchezs.2017@alumnos.urjc.es
 
 Email de GitHub: jorgesanworks@gmail.com
 
--Integrante 4:
+- Integrante 4:
 
 Nombre: Alberto Romero Abarca
 
 Email de la urjc: a.romeroa.2017@alumnos.urjc.es
 
 Email de GitHub: romeroabarca.alberto@gmail.com
+
+#### Trello del grupo
+
+https://trello.com/b/T5xBf1k2/juegos-en-red
 
 #### Influencias
 - Off The Balls
