@@ -1,5 +1,4 @@
 # Shinobi-no-noboru
-Videojuego multijugador
 
 ## Principal
 ### Temática
@@ -8,7 +7,8 @@ Videojuego multijugador
 - Plataformas
 
 ### Características importantes
-- Plataforma: PC
+#### Plataforma 
+- PC
 #### Equipo
 - 4 integrantes
   - Germán López Gutiérrez
