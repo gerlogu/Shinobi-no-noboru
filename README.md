@@ -90,6 +90,12 @@ De la parte superior de la pantalla irán cayendo los troncos que los jugadores 
 
 A medida que avanza la partida, la corriente aumenta, haciendo que los troncos caigan más rápido, pero el número de troncos disminuirá, hasta que uno de los jugadores caiga finalizando así la partida.
 
+### Interfaz
+
+In game en una de las esquinas se mostrará la distancia recorrida de los jugadores. Por lo demás, en cuanto a UI no hay más contenido durante la partida. 
+
+El menú inicial contará con una opción para acceder menú opciones para configurar el sonido del juego, otra opción para iniciar una partida en local, otra más para iniciar una partida online y una última para salir del juego.
+
 --------------------
 
 ## Assets Necesarios
@@ -99,6 +105,7 @@ A medida que avanza la partida, la corriente aumenta, haciendo que los troncos c
  - Troncos
 
  - Ninjas 
+ 
 ### Sonido
 #### Lista de sonidos (Ambiente)
 - Fuera
