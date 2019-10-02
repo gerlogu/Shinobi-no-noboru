@@ -15,11 +15,13 @@
   - Ignacio Atance Loras
   - Jorge Sánchez Sánchez
   - Alberto Romero Abarca
+  
 - Desarrollo mediante el uso de Phaser 3 en javascript
 #### Influencias
 - Off The Balls
 	- Videojuego
   - Inspira: La mecánica en la que se debe ir saltando entre superficies.
+  
 - PROYECTO NINJAS DEL INFIERNO (1985)
 	- Película
 	- Inspira: La estética de los ninjas y el tono de los mismos.
