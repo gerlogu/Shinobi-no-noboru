@@ -130,4 +130,4 @@ El menú inicial contará con una opción para acceder menú opciones para confi
 	- Salto
 	- Caída
 
-
+--------------
