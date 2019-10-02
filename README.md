@@ -76,10 +76,6 @@ La partida concluirá cuando uno de los jugadores haya perecido.
 El juego tendrá una estética cartoon, más similar a la de cómic. Tomaremos de referencia los sigientes elementos:
 - Ninja Gaiden: Para la estética de los ninjas.
 - PROYECTO NINJAS DEL INFIERNO (1985): Para la estética de los ninjas y la paleta de colores.
-----------------
-![NINJA PURPURA VS OCRE](https://user-images.githubusercontent.com/55363746/66069292-5bfd1300-e54f-11e9-9330-ae21ebbc74be.png)
-
-----------------
 - Battleblock theater: La paleta de colores y la poca sobrecarga de la imagen, tanto de los personajes como de los escenarios.
 
 --------------------
