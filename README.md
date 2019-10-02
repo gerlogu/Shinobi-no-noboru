@@ -83,7 +83,7 @@ Un grupo de ninjas, en busca de perfeccionar sus habilidades, deciden competir e
 
 ### Gameplay
 
-Los jugadores aparecerán en las esquinas de la pantalla y saltarán a un tronco empezando así la partida. Cuando el personaje colisiona con un tronco, su personaje será impulsado hacia arriba, y el jugador deberá controlar la caída haciendo uso de las teclas 'A' y 'D' o las felchas de dirección, moviéndose a la izquierda o a la derecha.
+Los jugadores aparecerán en las esquinas de la pantalla y saltarán a un tronco empezando así la partida. Cuando el jugador colisiona con un tronco, su personaje será impulsado hacia arriba, y se deberá controlar la caída haciendo uso de las teclas 'A' y 'D' o las flechas de dirección, moviéndose a la izquierda o a la derecha.
 
 De la parte superior de la pantalla irán cayendo los troncos que los jugadores deberán alcanzar para poder impulsarse y no caer al vacío. A su vez, el tronco con el que colisione un jugador es destruido.
 
