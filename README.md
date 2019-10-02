@@ -77,4 +77,4 @@ Un grupo de ninjas, en busca de perfeccionar sus habilidades, deciden competir e
 - Salto
 - Caída
 
-![índice](https://user-images.githubusercontent.com/44704611/66046409-f6486100-e525-11e9-8283-bd411a0c6c55.jpg)
+
