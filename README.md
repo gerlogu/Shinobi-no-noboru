@@ -55,6 +55,7 @@ https://trello.com/b/T5xBf1k2/juegos-en-red
 - PROYECTO NINJAS DEL INFIERNO (1985)
 	- Película
 	- Inspira: La estética de los ninjas y el tono de los mismos.
+	
 ### The elevator Pitch
 Un juego de plataformas multijugador centrado en la verticalidad cuyo objetivo es aguantar la escalada de una cascada saltando entre unos troncos que van cayendo de la misma. Al tocarlos estos serían destruidos. La motivación principal es resistir dicho desafío (el cual se irá complicando) y esperar a que sea tu oponente el primero en caer.
 
@@ -73,7 +74,9 @@ La partida concluirá cuando uno de los jugadores haya perecido.
 
 ### Aspecto gráfico
 El juego tendrá una estética cartoon, más similar a la de cómic. Tomaremos de referencia los sigientes elementos:
-- Ninja Gaiden: Para la estética de los ninjas
+- Ninja Gaiden: Para la estética de los ninjas.
+- PROYECTO NINJAS DEL INFIERNO (1985): Para la estética de los ninjas y la paleta de colores.
+- Battleblock theate: La paleta de colores y la poca sobrecarga de la imagen, tanto de los personajes como de los escenarios.
 
 --------------------
 
