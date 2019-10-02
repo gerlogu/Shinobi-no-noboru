@@ -70,11 +70,11 @@ La partida concluirá cuando uno de los jugadores haya perecido.
 
 - Partidas rápidas y simples que implican que cualquier clase de jugador pueda entretenerse con el título en cualquier situación.
 
---------------------
-
 ### Aspecto gráfico
 El juego tendrá una estética cartoon, más similar a la de cómic. Tomaremos de referencia los sigientes elementos:
 - Ninja Gaiden: Para la estética de los ninjas
+
+--------------------
 
 ## Historia y Gameplay
 ### Historia
