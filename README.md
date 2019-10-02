@@ -19,7 +19,8 @@
  Email de GitHub: gerlogu@gmail.com
 
 - Integrante 2: 
-  Nombre: Ignacio Atance Loras
+ 
+ Nombre: Ignacio Atance Loras
 
  Email de la urjc: i.atance.2017@alumnos.urjc.es
 
