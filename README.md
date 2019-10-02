@@ -45,7 +45,7 @@ Email de GitHub: romeroabarca.alberto@gmail.com
 
 #### Trello del grupo
 
-https://trello.com/b/T5xBf1k2/juegos-en-red
+- Link: https://trello.com/b/T5xBf1k2/juegos-en-red
 
 #### Influencias
 - Off The Balls
