@@ -21,7 +21,7 @@
 - Integrante 2: 
   Nombre: Ignacio Atance Loras
 
- Email de la urjc: I.atance.2017@alumnos.urjc.es
+ Email de la urjc: i.atance.2017@alumnos.urjc.es
 
  Email de GitHub: ignacio.atance.loras@gmail.com
 
