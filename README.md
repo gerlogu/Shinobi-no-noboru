@@ -62,7 +62,7 @@ Email de GitHub: romeroabarca.alberto@gmail.com
 	- Inspira: La estética de los ninjas y el tono de los mismos.
 	
 ### The elevator Pitch
-Un juego de plataformas multijugador de ninjas centrado en el objetivo de subir una cascada a base de saltos. Es un videojuego centrado en la verticalidad y la resistencia, donde se tendrá que sobrevivir hasta que tu rival sea el primero en morir ya que si no él será quién se lleve la victoria. De la parte superior de la cascada irán cayendo troncos, los cuales serán nuestro medio para mantenernos en la cascada, con el único problema de que al tocarlos estos se destruirán y nosotros saldremos disparados hacia arriba de un salto. En eso consistirá el juego, en ir saltando de tronco en tronco y fijarse en los siguientes, ya que cualquier error de cálculo se verá reflejado en nuestra derrota.
+Un juego de plataformas multijugador de ninjas centrado en el objetivo de subir una cascada a base de saltos. Es un videojuego centrado en la verticalidad y la resistencia, donde se tendrá que sobrevivir hasta que tu rival sea el primero en caer ya que si no, él será quién se lleve la victoria. De la parte superior de la cascada irán cayendo troncos, los cuales serán nuestro medio para mantenernos en la cascada, con el único problema de que, al tocarlos, estos se destruirán y nosotros saldremos disparados hacia arriba de un salto. En eso consistirá el juego, en ir saltando de tronco en tronco y fijarse en los siguientes, ya que cualquier error de cálculo se verá reflejado en nuestra derrota.
 
 ### Descripción del proyecto
 Juego multijugador para 2 jugadores ambientado en la época Edo. Los personajes que se manejarán serán ninjas cuyo objetivo es escalar una cascada. Este título gira entorno a la resistencia, el jugador derrotado será aquel que haya caído durante la escalada mientras que el victorioso será el que se haya mantenido en pie cuando esto haya sucedido.
@@ -79,7 +79,9 @@ La partida concluirá cuando uno de los jugadores haya perecido.
 ### Aspecto gráfico
 El juego tendrá una estética cartoon, más similar a la de cómic. Tomaremos de referencia los sigientes elementos:
 - Ninja Gaiden: Para la estética de los ninjas.
+
 - PROYECTO NINJAS DEL INFIERNO (1985): Para la estética de los ninjas y la paleta de colores.
+
 - Battleblock Theater: La paleta de colores y la poca sobrecarga de la imagen, tanto de los personajes como de los escenarios.
 
 --------------------
