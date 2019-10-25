@@ -390,7 +390,7 @@ class localgame extends Phaser.Scene{
 
   InitializePlayers(){
     this.Law   = this.physics.add.sprite(this.width/10,this.height/3,'ocre',3);//Al escribir physics, le indicamos que el objeto está sujeto a las leyes de la física, indicadas en el archivo game.js
-    
+    this.Law2   = this.physics.add.sprite(this.width/1.1,this.height/3,'purpura',3);
     this.anims.create({
       key: 'left0',
       frames: [ { key: 'ocre', frame: 2 } ],
@@ -413,6 +413,26 @@ class localgame extends Phaser.Scene{
     });
 
     this.Law.anims.play('start0');
+    this.anims.create({
+      key: 'left1',
+      frames: [ { key: 'purpura', frame: 2 } ],
+      frameRate: 10,
+      repeat: -1
+    });
+  
+    this.anims.create({
+      key: 'right1',
+      frames: [ { key: 'purpura', frame: 1 } ],
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'start1',
+      frames: [ { key: 'purpura', frame: 3 } ],
+      frameRate: 10,
+      repeat: -1
+    });
    
     this.Law.score = 0;
     this.Law.lifes = 6;
@@ -429,17 +449,20 @@ class localgame extends Phaser.Scene{
     // #endregion
 
     // #region Personaje 2
-    this.Law2 = this.physics.add.sprite(this.width/1.1,this.height/3,'player2'); // Al escribir physics, le indicamos que el objeto está sujeto a las leyes de la física, indicadas en el archivo game.js
+    //this.Law2 = this.physics.add.sprite(this.width/1.1,this.height/3,'purpura',3); // Al escribir physics, le indicamos que el objeto está sujeto a las leyes de la física, indicadas en el archivo game.js
     this.Law2.score = 0;
     this.Law2.lifes = 6;
     //Reajusto el tamaño de la imagen del prota
-    this.Law2.displayWidth = 25;
-    this.Law2.scaleY       = this.Law2.scaleX;
+    this.Law2.displayWidth = 45;
+    this.Law2.scaleY       = this.Law.scaleX;
+
     //this.Law.setBounce(0.2);
     this.Law2.setCollideWorldBounds(false);
     
     this.Law.setDepth(3000);
+    this.Law2.setDepth(3000);
     // #endregion
+
   }
 
   InitializeStartTimer(){
@@ -542,9 +565,15 @@ class localgame extends Phaser.Scene{
 
         this.Law2.setVelocityX(-this.xSpeed);
 
+        if(!this.Law2.body.touching.down)  
+          this.Law2.anims.play('left1');
+
       }else if(rightButton.isDown){
 
         this.Law2.setVelocityX(this.xSpeed);
+
+        if(!this.Law2.body.touching.down)  
+          this.Law2.anims.play('right1');
 
       }else{
 
