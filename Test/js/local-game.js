@@ -292,8 +292,8 @@ class localgame extends Phaser.Scene{
     // ocupe menos espacio, a la izquiera puedes clickear en la flechita para desplegarlo
     // #region Plataformas (suelo)
     this.platforms = this.physics.add.staticGroup();//Al ser static, nos aseguramos de que cuando colisione con el prota, las plataformas no reciban una fuerza y se muevan.
-    this.platforms.create(-300, this.height/2, 'ground').setScale(2).refreshBody();
-    this.platforms.create(1100, this.height/2, 'ground').setScale(2).refreshBody();
+    this.platforms.create(0, this.height/2, 'ground').setScale(2).refreshBody();
+    this.platforms.create(800, this.height/2, 'ground').setScale(2).refreshBody();
     // #endregion
 
     this.cols        = this.physics;
@@ -327,19 +327,125 @@ class localgame extends Phaser.Scene{
   }
 
   InitializeSpawns(){
+
+
+
       // #region spawnAreas
       var spawnTrunkRight = function(){ 
-        this.cols[this.cols.length] = this.physics.add.sprite(Phaser.Math.Between(this.width/5.12, this.width/3.20),0,'trunk').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
+        var indice = this.cols.length;
+        var choqueLaw = function(tronco){
+          if(Phaser.Input.Keyboard.JustDown(WButton)){
+            // Salto
+            this.Law.setVelocityY(this.jumpForce);  
+            //Sonido de salto
+            this.jumpaudio.play({
+              volume: 0.2
+            });
+
+            tronco.setGravityY(0) ; 
+
+            this.Law.score += 25;
+          }
+          console.log("asdf");
+        };
+        var choqueLaw2 = function(tronco){
+          if(Phaser.Input.Keyboard.JustDown(upButton)){
+            // Salto
+            this.Law2.setVelocityY(this.jumpForce);  
+            //Sonido de salto
+            this.jumpaudio.play({
+              volume: 0.2
+            });
+
+            this.Law2.score += 25;
+
+            tronco.setGravityY(0);
+          }
+          console.log("asdf");
+        }
+
+        var tronco = this.cols[indice] = this.physics.add.sprite(Phaser.Math.Between(this.width/5.12, this.width/3.20),0,'trunk').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
+        this.physics.add.overlap(tronco,this.Law, choqueLaw, null, this);
+        this.physics.add.overlap(tronco,this.Law2, choqueLaw2,null, this);
         this.cols.length++;
       }
         
       var spawnTrunkLeft = function(){ 
-        this.cols[this.cols.length] = this.physics.add.sprite(Phaser.Math.Between(this.width/1.8, this.width/1.24),0,'trunk').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
+        var indice = this.cols.length;
+        var choqueLaw = function(tronco){
+          if(Phaser.Input.Keyboard.JustDown(WButton)){
+            // Salto
+            this.Law.setVelocityY(this.jumpForce);  
+            //Sonido de salto
+            this.jumpaudio.play({
+              volume: 0.2
+            });
+
+            tronco.setGravityY(0) ; 
+
+            this.Law.score += 25;
+          }
+          console.log("asdf");
+        };
+        var choqueLaw2 = function(tronco){
+          if(Phaser.Input.Keyboard.JustDown(upButton)){
+            // Salto
+            this.Law2.setVelocityY(this.jumpForce);  
+            //Sonido de salto
+            this.jumpaudio.play({
+              volume: 0.2
+            });
+
+            this.Law2.score += 25;
+
+            tronco.setGravityY(0);
+          }
+          console.log("asdf");
+        }
+
+        this.cols[indice] = this.physics.add.sprite(Phaser.Math.Between(this.width/1.8, this.width/1.24),0,'trunk').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
+        var tronco = this.cols[indice];
+        this.physics.add.overlap(tronco,this.Law, choqueLaw, null, this);
+        this.physics.add.overlap(tronco,this.Law2, choqueLaw2, null, this);
         this.cols.length++;
       }
     
       var spawnTrunkMiddle = function(){ 
-        this.cols[this.cols.length] = this.physics.add.sprite(Phaser.Math.Between(this.width/3, this.width/2),0,'trunk').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
+        var indice = this.cols.length;
+        var choqueLaw = function(tronco){
+          if(Phaser.Input.Keyboard.JustDown(WButton)){
+            // Salto
+            this.Law.setVelocityY(this.jumpForce);  
+            //Sonido de salto
+            this.jumpaudio.play({
+              volume: 0.2
+            });
+
+            tronco.setGravityY(0) ; 
+
+            this.Law.score += 25;
+          }
+          console.log("asdf");
+        };
+        var choqueLaw2 = function(tronco){
+          if(Phaser.Input.Keyboard.JustDown(upButton)){
+            // Salto
+            this.Law2.setVelocityY(this.jumpForce);  
+            //Sonido de salto
+            this.jumpaudio.play({
+              volume: 0.2
+            });
+
+            this.Law2.score += 25;
+
+            tronco.setGravityY(0);
+          }
+          console.log("asdf");
+        }
+
+        this.cols[indice] = this.physics.add.sprite(Phaser.Math.Between(this.width/3, this.width/2),0,'trunk').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
+        this.physics.add.overlap(this.cols[indice],this.Law, choqueLaw, null, this);
+        this.physics.add.overlap(this.cols[indice],this.Law2, choqueLaw2, null, this);
         this.cols.length++;
       }
       // #endregion
@@ -349,6 +455,7 @@ class localgame extends Phaser.Scene{
       this.TrunkGeneratorLeft   = this.scene.get("localgame").time.addEvent({delay: Phaser.Math.Between(this.minTrunkTimer - 400, this.maxTrunkTimer), callback: spawnTrunkLeft, callbackScope:this, loop:true});
       this.TrunkGeneratorMiddle = this.scene.get("localgame").time.addEvent({delay: Phaser.Math.Between(this.minTrunkTimer, this.maxTrunkTimer), callback: spawnTrunkMiddle, callbackScope:this, loop:true});
   }
+
 
   InitializeColliders(){
     this.physics.add.collider(this.platforms);
@@ -582,9 +689,9 @@ class localgame extends Phaser.Scene{
       }
       
       // #endregion 
-      this.forPlayer(this.Law, WButton);    
+      // this.forPlayer(this.Law, this.WButton);    
 
-      this.forPlayer(this.Law2, upButton);
+      // this.forPlayer(this.Law2, this.upButton);
      
 
     }
