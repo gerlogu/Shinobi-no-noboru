@@ -614,9 +614,9 @@ class localgame extends Phaser.Scene{
       }
       
       // #endregion 
-      this.forPlayer(this.Law, WButton);    
+      this.forPlayer(this.Law, this.WButton);    
 
-      this.forPlayer(this.Law2, upButton);
+      this.forPlayer(this.Law2, this.upButton);
      
 
     }
