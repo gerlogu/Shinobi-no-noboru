@@ -226,6 +226,14 @@ class localgame extends Phaser.Scene{
   // colliders y demás...
   create(){
 
+    this.DButton = this.input.keyboard.addKey('D');
+    this.AButton = this.input.keyboard.addKey('A');
+    this.WButton = this.input.keyboard.addKey('W');
+
+    this.rightButton = this.input.keyboard.addKey('right');
+    this.leftButton  = this.input.keyboard.addKey('left');
+    this.upButton    = this.input.keyboard.addKey('up');
+
     //Funcion for, que recibe un personaje, y hace las comprobación
     this.forPlayer = function(player, key){
       // #region Recorre el array de troncos
@@ -351,10 +359,41 @@ class localgame extends Phaser.Scene{
   }
 
   InitializeColliders(){
+    var playersCollide = function players(){
+      if(Phaser.Input.Keyboard.JustDown(this.WButton)){
+        // Salto
+        this.Law.setVelocityY(this.jumpForce);  
+        this.Law2.setVelocityY(-this.jumpForce/2); 
+        //Sonido de salto
+        this.jumpaudio.play({
+          volume: 0.2
+        });
+  
+        console.log("Arriba");
+      }
+      if(Phaser.Input.Keyboard.JustDown(this.upButton)){
+        // Salto
+        this.Law2.setVelocityY(this.jumpForce);  
+        this.Law.setVelocityY(-this.jumpForce/2); 
+        //Sonido de salto
+        this.jumpaudio.play({
+          volume: 0.2
+        });
+        console.log("Arriba");
+      }
+      
+    };
+
     this.physics.add.collider(this.platforms);
-    this.physics.add.collider(this.Law,  this.Law2);
-    this.physics.add.collider(this.Law,  this.platforms);
-    this.physics.add.collider(this.Law2, this.platforms);
+    this.physics.add.overlap(this.Law,  this.Law2, playersCollide, null, this);
+    this.physics.add.collider(this.Law,  this.platforms, function(){
+      if(Phaser.Input.Keyboard.JustDown(this.WButton))
+        this.Law.setVelocityY(this.jumpForce);       
+    }, null, this);
+    this.physics.add.collider(this.Law2, this.platforms,function(){
+      if(Phaser.Input.Keyboard.JustDown(this.upButton))
+        this.Law2.setVelocityY(this.jumpForce);       
+    }, null, this);
   }
 
   EndGameScreen(){
@@ -533,22 +572,15 @@ class localgame extends Phaser.Scene{
       // #endregion
 
       // #region Teclas y movimiento
-      var DButton = this.input.keyboard.addKey('D');
-      var AButton = this.input.keyboard.addKey('A');
-      var WButton = this.input.keyboard.addKey('W');
 
-      var rightButton = this.input.keyboard.addKey('right');
-      var leftButton  = this.input.keyboard.addKey('left');
-      var upButton    = this.input.keyboard.addKey('up');
-
-      if(AButton.isDown){
+      if(this.AButton.isDown){
 
         this.Law.setVelocityX(-this.xSpeed);
 
         if(!this.Law.body.touching.down)       
           this.Law.anims.play('left0');
 
-      }else if(DButton.isDown){
+      }else if(this.DButton.isDown){
 
         this.Law.setVelocityX(this.xSpeed);
 
@@ -561,14 +593,14 @@ class localgame extends Phaser.Scene{
 
       }
 
-      if(leftButton.isDown){
+      if(this.leftButton.isDown){
 
         this.Law2.setVelocityX(-this.xSpeed);
 
         if(!this.Law2.body.touching.down)  
           this.Law2.anims.play('left1');
 
-      }else if(rightButton.isDown){
+      }else if(this.rightButton.isDown){
 
         this.Law2.setVelocityX(this.xSpeed);
 
