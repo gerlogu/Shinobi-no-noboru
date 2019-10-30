@@ -432,8 +432,8 @@ class localgame extends Phaser.Scene{
     var playersCollide = function players(){
       if(Phaser.Input.Keyboard.JustDown(this.WButton)){
         // Salto
-        this.Law.setVelocityY(this.jumpForce);  
-        this.Law2.setVelocityY(-this.jumpForce/2); 
+        this.player1.setVelocityY(this.jumpForce);  
+        this.player2.setVelocityY(-this.jumpForce/2); 
         //Sonido de salto
         this.jumpaudio.play({
           volume: 0.2
@@ -443,8 +443,8 @@ class localgame extends Phaser.Scene{
       }
       if(Phaser.Input.Keyboard.JustDown(this.upButton)){
         // Salto
-        this.Law2.setVelocityY(this.jumpForce);  
-        this.Law.setVelocityY(-this.jumpForce/2); 
+        this.player2.setVelocityY(this.jumpForce);  
+        this.player1.setVelocityY(-this.jumpForce/2); 
         //Sonido de salto
         this.jumpaudio.play({
           volume: 0.2
@@ -455,14 +455,17 @@ class localgame extends Phaser.Scene{
     };
 
     this.physics.add.collider(this.platforms);
-    this.physics.add.overlap(this.Law,  this.Law2, playersCollide, null, this);
-    this.physics.add.collider(this.Law,  this.platforms, function(){
+   // this.physics.add.overlap(this.player1,  this.player2);
+    // this.physics.add.collider(this.player1,  this.platforms);
+    // this.physics.add.collider(this.player2, this.platforms);
+    this.physics.add.overlap(this.player1,  this.player2, playersCollide, null, this);
+    this.physics.add.collider(this.player1,  this.platforms, function(){
       if(Phaser.Input.Keyboard.JustDown(this.WButton))
-        this.Law.setVelocityY(this.jumpForce);       
+        this.player1.setVelocityY(this.jumpForce);       
     }, null, this);
-    this.physics.add.collider(this.Law2, this.platforms,function(){
+    this.physics.add.collider(this.player2, this.platforms,function(){
       if(Phaser.Input.Keyboard.JustDown(this.upButton))
-        this.Law2.setVelocityY(this.jumpForce);       
+        this.player2.setVelocityY(this.jumpForce);       
     }, null, this);
   }
 

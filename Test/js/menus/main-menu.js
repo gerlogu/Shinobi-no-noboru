@@ -10,89 +10,15 @@ class example2 extends Phaser.Scene{
         this.pointerOver = false; // Booleano que se activa y desactiva al pasar por encima de los botones, con el objetivo de que los sonidos se reproduzcan una sola vez , y no se bugee
         // //#endregion
 
-        this.load.image('Local-game', 'assets/main-menu/local-game-btn.jpg');
-        this.load.image('Online-game', 'assets/main-menu/online-game-btn.jpg');
-        this.load.image('Controls', 'assets/main-menu/controls-btn.jpg');
-        this.load.image('T1','assets/main-menu/tit-1.png');
-        this.load.image('T2','assets/main-menu/tit-2.png');
-        //  for (var i = 0; i < 200; i++) {
-        //      this.load.image('File nº'+i, 'assets/main-menu/local-game-btn.jpg');
-        // }
-
-        // #region Loading Bar Mal
-        // //if(!this.load.on('complete'))
-
-        // var loaded = false;
-
-        
-
-        // this.load.on('complete', function () {
-        //     console.log('complete');
-        //     loaded = true;
-        // });
-
-        // if(loaded === false){
-        //     var progressBar = this.add.graphics();
-        //     var progressBox = this.add.graphics();
-        //     progressBox.fillStyle(0x222222, 0.8).setDepth(6000);
-        //     progressBox.fillRect(240, 270, 320, 50).setDepth(5000);
-            
-        //     this.load.on('progress', function (value) {
-        //         console.log(value);
-        //         progressBar.clear();
-        //         progressBar.fillStyle(0xffffff, 1);
-        //         progressBar.fillRect(250, 280, 300 * value, 30);
-        //         });
-            
-        //     // Texto loading
-        //     var width = this.cameras.main.width;
-        //     var height = this.cameras.main.height;
-        //     var loadingText = this.make.text({
-        //         x: width / 2,
-        //         y: height / 2 - 50,
-        //         text: 'Loading...',
-        //         style: {
-        //             font: '20px monospace',
-        //             fill: '#ffffff'
-        //         }
-        //     });
-    
-        //     // Porcentaje
-        //     loadingText.setOrigin(0.5, 0.5);
-        //     var percentText = this.make.text({
-        //         x: width / 2,
-        //         y: height / 2 - 5,
-        //         text: '0%',
-        //         style: {
-        //             font: '18px monospace',
-        //             fill: '#ffffff'
-        //         }
-        //     });
-        //     this.load.on('progress', function (value) {
-        //         console.log(value);
-        //         if(value >= 0.99){
-        //             progressBar.destroy();
-        //             progressBox.destroy();
-        //             loadingText.destroy();
-        //             percentText.destroy();
-        //         }
-    
-                
-        //     });
-        //     percentText.setOrigin(0.5, 0.5);
-        // }
-        
-
-        
-                    
-        // this.load.on('fileprogress', function (file) {
-        //     console.log(file.src);
-        // });        
-
-        // // Destructor
-        
-        // #endregion
-    
+        this.load.image('Local-game'         , 'assets/main-menu/local-game-btn.png');
+        this.load.image('Online-game'        , 'assets/main-menu/online-game-btn.png');
+        this.load.image('Controls'           , 'assets/main-menu/controls-btn.png');
+        this.load.image('Credits'            , 'assets/main-menu/credits-btn.png');
+        this.load.image('T1'                 , 'assets/main-menu/tit-1.png');
+        this.load.image('T2'                 , 'assets/main-menu/tit-2.png');
+        this.load.image('buttons-background' , 'assets/main-menu/buttons-background.png');
+        this.load.image('buttons-background-2' , 'assets/main-menu/buttons-background-2.png');
+   
         // #region Loading Bar
             var progressBar = this.add.graphics();
             var progressBox = this.add.graphics();
@@ -119,20 +45,6 @@ class example2 extends Phaser.Scene{
                 }
             });
             loadingText.setDepth(11000);
-            // Porcentaje
-            // loadingText.setOrigin(0.5, 0.5);
-            // var percentText = this.make.text({
-            //     x: width / 2.55,
-            //     y: height / 1.08 - 50,
-            //     text: '0%',
-            //     style: {
-            //         font: '18px monospace',
-            //         fill: '#ffffff'
-            //     }
-            // });
-    
-            // percentText.setOrigin(0.5, 0.5);
-            // percentText.setDepth(10000);
             
             var assetText = this.make.text({
                 x: width / 1.23,
@@ -176,17 +88,28 @@ class example2 extends Phaser.Scene{
         //Variable auxiliar que guarda la escena actual en ella. Es importante porque en los eventos, si ponemos this, no devuelve la escena,
         //sino el objeto que ha llamado al evento (eso objeto puede ser un botón, por ejemplo)
         var that = this;
+        this.width  = 800;
+        this.height = 600;
+
         this.cameras.main.fadeIn(1000);
         //Se crean los objetos para los sonidos
         this.sound1 = this.sound.add('MenuSound1');
         this.sound2 = this.sound.add('MenuSound2');
         
-
-        this.width  = 800;
-        this.height = 600;
+        this.btn_bck = this.physics.add.sprite(this.width/1.97, this.height/1.4,'buttons-background').setGravityY(-1000).setVelocityX(0).setInteractive();
+        //this.t1.setInteractive();
+        this.btn_bck.displayWidth = 400;
+        this.btn_bck.scaleY= this.btn_bck.scaleX;
+        this.btn_bck.setDepth(1000);
+        
+        this.btn_bck2 = this.physics.add.sprite(this.width/3.8, this.height/1.41,'buttons-background-2').setGravityY(-1000).setVelocityX(0).setInteractive();
+        //this.t1.setInteractive();
+        this.btn_bck2.displayWidth = 115;
+        this.btn_bck2.scaleY= this.btn_bck2.scaleX;
+        this.btn_bck2.setDepth(2000);
 
         this.posBtnX = this.width/2.8;
-        
+
         this.t1 = this.physics.add.sprite(-85, this.height/5,'T1').setGravityY(-1000).setGravityX(6000).setInteractive();
         this.t1.setInteractive();
         this.t1.displayWidth = 600;
@@ -197,37 +120,49 @@ class example2 extends Phaser.Scene{
         this.t2.displayWidth = 350;
         this.t2.scaleY= this.t2.scaleX;
 
-        this.Empezar = this.physics.add.sprite(-85, this.height/2,'Local-game').setGravityY(-1000).setGravityX(5000).setInteractive();
+        this.Empezar = this.physics.add.sprite(this.width/2, this.height/1.69,'Local-game').setGravityY(-1000).setInteractive();
         this.Empezar.setInteractive();
-        this.Empezar.displayWidth = 400;
+        this.Empezar.displayWidth = 230;
         this.Empezar.scaleY= this.Empezar.scaleX;
+        this.Empezar.setDepth(2000);
         this.Empezar.on('pointerup', function(){
             that.sound2.play();
             that.scene.start('localgame');
         });
 
-        this.OnlineGameButton = this.physics.add.sprite(this.width, this.height/1.70,'Online-game').setGravityY(-1000).setGravityX(-6380).setInteractive();
+        this.OnlineGameButton = this.physics.add.sprite(this.width/2, this.height/1.5,'Online-game').setGravityY(-1000).setGravityX(0).setInteractive();
         this.OnlineGameButton.setInteractive();
-        this.OnlineGameButton.displayWidth = 400;
+        this.OnlineGameButton.displayWidth = 230;
         this.OnlineGameButton.scaleY= this.Empezar.scaleX;
+        this.OnlineGameButton.setDepth(2000);
         this.OnlineGameButton.on('pointerup', function(){
             that.sound2.play();
             that.scene.start('localgame');
         });
 
-        this.ControlsButton = this.physics.add.sprite(-85,this.height/1.481,'Controls').setGravityY(-1000).setGravityX(5000).setInteractive();
+        this.ControlsButton = this.physics.add.sprite(this.width/2,this.height/1.35,'Controls').setGravityY(-1000).setGravityX(0).setInteractive();
         this.ControlsButton.setInteractive();
-        this.ControlsButton.displayWidth = 400;
+        this.ControlsButton.displayWidth = 230;
         this.ControlsButton.scaleY= this.Empezar.scaleX;
+        this.ControlsButton.setDepth(2000);
         this.ControlsButton.on('pointerup', function(){
             that.sound2.play();
             that.scene.start('example3');
         });
         
-        
+        this.CreditsButton = this.physics.add.sprite(this.width/2,this.height/1.23,'Credits').setGravityY(-1000).setGravityX(0).setInteractive();
+        this.CreditsButton.setInteractive();
+        this.CreditsButton.displayWidth = 230;
+        this.CreditsButton.scaleY= this.Empezar.scaleX;
+        this.CreditsButton.setDepth(2000);
+        this.CreditsButton.on('pointerup', function(){
+            that.sound2.play();
+            that.scene.start('example3');
+        });
+
 
         this.Empezar.on('pointerover', function() {
-            this.displayWidth=500; //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
+            this.displayWidth=250; //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
             this.scaleY=this.scaleX;
 
             if(this.pointerOver == true){   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
@@ -238,13 +173,13 @@ class example2 extends Phaser.Scene{
   
         // When moves away
         this.Empezar.on('pointerout', function() {
-            this.displayWidth=400;
+            this.displayWidth=230;
             this.scaleY = this.scaleX;
             this.pointerOver = true;           
         });
 
         this.OnlineGameButton.on('pointerover', function() {
-            this.displayWidth=500;  //Con this accedemos al botón OnlineGameButton, porque ese botón ha desencadenado el evento.
+            this.displayWidth=250;  //Con this accedemos al botón OnlineGameButton, porque ese botón ha desencadenado el evento.
             this.scaleY = this.scaleX;
 
             if(this.pointerOver == true){   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
@@ -255,14 +190,14 @@ class example2 extends Phaser.Scene{
   
         // When moves away
         this.OnlineGameButton.on('pointerout', function() {
-            this.displayWidth=400;  //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
+            this.displayWidth=230;  //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
             this.scaleY = this.scaleX;
 
             this.pointerOver = true;  
         });
 
         this.ControlsButton.on('pointerover', function() {
-            this.displayWidth=500;
+            this.displayWidth=250;
             this.scaleY = this.scaleX;
 
             if(this.pointerOver == true){   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
@@ -273,7 +208,25 @@ class example2 extends Phaser.Scene{
   
         // When moves away
         this.ControlsButton.on('pointerout', function() {
-            this.displayWidth=400;
+            this.displayWidth=230;
+            this.scaleY = this.scaleX;
+
+            this.pointerOver = true;  
+        });
+
+        this.CreditsButton.on('pointerover', function() {
+            this.displayWidth=250;
+            this.scaleY = this.scaleX;
+
+            if(this.pointerOver == true){   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
+                that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
+                this.pointerOver = false;
+            }
+        });
+  
+        // When moves away
+        this.CreditsButton.on('pointerout', function() {
+            this.displayWidth=230;
             this.scaleY = this.scaleX;
 
             this.pointerOver = true;  
@@ -282,14 +235,12 @@ class example2 extends Phaser.Scene{
     }
 
     update(){
-        if(this.Empezar.x>=this.posBtnX){
+        if(this.t1.x>=this.width/2.18){
             this.Empezar.setGravityX(0).setVelocityX(0);
             this.OnlineGameButton.setGravityX(0).setVelocityX(0);
             this.ControlsButton.setGravityX(0).setVelocityX(0);
             this.t1.setGravityX(0).setVelocityX(0);
             this.t2.setGravityX(0).setVelocityX(0);
         }
-
-        
     }
 }
