@@ -549,6 +549,21 @@ class localgame extends Phaser.Scene{
   // lugares aleatorios, actualizar puntuaciones,
   // y derribar los troncos golpeados.
   update(delta){
+
+    //Cuando los troncos dejen de verse en la pantalla, se borran del array que los contiene para liberar memoria
+    // for(var i=0; i<this.cols.length; i++){
+    //   if(this.cols[i].y >= 600){
+    //     this.cols.splice(i,1);
+    //   }
+    // }
+
+    // Cuando hay más de 12 troncos en el array, todos los que sobren se borran
+    // if(this.cols.length>12){
+    //   this.cols.splice(0, this.cols.length-12);
+    // }
+
+    // console.log(this.cols.length);
+
     
     this.emitterNinja1.setAngle(-270);
     this.emitterNinja1.setPosition(this.player1.x, this.player1.y)
