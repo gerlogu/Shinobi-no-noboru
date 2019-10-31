@@ -29,6 +29,8 @@ class localgame extends Phaser.Scene{
     this.trunkSpeedAceleration = 0.01;
     this.ended                 = false;
     this.isPlayable            = false;
+    this.player1CanMove        = false;
+    this.player2CanMove        = false;
 
     this.DButton = this.input.keyboard.addKey('D');
     this.AButton = this.input.keyboard.addKey('A');
@@ -56,12 +58,12 @@ class localgame extends Phaser.Scene{
       frameHeight: 175
     });    // #endregion
 
-    //  #region Sounds (no son los sonidos finales, son para testeos)
+    // #region Sounds (no son los sonidos finales, son para testeos)
     this.load.audio('jump-audio' , 'assets/Jumping-sounds/jump_10.mp3');
     this.load.audio('soundtrack' , 'assets/Soundtrack/Prueba shinobi.mp3');
     this.load.audio('FinalSound' , 'assets/Game over sound/GameOver.mp3');
     
-    //  #endregion
+    // #endregion
 
     this.cursors = this.input.keyboard.createCursorKeys(); // Usando este método, guardamos en la variebla los 
     // parámetros de las flechas del teclado
@@ -248,7 +250,7 @@ class localgame extends Phaser.Scene{
      * Booleano que determina cuándo pueden perder vida los personajes,
      * se inicia por defecto a TRUE
      */
-    this.canLooseLifes = true;
+    //this.canLooseLifes = true;
     this.number = 3;
 
     /**
@@ -313,13 +315,14 @@ class localgame extends Phaser.Scene{
     });
    
     this.player1.score = 0;
-    this.player1.lifes = 6;
+    this.player1.lifes = 3;
 
     this.player1.z = 100;
     
     // Reajusto el tamaño de la imagen del prota
     this.player1.displayWidth = 45;
     this.player1.scaleY       = this.player1.scaleX;
+    this.player1.canLooseLifes = true;
     // this.Law.setBounce(0.2);
     this.player1.setCollideWorldBounds(false);
     this.player1.setDepth(3000);
@@ -329,7 +332,8 @@ class localgame extends Phaser.Scene{
     // #region Personaje 2
     //this.Law2 = this.physics.add.sprite(this.width/1.1,this.height/3,'purpura',3); // Al escribir physics, le indicamos que el objeto está sujeto a las leyes de la física, indicadas en el archivo game.js
     this.player2.score = 0;
-    this.player2.lifes = 6;
+    this.player2.lifes = 3;
+    this.player2.canLooseLifes = true;
     //Reajusto el tamaño de la imagen del prota
     this.player2.displayWidth = 45;
     this.player2.scaleY       = this.player1.scaleX;
@@ -348,12 +352,12 @@ class localgame extends Phaser.Scene{
     this.emitter= this.particles.createEmitter({
       x: 400,
       y: 300,
-      speed:100,
-      lifespan:200,
+      speed: 100,
+      lifespan: 200,
       blendMode: 'ADD',
       //maxParticles: 50,
       scale:{
-          start:0.4, end:0
+          start: 0.4, end: 0
       },
       rotate: 20,
       //alpha: 0.4,
@@ -455,7 +459,7 @@ class localgame extends Phaser.Scene{
     };
 
     this.physics.add.collider(this.platforms);
-   // this.physics.add.overlap(this.player1,  this.player2);
+    // this.physics.add.overlap(this.player1,  this.player2);
     // this.physics.add.collider(this.player1,  this.platforms);
     // this.physics.add.collider(this.player2, this.platforms);
     this.physics.add.overlap(this.player1,  this.player2, playersCollide, null, this);
@@ -514,13 +518,16 @@ class localgame extends Phaser.Scene{
     this.timer.setDepth(7000);
 
     function onEvent(){
-      this.number--;
-      this.timer.setText(parseInt(this.number));
-      console.log(this.number);
-      if(this.number <= 0){
-        this.isPlayable = true;
-        this.timer.setText(parseInt(''));
+      if(this.number > 0){
+        this.number--;
+        this.timer.setText(parseInt(this.number));
+        console.log(this.number);
       }
+      if(this.number === 0){
+        this.isPlayable = true;
+      }
+      if(this.number <= 0)
+        this.timer.setText(parseInt(''));
     }
 
     this.timedEvent2 = this.scene.get("localgame").time.addEvent({delay: 0, callback:anim, callbackScope:this, loop:true});
@@ -549,27 +556,20 @@ class localgame extends Phaser.Scene{
   // lugares aleatorios, actualizar puntuaciones,
   // y derribar los troncos golpeados.
   update(delta){
-
-    //Cuando los troncos dejen de verse en la pantalla, se borran del array que los contiene para liberar memoria
-    // for(var i=0; i<this.cols.length; i++){
-    //   if(this.cols[i].y >= 600){
-    //     this.cols.splice(i,1);
-    //   }
-    // }
-
-    // Cuando hay más de 12 troncos en el array, todos los que sobren se borran
-    // if(this.cols.length>12){
-    //   this.cols.splice(0, this.cols.length-12);
-    // }
-
-    // console.log(this.cols.length);
-
     
     this.emitterNinja1.setAngle(-270);
-    this.emitterNinja1.setPosition(this.player1.x, this.player1.y)
+    this.emitterNinja1.setPosition(this.player1.x, this.player1.y);
 
     this.emitterNinja2.setAngle(-270);
-    this.emitterNinja2.setPosition(this.player2.x, this.player2.y)
+    this.emitterNinja2.setPosition(this.player2.x, this.player2.y);
+
+    if(this.player2.y <= 700){
+      this.player2.canLooseLifes = true;
+    }
+
+    if(this.player1.y <= 700){
+      this.player1.canLooseLifes = true;
+    }
 
     if(this.isPlayable){
       
@@ -586,16 +586,19 @@ class localgame extends Phaser.Scene{
 
       // #region Teclas y movimiento
 
+      
       if(this.AButton.isDown){
 
-        this.player1.setVelocityX(-this.xSpeed);
+        if(this.player1CanMove)
+          this.player1.setVelocityX(-this.xSpeed);
 
         if(!this.player1.body.touching.down)       
           this.player1.anims.play('left0');
 
       }else if(this.DButton.isDown){
 
-        this.player1.setVelocityX(this.xSpeed);
+        if(this.player1CanMove)
+          this.player1.setVelocityX(this.xSpeed);
 
         if(!this.player1.body.touching.down)       
           this.player1.anims.play('right0');
@@ -607,15 +610,15 @@ class localgame extends Phaser.Scene{
       }
 
       if(this.leftButton.isDown){
-
-        this.player2.setVelocityX(-this.xSpeed);
+        if(this.player2CanMove)
+          this.player2.setVelocityX(-this.xSpeed);
 
         if(!this.player2.body.touching.down)  
           this.player2.anims.play('left1');
 
       }else if(this.rightButton.isDown){
-
-        this.player2.setVelocityX(this.xSpeed);
+        if(this.player2CanMove)
+          this.player2.setVelocityX(this.xSpeed);
 
         if(!this.player2.body.touching.down)  
           this.player2.anims.play('right1');
@@ -626,18 +629,26 @@ class localgame extends Phaser.Scene{
 
       }
       // #endregion 
-
-      this.forPlayer(this.player1, this.WButton);    
-
-      this.forPlayer(this.player2, this.upButton);
-     
-
+      if(this.WButton.isDown){
+        this.forPlayer(this.player1, this.WButton);
+        if(!this.player1CanMove){
+          this.player1CanMove = true;
+        }
+      }
+          
+      if(this.upButton.isDown){
+        this.forPlayer(this.player2, this.upButton);
+        if(!this.player2CanMove){
+          this.player2CanMove = true;
+        }
+      }
     }
 
     // #region Fin de partida
     if(this.player1.y > 800 || this.player2.y > 800){
       
       if(this.ended === false && (this.player1.lifes <= 0 || this.player2.lifes <= 0)){
+        this.isPlayable = false;
         this.endBackground.visible = true;
         this.player1_Text_end.visible = true;
         this.player1_scoreText_end.setText(parseInt(this.player1.score));
@@ -659,23 +670,29 @@ class localgame extends Phaser.Scene{
         this.ended = true;
       }
       else if(this.ended === false){
-        if(this.player1.y > 800){
-          this.player1.setVelocityY(this.jumpForce * 2);
-          // if(this.canLooseLifes === true){
+        if(this.player1.y >= 800){
+          if(this.player1.canLooseLifes === true){
             this.player1.lifes--;
-            this.canLooseLifes = false;
-          // }
+            //console.log("Vidas: " + this.player2.lifes);
+            this.player1.canLooseLifes = false;
+          }
+          if(this.player1.lifes >= 1)
+            this.player1.setVelocityY(this.jumpForce * 2);  
+          console.log("Player 2 lifes: " + this.player1.lifes);
+        }else if(this.player2.y >= 800){
           
-          console.log("Player 1 lifes: " + this.player1.lifes);
-        }else if(this.player2.y > 800){
-          this.player2.setVelocityY(this.jumpForce * 2);  
-          // if(this.canLooseLifes === true){
+          if(this.player2.canLooseLifes === true){
             this.player2.lifes--;
-            this.canLooseLifes = false;
-          // }
+            //console.log("Vidas: " + this.player2.lifes);
+            this.player2.canLooseLifes = false;
+          }
+          if(this.player2.lifes >= 1)
+            this.player2.setVelocityY(this.jumpForce * 2);  
           console.log("Player 2 lifes: " + this.player2.lifes);
         }
       }
+
+      
       
     }
 
