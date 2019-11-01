@@ -67,7 +67,10 @@ class localgame extends Phaser.Scene{
 
     // #region Sounds (no son los sonidos finales, son para testeos)
     this.load.audio('jump-audio' , 'assets/Jumping-sounds/jump_10.mp3');
-    this.load.audio('soundtrack' , 'assets/Soundtrack/Prueba shinobi.mp3');
+    this.load.audio('soundtrack' , 'assets/Soundtrack/Shinobi song 1.mp3');
+    this.load.audio('soundtrack2' , 'assets/Soundtrack/Shinobi song 2.mp3');
+    this.load.audio('soundtrackLoop' , 'assets/Soundtrack/Shinobi song 1 loop.mp3');
+    this.load.audio('soundtrack2Loop' , 'assets/Soundtrack/Shinobi song 2 loop.mp3');
     this.load.audio('FinalSound' , 'assets/Game over sound/GameOver.mp3');
     
     // #endregion
@@ -207,8 +210,46 @@ class localgame extends Phaser.Scene{
     this.cameras.main.fadeIn(1500);
 
     // #region Se crean los objetos de sonido
+    var numeroCancion = Math.floor(Math.random() * 2);
+
     this.jumpaudio  = this.sound.add('jump-audio');
-    this.soundtrack = this.sound.add('soundtrack');
+    this.allSoundtracks = [this.sound.add('soundtrack'),this.sound.add('soundtrack2')];
+    this.allSoundtracksLoop = [this.sound.add('soundtrackLoop'),this.sound.add('soundtrack2Loop')];
+
+    var playLoop1 = function(){
+      this.allSoundtracksLoop[0].play({ 
+        mute: false,
+        volume: 0.5,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: false,
+        delay: 0
+      });
+      this.scene.get("localgame").time.addEvent({delay: 23800, callback: playLoop1, callbackScope:this, loop:false});
+    }
+
+    var playLoop2 = function(){
+      this.allSoundtracksLoop[1].play({ 
+        mute: false,
+        volume: 0.5,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: true,
+        delay: 0
+      });
+    }
+    switch(numeroCancion){
+      case 0:
+        this.scene.get("localgame").time.addEvent({delay: 29950, callback: playLoop1, callbackScope:this, loop:false});
+        break;
+      case 1:
+        this.scene.get("localgame").time.addEvent({delay: 32900, callback: playLoop2, callbackScope:this, loop:false});
+        break; 
+    }
+
+    this.soundtrack = this.allSoundtracks[numeroCancion];
     this.gameOver   = this.sound.add('FinalSound');
     // Reproducimos la banda sonora, bajandole el volumen de 1 a 0.5 debido a que si no suena demasiado, y ponemos loop a true, para que si acaba reinicie
     this.soundtrack.play({ 
@@ -217,7 +258,7 @@ class localgame extends Phaser.Scene{
       rate: 1,
       detune: 0,
       seek: 0,
-      loop: true,
+      loop: false,
       delay: 0
     });
 
