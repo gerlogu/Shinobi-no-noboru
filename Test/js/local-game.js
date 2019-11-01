@@ -49,6 +49,9 @@ class localgame extends Phaser.Scene{
     this.load.image('trunk'          , 'assets/game-elements/trunk.png');
     this.load.image('end-background' , 'assets/end-game-background.png');
     this.load.image('particle'       , 'assets/Particle2.png');
+
+    this.load.image('background' , 'assets/main-menu/e.png');
+
     this.load.spritesheet('ocre'     , 'assets/game-elements/ocre.png',{
       frameWidth: 100,
       frameHeight: 175
@@ -56,7 +59,11 @@ class localgame extends Phaser.Scene{
     this.load.spritesheet('purpura'  , 'assets/game-elements/purpura.png',{
       frameWidth: 100,
       frameHeight: 175
-    });    // #endregion
+    }); 
+    this.load.spritesheet('tronco'  , 'assets/game-elements/troncos.png',{
+      frameWidth: 50,
+      frameHeight: 24
+    });   // #endregion
 
     // #region Sounds (no son los sonidos finales, son para testeos)
     this.load.audio('jump-audio' , 'assets/Jumping-sounds/jump_10.mp3');
@@ -149,6 +156,8 @@ class localgame extends Phaser.Scene{
   // colliders y demás...
   create(){
 
+    
+
     //Funcion for, que recibe un personaje, y hace las comprobaciones de colision con los troncos
     this.forPlayer = function(player, key){
       // #region Recorre el array de troncos
@@ -211,6 +220,10 @@ class localgame extends Phaser.Scene{
       loop: true,
       delay: 0
     });
+
+    //Se crea la imagen colocandola de fondo del menu
+    this.background = this.add.image(400,300,'background');
+
     // #endregion
 
     this.InitializeSpawns();
@@ -221,13 +234,13 @@ class localgame extends Phaser.Scene{
     // ocupe menos espacio, a la izquiera puedes clickear en la flechita para desplegarlo
     // #region Plataformas (suelo)
     this.platforms = this.physics.add.staticGroup();//Al ser static, nos aseguramos de que cuando colisione con el prota, las plataformas no reciban una fuerza y se muevan.
-    this.platforms.create(-300, this.height/2, 'ground').setScale(2).refreshBody();
-    this.platforms.create(1100, this.height/2, 'ground').setScale(2).refreshBody();
+    this.platforms.create(-300, this.height/1.5, 'ground').setScale(2).refreshBody();
+    this.platforms.create(1100, this.height/1.5, 'ground').setScale(2).refreshBody();
     // #endregion
 
     this.cols        = this.physics;
     this.cols.length = 1;
-    this.cols[0]     = this.physics.add.sprite(-100,0,'trunk').body.setGravityY(-1000);
+    this.cols[0]     = this.physics.add.sprite(-100,0,'tronco').body.setGravityY(-1000);
 
     /**
      * Inicializa a los personajes que se mostraránen pantalla, 
@@ -411,17 +424,17 @@ class localgame extends Phaser.Scene{
   InitializeSpawns(){
       // #region spawnAreas
       var spawnTrunkRight = function(){ 
-        this.cols[this.cols.length] = this.physics.add.sprite(Phaser.Math.Between(this.width/5.12, this.width/3.20),0,'trunk').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
+        this.cols[this.cols.length] = this.physics.add.sprite(Phaser.Math.Between(this.width/5.12, this.width/3.20),0,'tronco' ).body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
         this.cols.length++;
       }
         
       var spawnTrunkLeft = function(){ 
-        this.cols[this.cols.length] = this.physics.add.sprite(Phaser.Math.Between(this.width/1.8, this.width/1.24),0,'trunk').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
+        this.cols[this.cols.length] = this.physics.add.sprite(Phaser.Math.Between(this.width/1.8, this.width/1.24),0,'tronco').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
         this.cols.length++;
       }
     
       var spawnTrunkMiddle = function(){ 
-        this.cols[this.cols.length] = this.physics.add.sprite(Phaser.Math.Between(this.width/3, this.width/2),0,'trunk').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
+        this.cols[this.cols.length] = this.physics.add.sprite(Phaser.Math.Between(this.width/3, this.width/2),0,'tronco').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
         this.cols.length++;
       }
       // #endregion

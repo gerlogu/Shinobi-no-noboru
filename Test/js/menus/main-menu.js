@@ -18,6 +18,7 @@ class example2 extends Phaser.Scene{
         this.load.image('T2'                 , 'assets/main-menu/tit-2.png');
         this.load.image('buttons-background' , 'assets/main-menu/buttons-background.png');
         this.load.image('buttons-background-2' , 'assets/main-menu/buttons-background-2.png');
+        this.load.image('background' , 'assets/main-menu/e.png');
    
         // #region Loading Bar
             var progressBar = this.add.graphics();
@@ -95,6 +96,10 @@ class example2 extends Phaser.Scene{
         //Se crean los objetos para los sonidos
         this.sound1 = this.sound.add('MenuSound1');
         this.sound2 = this.sound.add('MenuSound2');
+
+        //Se crea la imagen colocandola de fondo del menu
+        this.background = this.add.image(400,300,'background');
+
         
         this.btn_bck = this.physics.add.sprite(this.width/1.97, this.height/1.4,'buttons-background').setGravityY(-1000).setVelocityX(0).setInteractive();
         //this.t1.setInteractive();
