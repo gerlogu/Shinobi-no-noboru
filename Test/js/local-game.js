@@ -52,6 +52,11 @@ class localgame extends Phaser.Scene{
 
     this.load.image('background' , 'assets/main-menu/e.png');
 
+    this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
+      frameWidth: 800,
+      frameHeight: 600
+    });
+
     this.load.spritesheet('ocre'     , 'assets/game-elements/ocre.png',{
       frameWidth: 100,
       frameHeight: 175
@@ -159,8 +164,6 @@ class localgame extends Phaser.Scene{
   // colliders y demás...
   create(){
 
-    
-
     //Funcion for, que recibe un personaje, y hace las comprobaciones de colision con los troncos
     this.forPlayer = function(player, key){
       // #region Recorre el array de troncos
@@ -263,7 +266,17 @@ class localgame extends Phaser.Scene{
     });
 
     //Se crea la imagen colocandola de fondo del menu
-    this.background = this.add.image(400,300,'background');
+
+    this.background = this.add.sprite(this.width/2,this.height/2,'backgroundSheet',0);
+
+    this.anims.create({
+      key: 'backgroundAnimation',
+      frames: this.anims.generateFrameNumbers('backgroundSheet', { start: 0, end: 2}),
+      frameRate: 8,
+      repeat: -1
+    });
+  
+    this.background.anims.play('backgroundAnimation');
 
     // #endregion
 
