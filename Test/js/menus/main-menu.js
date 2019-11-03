@@ -1,6 +1,6 @@
-class example2 extends Phaser.Scene{
+class mainMenu extends Phaser.Scene{
     constructor(){
-        super({key:"example2"});
+        super({key:"mainMenu"});
       }
 
     preload(){  
@@ -16,10 +16,15 @@ class example2 extends Phaser.Scene{
         this.load.image('Credits'            , 'assets/main-menu/credits-btn.png');
         this.load.image('T1'                 , 'assets/main-menu/tit-1.png');
         this.load.image('T2'                 , 'assets/main-menu/tit-2.png');
-        this.load.image('buttons-background' , 'assets/main-menu/buttons-background.png');
+        this.load.image('buttons-background' , 'assets/main-menu/PergaminoNinja.png');
         this.load.image('buttons-background-2' , 'assets/main-menu/buttons-background-2.png');
-        this.load.image('background' , 'assets/main-menu/e.png');
+        this.load.image('background' , 'assets/game-elements/level-background.png');
+        //this.load.ima
    
+        // for (var i = 0; i < 500; i++) {
+        //     this.load.image('logo'+i, 'local-game-btn.png');
+        // }
+
         // #region Loading Bar
             var progressBar = this.add.graphics();
             var progressBox = this.add.graphics();
@@ -82,10 +87,20 @@ class example2 extends Phaser.Scene{
                 assetText.destroy();
             });
             // #endregion
-      
+
+            this.progressB = progressBar;
+            this.progressBx = progressBox;
+            this.loading = loadingText;
+            this.asset = assetText;
     }
 
     create(){
+        
+        this.progressB.destroy();
+        this.progressBx.destroy();
+        this.loading.destroy();
+        this.asset.destroy();
+
         //Variable auxiliar que guarda la escena actual en ella. Es importante porque en los eventos, si ponemos this, no devuelve la escena,
         //sino el objeto que ha llamado al evento (eso objeto puede ser un botón, por ejemplo)
         var that = this;
@@ -101,7 +116,7 @@ class example2 extends Phaser.Scene{
         this.background = this.add.image(400,300,'background');
 
         
-        this.btn_bck = this.physics.add.sprite(this.width/1.97, this.height/1.4,'buttons-background').setGravityY(-1000).setVelocityX(0).setInteractive();
+        this.btn_bck = this.physics.add.sprite(this.width/1.97, this.height/1.42,'buttons-background').setGravityY(-1000).setVelocityX(0).setInteractive();
         //this.t1.setInteractive();
         this.btn_bck.displayWidth = 400;
         this.btn_bck.scaleY= this.btn_bck.scaleX;
@@ -109,8 +124,9 @@ class example2 extends Phaser.Scene{
         
         this.btn_bck2 = this.physics.add.sprite(this.width/3.8, this.height/1.41,'buttons-background-2').setGravityY(-1000).setVelocityX(0).setInteractive();
         //this.t1.setInteractive();
-        this.btn_bck2.displayWidth = 115;
+        this.btn_bck2.displayWidth = 81;
         this.btn_bck2.scaleY= this.btn_bck2.scaleX;
+        this.btn_bck2.displayWidth = 73;
         this.btn_bck2.setDepth(2000);
 
         this.posBtnX = this.width/2.8;
@@ -132,7 +148,8 @@ class example2 extends Phaser.Scene{
         this.Empezar.setDepth(2000);
         this.Empezar.on('pointerup', function(){
             that.sound2.play();
-            that.scene.start('localgame');
+            that.cameras.main.fadeOut(200);
+            that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('localgame');}, callbackScope:this, loop:false});
         });
 
         this.OnlineGameButton = this.physics.add.sprite(this.width/2, this.height/1.5,'Online-game').setGravityY(-1000).setGravityX(0).setInteractive();
@@ -142,7 +159,8 @@ class example2 extends Phaser.Scene{
         this.OnlineGameButton.setDepth(2000);
         this.OnlineGameButton.on('pointerup', function(){
             that.sound2.play();
-            that.scene.start('localgame');
+            that.cameras.main.fadeOut(200);
+            that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('localgame');}, callbackScope:this, loop:false});
         });
 
         this.ControlsButton = this.physics.add.sprite(this.width/2,this.height/1.35,'Controls').setGravityY(-1000).setGravityX(0).setInteractive();
@@ -152,7 +170,8 @@ class example2 extends Phaser.Scene{
         this.ControlsButton.setDepth(2000);
         this.ControlsButton.on('pointerup', function(){
             that.sound2.play();
-            that.scene.start('example3');
+            that.cameras.main.fadeOut(200);
+            that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('controlsMenu');}, callbackScope:this, loop:false});
         });
         
         this.CreditsButton = this.physics.add.sprite(this.width/2,this.height/1.23,'Credits').setGravityY(-1000).setGravityX(0).setInteractive();
@@ -162,7 +181,9 @@ class example2 extends Phaser.Scene{
         this.CreditsButton.setDepth(2000);
         this.CreditsButton.on('pointerup', function(){
             that.sound2.play();
-            that.scene.start('example3');
+            that.cameras.main.fadeOut(200);
+            that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('creditsMenu');}, callbackScope:this, loop:false});
+            //that.scene.start('creditsMenu');
         });
 
 
@@ -178,6 +199,8 @@ class example2 extends Phaser.Scene{
   
         // When moves away
         this.Empezar.on('pointerout', function() {
+            //this.Empezar.sprite('Online Game');
+            //this.Empezar.sprite('Online Game');
             this.displayWidth=230;
             this.scaleY = this.scaleX;
             this.pointerOver = true;           

@@ -23,7 +23,7 @@ class localgame extends Phaser.Scene{
     this.minTrunkTimer         = 900;
     this.maxTrunkTimer         = 1100;
     this.nullGravity           = -1000;
-    this.trunksVelocity        = 270;
+    this.trunksVelocity        = 310;
     this.jumpForce             = -535;
     this.xSpeed                = 280;
     this.trunkSpeedAceleration = 0.01;
@@ -44,13 +44,16 @@ class localgame extends Phaser.Scene{
 
     // #region Sprites
     this.load.image('ground'         , 'assets/game-elements/ground.png');
-    this.load.image('player1'        , 'assets/game-elements/p5.png');
-    this.load.image('player2'        , 'assets/game-elements/p2.jpg');
+    
+    // this.load.image('player1'        , 'assets/game-elements/p5.png');
+    // this.load.image('player2'        , 'assets/game-elements/p2.jpg');
     this.load.image('trunk'          , 'assets/game-elements/trunk.png');
     this.load.image('end-background' , 'assets/end-game-background.png');
     this.load.image('particle'       , 'assets/Particle2.png');
-
-    this.load.image('background' , 'assets/main-menu/e.png');
+    this.load.image ('frontground'   , 'assets/game-elements/level-frontground.png');
+    this.load.image('beginning_platform' , 'assets/game-elements/platform.png');
+    this.load.image('beginning_platform_behind' , 'assets/game-elements/platform_up.png');
+   // this.load.image('background' , 'assets/main-menu/e.png');
 
     this.load.spritesheet('ocre'     , 'assets/game-elements/ocre.png',{
       frameWidth: 100,
@@ -61,8 +64,8 @@ class localgame extends Phaser.Scene{
       frameHeight: 175
     }); 
     this.load.spritesheet('tronco'  , 'assets/game-elements/troncos.png',{
-      frameWidth: 50,
-      frameHeight: 24
+      frameWidth: 67,
+      frameHeight: 30
     });   // #endregion
 
     // #region Sounds (no son los sonidos finales, son para testeos)
@@ -149,6 +152,12 @@ class localgame extends Phaser.Scene{
     });
     // #endregion
 
+
+    this.progressB = progressBar;
+    this.progressBx = progressBox;
+    this.loading = loadingText;
+    this.asset = assetText;
+
   }
 
   // Método que se ejecuta al comienzo del juego, cuandos se ha creado todo. En él inicializo la mayoría 
@@ -156,7 +165,10 @@ class localgame extends Phaser.Scene{
   // colliders y demás...
   create(){
 
-    
+    this.progressB.destroy();
+    this.progressBx.destroy();
+    this.loading.destroy();
+    this.asset.destroy();
 
     //Funcion for, que recibe un personaje, y hace las comprobaciones de colision con los troncos
     this.forPlayer = function(player, key){
@@ -164,10 +176,10 @@ class localgame extends Phaser.Scene{
       for(var i = 0; i < this.cols.length; i++){
         // Compara la posicion del player con un tronco o el suelo
         // Es importante saber que para phaser, la coordenada x no está en el centro del objeto, sino a la izquierda del mismo
-        if(player.body.touching.down || ((player.x <= (this.cols[i].x+this.cols[i].width*1.5)) 
-        && (player.x >= (this.cols[i].x-this.cols[i].width/2))
-        && (player.y  <= (this.cols[i].y+this.cols[i].height))
-        && (player.y >= (this.cols[i].y-this.cols[i].height/1.5)))){
+        if(player.body.touching.down || ((player.x <= (this.cols[i].x+this.cols[i].width*1.25)) 
+        && (player.x >= (this.cols[i].x-this.cols[i].width/4))
+        && (player.y  <= (this.cols[i].y+this.cols[i].height/1.5))
+        && (player.y >= (this.cols[i].y-this.cols[i].height*1.5)))){
            if(Phaser.Input.Keyboard.JustDown(key)){
             // Salto
             player.setVelocityY(this.jumpForce);  
@@ -179,10 +191,10 @@ class localgame extends Phaser.Scene{
             
 
             // Comprobación para tirar el tronco abajo (provisional)
-            if(((player.x <= (this.cols[i].x+this.cols[i].width*1.5)) 
-            && (player.x >= (this.cols[i].x-this.cols[i].width/2))
-            && (player.y <= (this.cols[i].y+this.cols[i].height))
-            && (player.y >= (this.cols[i].y-this.cols[i].height/1.5)))){
+            if(((player.x <= (this.cols[i].x+this.cols[i].width*1.25)) 
+            && (player.x >= (this.cols[i].x-this.cols[i].width/4))
+            && (player.y <= (this.cols[i].y+this.cols[i].height/1.5))
+            && (player.y >= (this.cols[i].y-this.cols[i].height*1.5)))){
               //this.Law.setVelocityY(-600); 
               this.cols[i].setGravityY(0) ; 
 
@@ -222,32 +234,39 @@ class localgame extends Phaser.Scene{
     });
 
     //Se crea la imagen colocandola de fondo del menu
-    this.background = this.add.image(400,300,'background');
+    this.background = this.add.image(this.width/2,this.height/2,'background');
 
+
+    this.frontground = this.add.image(this.width/2, this.height/2,'frontground');
+    this.frontground.setDepth(10000);
     // #endregion
 
     this.InitializeSpawns();
     
-    this.InitializeScores();
+    
     
     // NOTA: Abajo uso un #region que sirve para colapsar el código y 
     // ocupe menos espacio, a la izquiera puedes clickear en la flechita para desplegarlo
     // #region Plataformas (suelo)
     this.platforms = this.physics.add.staticGroup();//Al ser static, nos aseguramos de que cuando colisione con el prota, las plataformas no reciban una fuerza y se muevan.
-    this.platforms.create(-300, this.height/1.5, 'ground').setScale(2).refreshBody();
+   // this.platforms.create(-300, this.height/1.5, 'ground').setScale(2).refreshBody();
     this.platforms.create(1100, this.height/1.5, 'ground').setScale(2).refreshBody();
+
+    this.platforms.create(this.width/13,this.height/1.2, 'beginning_platform').setScale(0.45).refreshBody();
+    this.platforms.setDepth(9000);
+    this.platform_left_backgroubd = this.add.image(this.width/13,this.height/1.53,'beginning_platform_behind').setScale(0.43);
     // #endregion
 
-    this.cols        = this.physics;
-    this.cols.length = 1;
-    this.cols[0]     = this.physics.add.sprite(-100,0,'tronco').body.setGravityY(-1000);
+    this.cols        =  this.physics;
+    this.cols.length =  1;
+    this.cols[0]     =  this.physics.add.sprite(-100,0,'tronco').body.setGravityY(-1000);
 
     /**
      * Inicializa a los personajes que se mostraránen pantalla, 
      * con las animaciones y atributos propias de cada uno
      */
     this.InitializePlayers();
-
+    this.InitializeScores();
     /**
      * Prepara la pantalla que se muestra al finalizar la partida
      */ 
@@ -281,7 +300,7 @@ class localgame extends Phaser.Scene{
 
   InitializePlayers(){
     //Al escribir physics, le indicamos que el objeto está sujeto a las leyes de la física, indicadas en el archivo game.js
-    this.player1   = this.physics.add.sprite(this.width/10,this.height/3,'ocre',3);
+    this.player1   = this.physics.add.sprite(this.width/10,this.height/1.7,'ocre',3);
     this.player2   = this.physics.add.sprite(this.width/1.1,this.height/3,'purpura',3);
 
     this.anims.create({
@@ -368,56 +387,139 @@ class localgame extends Phaser.Scene{
       speed: 100,
       lifespan: 200,
       blendMode: 'ADD',
-      //maxParticles: 50,
+      // maxParticles: 50,
       scale:{
           start: 0.4, end: 0
       },
       rotate: 20,
-      //alpha: 0.4,
+      // alpha: 0.4,
       on: false
-  });
+    });
 
+    // #region player 1 particles
     this.particles2 = this.add.particles('particle').setDepth(0);
-    this.emitterNinja1= this.particles2.createEmitter({
+    
+    this.emitterNinja1_3= this.particles2.createEmitter({
       x: player.x,
       y: player.y,
       lifespan:400,
-      speed: {min:100, max: 200},
+      speed: {min:50, max: 100},
+      angle: -player.body.gravity,
+      blendMode: 'ADD',
+      gravityY: 100,
+      scale:{
+          start:0.5, end:0
+      },
+      alpha: 0.1,
+      quantity: 0.7
+    });
+
+    this.particles2_1 = this.add.particles('particle').setDepth(0);
+    this.emitterNinja1_1= this.particles2.createEmitter({
+      x: player.x-10,
+      y: player.y,
+      lifespan:400,
+      speed: {min:50, max: 100},
+      angle: -player.body.gravity,
+      blendMode: 'ADD',
+      gravityY: 100,
+      scale:{
+          start:0.5, end:0
+      },
+      alpha: 0.2,
+      quantity: 0.5
+    });
+
+    this.particles2_2 = this.add.particles('particle').setDepth(0);
+    this.emitterNinja1_2= this.particles2.createEmitter({
+      x: player.x-10,
+      y: player.y,
+      lifespan:400,
+      speed: {min:50, max: 100},
+      angle: -player.body.gravity,
+      blendMode: 'ADD',
+      gravityY: 100,
+      scale:{
+          start:0.5, end:0
+      },
+      alpha: 0.2,
+      quantity: 0.5
+    });
+    // #endregion
+
+    // #region player 2 particles
+    this.emitterNinja2_1= this.particles2.createEmitter({
+      x: player.x,
+      y: player.y,
+      lifespan:400,
+      speed: {min:50, max: 100},
       angle: -player.body.gravity,
       blendMode: 'ADD',
       gravityY: 100,
       //maxParticles: 50,
       scale:{
-          start:0.4, end:0
+          start:0.5, end:0
       },
-      alpha: 0,
+      alpha: 0.1,
       quantity: 1
     });
 
-    this.emitterNinja2= this.particles2.createEmitter({
+    this.emitterNinja2_2= this.particles2.createEmitter({
       x: player.x,
       y: player.y,
       lifespan:400,
-      speed: {min:100, max: 200},
+      speed: {min:50, max: 100},
       angle: -player.body.gravity,
       blendMode: 'ADD',
       gravityY: 100,
       //maxParticles: 50,
       scale:{
-          start:0.4, end:0
+          start:0.5, end:0
       },
-      alpha: 0,
+      alpha: 0.1,
       quantity: 1
     });
+
+    this.emitterNinja2_3= this.particles2.createEmitter({
+      x: player.x,
+      y: player.y,
+      lifespan:400,
+      speed: {min:50, max: 100},
+      angle: -player.body.gravity,
+      blendMode: 'ADD',
+      gravityY: 100,
+      //maxParticles: 50,
+      scale:{
+          start:0.5, end:0
+      },
+      alpha: 0.1,
+      quantity: 1
+    });
+    // #endregion
+  
   }
 
   InitializeScores(){
     // #region Scores
-    this.player1_Text = this.add.text(this.width/40, 0, 'PLAYER 1  ', { fontFamily: '"Roboto Condensed"', fontSize: 24 });
-    this.player1_scoreText = this.add.text(this.width/35, this.height/15, this.player1_score, { fontFamily: '"Roboto Condensed"' ,boundsAlignH: "center", boundsAlignV: "middle",align: "center", fontSize: 34 });
+    this.player1_Text = this.add.text(this.width/40, this.height/1.095, 'P1 LIFES', { fontFamily: '"Roboto Condensed"', fontSize: 21 });
+    this.player1_Text.setDepth(11000);
+    this.player1_scoreText = this.add.text(this.width/16, this.height/1.055, this.player1.lifes, { 
+      fontFamily: '"Roboto Condensed"',
+      boundsAlignH: "center", 
+      boundsAlignV: "middle",
+      align: "center", 
+      fontSize: 29 });
+    this.player1_scoreText.setDepth(11000);
 
-    this.player2_Text = this.add.text(this.width/1.19, 0, 'PLAYER 2  ', { fontFamily: '"Roboto Condensed"', fontSize: 24 });
-    this.player2_scoreText = this.add.text(this.width/1.045, this.height/15, this.player2_score, { fontFamily: '"Roboto Condensed"' , boundsAlignH: "right",boundsAlignV: "middle", align:'right', fontSize: 34  });
+    this.player2_Text = this.add.text(this.width/1.19, this.height/1.095, 'P2 LIFES', { fontFamily: '"Roboto Condensed"', fontSize: 21 });
+    this.player2_Text.setDepth(11000);
+    this.player2_scoreText = this.add.text(this.width/1.14, this.height/1.055, this.player2.lifes, { 
+      fontFamily: '"Roboto Condensed"' , 
+      boundsAlignH: "right",
+      boundsAlignV: "middle", 
+      align:'right', 
+      fontSize: 29  });
+    this.player2_scoreText.setDepth(11000);
     // #endregion
   }
 
@@ -491,28 +593,28 @@ class localgame extends Phaser.Scene{
       this.endBackground = this.add.sprite(0,0,'end-background');
       this.endBackground.displayWidth = 20000;
       this.endBackground.scaleY       = this.endBackground.scaleX;
-      this.endBackground.setDepth(4000);
+      this.endBackground.setDepth(12000);
       this.endBackground.visible = false;
     
       this.player1_Text_end = this.add.text(this.width/4, this.height/2, 'PLAYER 1  ', { fontFamily: '"Roboto Condensed"', fontSize: 24 });
-      this.player1_Text_end.setDepth(5000);
+      this.player1_Text_end.setDepth(13000);
       this.player1_Text_end.visible = false;
       this.player1_scoreText_end = this.add.text(this.width/3.25, this.height/1.75, this.player1_score, { fontFamily: '"Roboto Condensed"' , fontSize: 34 });
-      this.player1_scoreText_end.setDepth(5000);
+      this.player1_scoreText_end.setDepth(13000);
       this.player1_scoreText_end.visible = false;
     
       this.player2_Text_end = this.add.text(this.width/1.55, this.height/2, 'PLAYER 2  ', { fontFamily: '"Roboto Condensed"', fontSize: 24 });
-      this.player2_Text_end.setDepth(5000);
+      this.player2_Text_end.setDepth(13000);
       this.player2_Text_end.visible = false;
       this.player2_scoreText_end = this.add.text(this.width/1.42, this.height/1.75, this.player2_score, { fontFamily: '"Roboto Condensed"' , boundsAlignH: "center",  fontSize: 34  });
-      this.player2_scoreText_end.setDepth(5000);
+      this.player2_scoreText_end.setDepth(13000);
       this.player2_scoreText_end.visible = false;
     
       this.playerX_Text = this.add.text(this.width/4.25, this.height/3, 'PLAYER 1', { fontFamily: '"Roboto Condensed"' ,  fontSize: 40  });
-      this.playerX_Text.setDepth(5000);
+      this.playerX_Text.setDepth(13000);
       this.playerX_Text.visible = false;
       this.playerX_WinnerTex = this.add.text(this.width/2.1, this.height/3, 'is the WINNER', { fontFamily: '"Roboto Condensed"' ,  fontSize: 40  });
-      this.playerX_WinnerTex.setDepth(5000);
+      this.playerX_WinnerTex.setDepth(13000);
       this.playerX_WinnerTex.visible = false;
       // #endregion
   }
@@ -531,7 +633,7 @@ class localgame extends Phaser.Scene{
     this.timer.setDepth(7000);
 
     function onEvent(){
-      if(this.number > 0){
+      if(this.number >= 0){
         this.number--;
         this.timer.setText(parseInt(this.number));
         console.log(this.number);
@@ -569,12 +671,72 @@ class localgame extends Phaser.Scene{
   // lugares aleatorios, actualizar puntuaciones,
   // y derribar los troncos golpeados.
   update(delta){
-    
-    this.emitterNinja1.setAngle(-270);
-    this.emitterNinja1.setPosition(this.player1.x, this.player1.y);
 
-    this.emitterNinja2.setAngle(-270);
-    this.emitterNinja2.setPosition(this.player2.x, this.player2.y);
+    if(this.player1CanMove){
+      this.emitterNinja1_3.setAngle(-270);
+      this.emitterNinja1_3.setPosition(this.player1.x, this.player1.y);
+
+      this.emitterNinja1_1.setAngle(-270);
+      
+      if(this.player1.body.velocity.x > 0){
+        this.emitterNinja1_1.setPosition(this.player1.x + 15, this.player1.y - 18);
+        this.emitterNinja1_1.setAlpha(0.1);
+      }
+      else if(this.player1.body.velocity.x < 0){
+        this.emitterNinja1_1.setPosition(this.player1.x - 15, this.player1.y - 18);
+        this.emitterNinja1_1.setAlpha(0.1);
+      }else{
+        this.emitterNinja1_1.setPosition(this.player1.x, this.player1.y - 18);
+        this.emitterNinja1_1.setAlpha(0.1);
+      }
+
+      this.emitterNinja1_2.setAngle(-270);
+      if(this.player1.body.velocity.x > 0){
+        this.emitterNinja1_2.setPosition(this.player1.x + 5, this.player1.y + 20);
+        this.emitterNinja1_2.setAlpha(0.1);
+      }
+      else if(this.player1.body.velocity.x < 0){
+        this.emitterNinja1_2.setPosition(this.player1.x - 5, this.player1.y + 20);
+        this.emitterNinja1_2.setAlpha(0.1);
+      }else{
+        this.emitterNinja1_2.setPosition(this.player1.x, this.player1.y + 20);
+        this.emitterNinja1_2.setAlpha(0.1);
+      }
+      
+    }
+
+    if(this.player2CanMove){
+
+      this.emitterNinja2_1.setAngle(-270);
+      this.emitterNinja2_1.setPosition(this.player2.x, this.player2.y);
+
+      this.emitterNinja2_2.setAngle(-270);
+      if(this.player2.body.velocity.x > 0){
+        this.emitterNinja2_2.setPosition(this.player2.x + 15, this.player2.y - 18);
+        this.emitterNinja2_1.setAlpha(0.1);
+      }
+      else if(this.player2.body.velocity.x < 0){
+        this.emitterNinja2_2.setPosition(this.player2.x - 15, this.player2.y - 18);
+        this.emitterNinja2_2.setAlpha(0.1);
+      }else{
+        this.emitterNinja2_2.setPosition(this.player2.x, this.player2.y - 18);
+        this.emitterNinja2_2.setAlpha(0.1);
+      }
+
+      this.emitterNinja2_3.setAngle(-270);
+      if(this.player1.body.velocity.x > 0){
+        this.emitterNinja2_3.setPosition(this.player2.x + 5, this.player2.y + 20);
+        this.emitterNinja2_3.setAlpha(0.1);
+      }
+      else if(this.player2.body.velocity.x < 0){
+        this.emitterNinja2_3.setPosition(this.player2.x - 5, this.player2.y + 20);
+        this.emitterNinja2_3.setAlpha(0.1);
+      }else{
+        this.emitterNinja2_3.setPosition(this.player2.x, this.player2.y + 20);
+        this.emitterNinja2_3.setAlpha(0.1);
+      }
+        
+    }
 
     if(this.player2.y <= 700){
       this.player2.canLooseLifes = true;
@@ -586,20 +748,12 @@ class localgame extends Phaser.Scene{
 
     if(this.isPlayable){
       
-      // #region Scores
-      this.trunksVelocity += this.trunkSpeedAceleration;
-      if(!this.ended){
-        this.player1.score  += 0.05;
-        this.player2.score  += 0.05;
-      }
-
-      this.player1_scoreText.setText(parseInt(this.player1.score));
-      this.player2_scoreText.setText(parseInt(this.player2.score));
+      // #region Player Lifes
+      this.player1_scoreText.setText(this.player1.lifes);
+      this.player2_scoreText.setText(parseInt(this.player2.lifes));
       // #endregion
 
       // #region Teclas y movimiento
-
-      
       if(this.AButton.isDown){
 
         if(this.player1CanMove)
@@ -661,7 +815,7 @@ class localgame extends Phaser.Scene{
     if(this.player1.y > 800 || this.player2.y > 800){
       
       if(this.ended === false && (this.player1.lifes <= 0 || this.player2.lifes <= 0)){
-        this.isPlayable = false;
+        
         this.endBackground.visible = true;
         this.player1_Text_end.visible = true;
         this.player1_scoreText_end.setText(parseInt(this.player1.score));
@@ -681,6 +835,7 @@ class localgame extends Phaser.Scene{
         this.soundtrack.stop();
         this.gameOver.play();
         this.ended = true;
+        this.isPlayable = false;
       }
       else if(this.ended === false){
         if(this.player1.y >= 800){
@@ -704,11 +859,7 @@ class localgame extends Phaser.Scene{
           console.log("Player 2 lifes: " + this.player2.lifes);
         }
       }
-
-      
-      
     }
-
     // #endregion
   }
 }

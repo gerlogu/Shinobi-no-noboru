@@ -8,7 +8,7 @@ var config = {
       gravity: { y: 1000}
     }
   },
-  scene: [example2, example3, localgame]
+  scene: [mainMenu, controlsMenu, creditsMenu, localgame]
   
 };
 
