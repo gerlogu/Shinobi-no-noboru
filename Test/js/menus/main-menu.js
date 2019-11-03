@@ -7,7 +7,7 @@ class mainMenu extends Phaser.Scene{
         // #region se cargar los sonidos para el menu
         this.load.audio('MenuSound1','assets/Menu sounds/MenuSound1.mp3');
         this.load.audio('MenuSound2','assets/Menu sounds/MenuSound2.mp3');
-        this.pointerOver = false; // Booleano que se activa y desactiva al pasar por encima de los botones, con el objetivo de que los sonidos se reproduzcan una sola vez , y no se bugee
+        this.pointerOver = true; // Booleano que se activa y desactiva al pasar por encima de los botones, con el objetivo de que los sonidos se reproduzcan una sola vez , y no se bugee
         // //#endregion
 
         this.load.image('Local-game'         , 'assets/main-menu/local-game-btn.png');
@@ -18,7 +18,15 @@ class mainMenu extends Phaser.Scene{
         this.load.image('T2'                 , 'assets/main-menu/tit-2.png');
         this.load.image('buttons-background' , 'assets/main-menu/PergaminoNinja.png');
         this.load.image('buttons-background-2' , 'assets/main-menu/buttons-background-2.png');
-        this.load.image('background' , 'assets/game-elements/level-background.png');
+        this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
+            frameWidth: 800,
+            frameHeight: 600
+        }); 
+
+        
+
+        
+
         //this.load.ima
    
         // for (var i = 0; i < 500; i++) {
@@ -94,7 +102,7 @@ class mainMenu extends Phaser.Scene{
             this.asset = assetText;
     }
 
-    create(){
+    create(){        
         
         this.progressB.destroy();
         this.progressBx.destroy();
@@ -111,11 +119,18 @@ class mainMenu extends Phaser.Scene{
         //Se crean los objetos para los sonidos
         this.sound1 = this.sound.add('MenuSound1');
         this.sound2 = this.sound.add('MenuSound2');
-
-        //Se crea la imagen colocandola de fondo del menu
-        this.background = this.add.image(400,300,'background');
-
         
+        this.background = this.add.sprite(this.width/2,this.height/2,'backgroundSheet',0);
+
+        this.anims.create({
+            key: 'backgroundAnimation',
+            frames: this.anims.generateFrameNumbers('backgroundSheet', { start: 0, end: 2}),
+            frameRate: 8,
+            repeat: -1
+          });
+      
+        this.background.anims.play('backgroundAnimation');
+
         this.btn_bck = this.physics.add.sprite(this.width/1.97, this.height/1.42,'buttons-background').setGravityY(-1000).setVelocityX(0).setInteractive();
         //this.t1.setInteractive();
         this.btn_bck.displayWidth = 400;
@@ -191,10 +206,10 @@ class mainMenu extends Phaser.Scene{
             this.displayWidth=250; //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
             this.scaleY=this.scaleX;
 
-            if(this.pointerOver == true){   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
+            do{  //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
-            }
+            }while(this.pointerover);
         });
   
         // When moves away
@@ -210,10 +225,10 @@ class mainMenu extends Phaser.Scene{
             this.displayWidth=250;  //Con this accedemos al botón OnlineGameButton, porque ese botón ha desencadenado el evento.
             this.scaleY = this.scaleX;
 
-            if(this.pointerOver == true){   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
+            do{   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
-            }
+            }while(this.pointerOver);
         });
   
         // When moves away
@@ -228,10 +243,10 @@ class mainMenu extends Phaser.Scene{
             this.displayWidth=250;
             this.scaleY = this.scaleX;
 
-            if(this.pointerOver == true){   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
+            do{   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
-            }
+            }while(this.pointerOver);
         });
   
         // When moves away
@@ -246,10 +261,10 @@ class mainMenu extends Phaser.Scene{
             this.displayWidth=250;
             this.scaleY = this.scaleX;
 
-            if(this.pointerOver == true){   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
+            do{   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
-            }
+            }while(this.pointerOver);
         });
   
         // When moves away

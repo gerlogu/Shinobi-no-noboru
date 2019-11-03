@@ -8,7 +8,13 @@ class controlsMenu extends Phaser.Scene{
         this.load.image('controls-player2','assets/controls-menu/controls-player2.png');  
         this.load.image('return-btn','assets/controls-menu/return-btn.jpg');       
         this.load.image('scroll-background','assets/controls-menu/pergamino.png');   
-        this.load.image('scroll-background2','assets/controls-menu/pergamino2.png'); 
+        this.load.image('scroll-background2','assets/controls-menu/pergamino2.png');
+
+        this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
+            frameWidth: 800,
+            frameHeight: 600
+        }); 
+
         this.load.image('ochre-controls','assets/controls-menu/ochre-controls.png');  
         this.load.image('purple-controls','assets/controls-menu/purple-controls.png');
     }
@@ -19,7 +25,18 @@ class controlsMenu extends Phaser.Scene{
 
         var that = this;
 
-        this.background = this.add.image(400,300,'background');
+        //#region inicializamos en fondo del menú, y lo animamos
+        this.background = this.add.sprite(this.width/2,this.height/2,'backgroundSheet',0);
+
+        this.anims.create({
+            key: 'backgroundAnimation',
+            frames: this.anims.generateFrameNumbers('backgroundSheet', { start: 0, end: 2}),
+            frameRate: 8,
+            repeat: -1
+          });
+      
+        this.background.anims.play('backgroundAnimation');
+        ////#endregion
 
         this.cameras.main.fadeIn(500);
 

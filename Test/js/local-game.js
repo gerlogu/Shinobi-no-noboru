@@ -31,6 +31,8 @@ class localgame extends Phaser.Scene{
     this.isPlayable            = false;
     this.player1CanMove        = false;
     this.player2CanMove        = false;
+    this.player1IZQ            = false;
+    this.player2IZQ            = false;
 
     this.DButton = this.input.keyboard.addKey('D');
     this.AButton = this.input.keyboard.addKey('A');
@@ -60,11 +62,11 @@ class localgame extends Phaser.Scene{
       frameHeight: 600
     });
 
-    this.load.spritesheet('ocre'     , 'assets/game-elements/ocre.png',{
+    this.load.spritesheet('ocre'     , 'assets/game-elements/ocrev2.png',{
       frameWidth: 100,
       frameHeight: 175
     });
-    this.load.spritesheet('purpura'  , 'assets/game-elements/purpura.png',{
+    this.load.spritesheet('purpura'  , 'assets/game-elements/purpurav2.png',{
       frameWidth: 100,
       frameHeight: 175
     });
@@ -355,48 +357,77 @@ class localgame extends Phaser.Scene{
 
   InitializePlayers(){
     //Al escribir physics, le indicamos que el objeto está sujeto a las leyes de la física, indicadas en el archivo game.js
-    this.player1   = this.physics.add.sprite(this.width/10,this.height/1.7,'ocre',3);
-    this.player2   = this.physics.add.sprite(this.width/1.1,this.height/3,'purpura',3);
+    this.player1   = this.physics.add.sprite(this.width/10,this.height/1.7,'ocre',4);
+    this.player2   = this.physics.add.sprite(this.width/1.1,this.height/3,'purpura',4);
 
     this.anims.create({
-      key: 'left0',
-      frames: [ { key: 'ocre', frame: 2 } ],
+      key: 'leftup0',
+      frames: [ { key: 'ocre', frame: 3 } ],
       frameRate: 10,
       repeat: -1
     });
 
     this.anims.create({
-      key: 'right0',
+      key: 'rightup0',
+      frames: [ { key: 'ocre', frame: 2 } ],
+      frameRate: 10,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'leftdown0',
       frames: [ { key: 'ocre', frame: 1 } ],
       frameRate: 10,
       repeat: -1
     });
 
     this.anims.create({
+      key: 'rightdown0',
+      frames: [ { key: 'ocre', frame: 0 } ],
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
       key: 'start0',
-      frames: [ { key: 'ocre', frame: 3 } ],
+      frames: [ { key: 'ocre', frame: 4 } ],
       frameRate: 10,
       repeat: -1
     });
 
     this.player1.anims.play('start0');
+
+
     this.anims.create({
-      key: 'left1',
+      key: 'leftup1',
+      frames: [ { key: 'purpura', frame: 3 } ],
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'rightup1',
       frames: [ { key: 'purpura', frame: 2 } ],
       frameRate: 10,
       repeat: -1
     });
 
     this.anims.create({
-      key: 'right1',
+      key: 'leftdown1',
       frames: [ { key: 'purpura', frame: 1 } ],
       frameRate: 10,
       repeat: -1
     });
 
     this.anims.create({
+      key: 'rightdown1',
+      frames: [ { key: 'purpura', frame: 0 } ],
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
       key: 'start1',
-      frames: [ { key: 'purpura', frame: 3 } ],
+      frames: [ { key: 'purpura', frame: 4 } ],
       frameRate: 10,
       repeat: -1
     });
@@ -727,6 +758,79 @@ class localgame extends Phaser.Scene{
   // y derribar los troncos golpeados.
   update(delta){
 
+    //#region gestión de las animaciones
+    if(!this.player1.body.touching.down && this.player1CanMove){
+      if(this.player1.body.velocity.x >0){
+        if(this.player1.body.velocity.y <0){
+          this.player1.anims.play("rightup0");
+        }else{
+          this.player1.anims.play("rightdown0");
+        }
+
+        this.player1IZQ = false;
+
+      }else if(this.player1.body.velocity.x <0 ){
+        if(this.player1.body.velocity.y <0){
+          this.player1.anims.play("leftup0");
+        }else{
+          this.player1.anims.play("leftdown0");
+        }
+
+        this.player1IZQ = true;
+
+      }else{
+        if(this.player1IZQ){
+          if(this.player1.body.velocity.y <0){
+            this.player1.anims.play("leftup0");
+          }else{
+            this.player1.anims.play("leftdown0");
+          }
+        }else{
+          if(this.player1.body.velocity.y <0){
+            this.player1.anims.play("rightup0");
+          }else{
+            this.player1.anims.play("rightdown0");
+          }
+        }
+      }
+    }
+    if(!this.player2.body.touching.down && this.player2CanMove){
+      if(this.player2.body.velocity.x >0){
+        if(this.player2.body.velocity.y <0){
+          this.player2.anims.play("rightup1");
+        }else{
+          this.player2.anims.play("rightdown1");
+        }
+
+        this.player2IZQ = false;
+
+      }else if(this.player2.body.velocity.x <0 ){
+        if(this.player2.body.velocity.y <0){
+          this.player2.anims.play("leftup1");
+        }else{
+          this.player2.anims.play("leftdown1");
+        }
+
+        this.player2IZQ = true;
+
+      }else{
+        if(this.player2IZQ){
+          if(this.player2.body.velocity.y <0){
+            this.player2.anims.play("leftup1");
+          }else{
+            this.player2.anims.play("leftdown1");
+          }
+        }else{
+          if(this.player2.body.velocity.y <0){
+            this.player2.anims.play("rightup1");
+          }else{
+            this.player2.anims.play("rightdown1");
+          }
+        }
+      }
+    }
+    ////#endregion
+
     if(this.player1CanMove){
       this.emitterNinja1_3.setAngle(-270);
       this.emitterNinja1_3.setPosition(this.player1.x, this.player1.y);
@@ -814,16 +918,16 @@ class localgame extends Phaser.Scene{
         if(this.player1CanMove)
           this.player1.setVelocityX(-this.xSpeed);
 
-        if(!this.player1.body.touching.down)
-          this.player1.anims.play('left0');
+        // if(!this.player1.body.touching.down)
+        //   this.player1.anims.play('left0');
 
       }else if(this.DButton.isDown){
 
         if(this.player1CanMove)
           this.player1.setVelocityX(this.xSpeed);
 
-        if(!this.player1.body.touching.down)
-          this.player1.anims.play('right0');
+        // if(!this.player1.body.touching.down)
+        //   this.player1.anims.play('right0');
 
       }else{
 
@@ -835,15 +939,15 @@ class localgame extends Phaser.Scene{
         if(this.player2CanMove)
           this.player2.setVelocityX(-this.xSpeed);
 
-        if(!this.player2.body.touching.down)
-          this.player2.anims.play('left1');
+        // if(!this.player2.body.touching.down)
+        //   this.player2.anims.play('left1');
 
       }else if(this.rightButton.isDown){
         if(this.player2CanMove)
           this.player2.setVelocityX(this.xSpeed);
 
-        if(!this.player2.body.touching.down)
-          this.player2.anims.play('right1');
+        // if(!this.player2.body.touching.down)
+        //   this.player2.anims.play('right1');
 
       }else{
 
