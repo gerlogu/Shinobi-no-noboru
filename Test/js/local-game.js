@@ -9,11 +9,9 @@ class localgame extends Phaser.Scene{
   }
 
   /**
-   * Método que se ejecuta antes de cargar la página (creo)
-   * En este método he cargado todos los sprites del juego (en un futuro habrá más y también habrá sonidos).
-   * También he creado las variables que van a ser parte de la escena. Para ello se escribe "this."
-   * seguido del nombre. No hay que escribir var, ya que estas variables
-   * son en realidad parámetros de la clase "example1"
+   * Método que se ejecuta ANTES de cargar la página
+   * En el se inicializan los sprites y otros elementos
+   * como la barra de carga
    */
   preload(){
 
@@ -55,7 +53,7 @@ class localgame extends Phaser.Scene{
     this.load.image('scroll-background','assets/controls-menu/pergamino.png');   
     this.load.image('scroll-background2','assets/controls-menu/pergamino2.png');
     this.load.image('scroll-background3' , 'assets/main-menu/buttons-background-2.png');
-   // this.load.image('background' , 'assets/main-menu/e.png');
+    // #endregion
 
     this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
       frameWidth: 800,
@@ -170,9 +168,9 @@ class localgame extends Phaser.Scene{
 
   }
 
-  // Método que se ejecuta al comienzo del juego, cuandos se ha creado todo. En él inicializo la mayoría
-  // de elementos del juego, como plataformas y el personaje en cuestión,
-  // colliders y demás...
+  /**
+   * Método que se ejecuta al comienzo del juego, cuandos se ha creado todo.
+   */
   create(){
 
     this.progressB.destroy();
@@ -223,7 +221,7 @@ class localgame extends Phaser.Scene{
         }
 
       }
-      // #endregion
+      
     }
 
     this.cameras.main.fadeIn(1500);
@@ -766,237 +764,101 @@ class localgame extends Phaser.Scene{
     }
   }
 
+  /**
+   * Actualiza la posicion de las particulas del movimiento del personaje 
+   * @param {*} player Personaje
+   * @param {*} playerCanMove Booleano que determina si se puede mover
+   * @param {*} particle1 Primera particula de movimiento del personaje
+   * @param {*} particle2 Segunda particula de movimiento del personaje
+   * @param {*} particle3 Tercera particula de movimiento del personaje
+   */
+  UpdateParticles(player, playerCanMove, particle1, particle2, particle3){
+    if(playerCanMove){
+      particle3.setAngle(-270);
+      particle3.setPosition(player.x, player.y);
 
-  // Método que se ejecuta constantemente, en el de momento solo están los controles de movimiento.
-  // Más tarde lo usaremos para spawnear troncos de vez en cuando, y en
-  // lugares aleatorios, actualizar puntuaciones,
-  // y derribar los troncos golpeados.
-  update(delta){
-
-    //#region gestión de las animaciones
-    if(!this.player1.body.touching.down && this.player1CanMove){
-      if(this.player1.body.velocity.x >0){
-        if(this.player1.body.velocity.y <0){
-          this.player1.anims.play("rightup0");
-        }else{
-          this.player1.anims.play("rightdown0");
-        }
-
-        this.player1IZQ = false;
-
-      }else if(this.player1.body.velocity.x <0 ){
-        if(this.player1.body.velocity.y <0){
-          this.player1.anims.play("leftup0");
-        }else{
-          this.player1.anims.play("leftdown0");
-        }
-
-        this.player1IZQ = true;
-
-      }else{
-        if(this.player1IZQ){
-          if(this.player1.body.velocity.y <0){
-            this.player1.anims.play("leftup0");
-          }else{
-            this.player1.anims.play("leftdown0");
-          }
-        }else{
-          if(this.player1.body.velocity.y <0){
-            this.player1.anims.play("rightup0");
-          }else{
-            this.player1.anims.play("rightdown0");
-          }
-        }
-      }
-    }
-    if(!this.player2.body.touching.down && this.player2CanMove){
-      if(this.player2.body.velocity.x >0){
-        if(this.player2.body.velocity.y <0){
-          this.player2.anims.play("rightup1");
-        }else{
-          this.player2.anims.play("rightdown1");
-        }
-
-        this.player2IZQ = false;
-
-      }else if(this.player2.body.velocity.x <0 ){
-        if(this.player2.body.velocity.y <0){
-          this.player2.anims.play("leftup1");
-        }else{
-          this.player2.anims.play("leftdown1");
-        }
-
-        this.player2IZQ = true;
-
-      }else{
-        if(this.player2IZQ){
-          if(this.player2.body.velocity.y <0){
-            this.player2.anims.play("leftup1");
-          }else{
-            this.player2.anims.play("leftdown1");
-          }
-        }else{
-          if(this.player2.body.velocity.y <0){
-            this.player2.anims.play("rightup1");
-          }else{
-            this.player2.anims.play("rightdown1");
-          }
-        }
-      }
-    }
-    ////#endregion
-
-    if(this.player1CanMove){
-      this.emitterNinja1_3.setAngle(-270);
-      this.emitterNinja1_3.setPosition(this.player1.x, this.player1.y);
-
-      this.emitterNinja1_1.setAngle(-270);
+      particle1.setAngle(-270);
 
       if(this.player1.body.velocity.x > 0){
-        this.emitterNinja1_1.setPosition(this.player1.x + 15, this.player1.y - 18);
-        this.emitterNinja1_1.setAlpha(0.1);
+        particle1.setPosition(player.x + 15, player.y - 18);
+        particle1.setAlpha(0.1);
       }
       else if(this.player1.body.velocity.x < 0){
-        this.emitterNinja1_1.setPosition(this.player1.x - 15, this.player1.y - 18);
-        this.emitterNinja1_1.setAlpha(0.1);
+        particle1.setPosition(player.x - 15, player.y - 18);
+        particle1.setAlpha(0.1);
       }else{
-        this.emitterNinja1_1.setPosition(this.player1.x, this.player1.y - 18);
-        this.emitterNinja1_1.setAlpha(0.1);
+        particle1.setPosition(player.x, player.y - 18);
+        particle1.setAlpha(0.1);
       }
 
-      this.emitterNinja1_2.setAngle(-270);
+      particle2.setAngle(-270);
       if(this.player1.body.velocity.x > 0){
-        this.emitterNinja1_2.setPosition(this.player1.x + 5, this.player1.y + 20);
-        this.emitterNinja1_2.setAlpha(0.1);
+        particle2.setPosition(player.x + 5, player.y + 20);
+        particle2.setAlpha(0.1);
       }
       else if(this.player1.body.velocity.x < 0){
-        this.emitterNinja1_2.setPosition(this.player1.x - 5, this.player1.y + 20);
-        this.emitterNinja1_2.setAlpha(0.1);
+        particle2.setPosition(player.x - 5, player.y + 20);
+        particle2.setAlpha(0.1);
       }else{
-        this.emitterNinja1_2.setPosition(this.player1.x, this.player1.y + 20);
-        this.emitterNinja1_2.setAlpha(0.1);
+        particle2.setPosition(player.x, player.y + 20);
+        particle2.setAlpha(0.1);
       }
-
     }
+  }
 
-    if(this.player2CanMove){
-
-      this.emitterNinja2_1.setAngle(-270);
-      this.emitterNinja2_1.setPosition(this.player2.x, this.player2.y);
-
-      this.emitterNinja2_2.setAngle(-270);
-      if(this.player2.body.velocity.x > 0){
-        this.emitterNinja2_2.setPosition(this.player2.x + 15, this.player2.y - 18);
-        this.emitterNinja2_1.setAlpha(0.1);
-      }
-      else if(this.player2.body.velocity.x < 0){
-        this.emitterNinja2_2.setPosition(this.player2.x - 15, this.player2.y - 18);
-        this.emitterNinja2_2.setAlpha(0.1);
-      }else{
-        this.emitterNinja2_2.setPosition(this.player2.x, this.player2.y - 18);
-        this.emitterNinja2_2.setAlpha(0.1);
-      }
-
-      this.emitterNinja2_3.setAngle(-270);
-      if(this.player1.body.velocity.x > 0){
-        this.emitterNinja2_3.setPosition(this.player2.x + 5, this.player2.y + 20);
-        this.emitterNinja2_3.setAlpha(0.1);
-      }
-      else if(this.player2.body.velocity.x < 0){
-        this.emitterNinja2_3.setPosition(this.player2.x - 5, this.player2.y + 20);
-        this.emitterNinja2_3.setAlpha(0.1);
-      }else{
-        this.emitterNinja2_3.setPosition(this.player2.x, this.player2.y + 20);
-        this.emitterNinja2_3.setAlpha(0.1);
-      }
-
-    }
-
-    if(this.player2.y <= 700){
-      this.player2.canLooseLifes = true;
-    }
-
-    if(this.player1.y <= 700){
-      this.player1.canLooseLifes = true;
-    }
-
-    if(this.isPlayable){
-
-      // #region Player Lifes
-      this.player1_scoreText.setText(this.player1.lifes);
-      this.player2_scoreText.setText(parseInt(this.player2.lifes));
-      // #endregion
-
-      // #region Teclas y movimiento
-      if(this.AButton.isDown){
-
-        if(this.player1CanMove)
-          this.player1.setVelocityX(-this.xSpeed);
-
-        // if(!this.player1.body.touching.down)
-        //   this.player1.anims.play('left0');
-
-      }else if(this.DButton.isDown){
-
-        if(this.player1CanMove)
-          this.player1.setVelocityX(this.xSpeed);
-
-        // if(!this.player1.body.touching.down)
-        //   this.player1.anims.play('right0');
-
-      }else{
-
-        this.player1.setVelocityX(0);
-
-      }
-
-      if(this.leftButton.isDown){
-        if(this.player2CanMove)
-          this.player2.setVelocityX(-this.xSpeed);
-
-        // if(!this.player2.body.touching.down)
-        //   this.player2.anims.play('left1');
-
-      }else if(this.rightButton.isDown){
-        if(this.player2CanMove)
-          this.player2.setVelocityX(this.xSpeed);
-
-        // if(!this.player2.body.touching.down)
-        //   this.player2.anims.play('right1');
-
-      }else{
-
-        this.player2.setVelocityX(0);
-
-      }
-      // #endregion
-      if(this.WButton.isDown){
-        this.forPlayer(this.player1, this.WButton);
-        if(!this.player1CanMove){
-          this.player1CanMove = true;
+  /**
+   * Actualiza la animacion del personaje
+   * @param {*} player Personaje
+   * @param {*} playerCanMove Booleano que determina si se puede mover
+   * @param {*} playerIZQ Boolean que determina hacia donde mira el personaje
+   */
+  UpdatePlayerAnim(player, playerCanMove, playerIZQ){
+    if(!player.body.touching.down && playerCanMove){
+      if(player.body.velocity.x >0){
+        if(player.body.velocity.y <0){
+          player.anims.play("rightup0");
+        }else{
+          player.anims.play("rightdown0");
         }
-      }
 
-      if(this.upButton.isDown){
-        this.forPlayer(this.player2, this.upButton);
-        if(!this.player2CanMove){
-          this.player2CanMove = true;
+        playerIZQ = false;
+
+      }else if(player.body.velocity.x <0 ){
+        if(player.body.velocity.y <0){
+          player.anims.play("leftup0");
+        }else{
+          player.anims.play("leftdown0");
+        }
+
+        playerIZQ = true;
+
+      }else{
+        if(playerIZQ){
+          if(player.body.velocity.y <0){
+            player.anims.play("leftup0");
+          }else{
+            player.anims.play("leftdown0");
+          }
+        }else{
+          if(player.body.velocity.y <0){
+            player.anims.play("rightup0");
+          }else{
+            player.anims.play("rightdown0");
+          }
         }
       }
     }
+  }
 
-    // #region Fin de partida
+  /**
+   * Comprueba si ha terminado la partida al caer un personaje
+   */
+  CheckEndGame(){
     if(this.player1.y > 800 || this.player2.y > 800){
 
       if(this.ended === false && (this.player1.lifes <= 0 || this.player2.lifes <= 0)){
-
+        
         this.endBackground.visible = true;
-        // this.player1_Text_end.visible = true;
-        // this.player1_scoreText_end.setText(parseInt(this.player1.score));
-        // this.player1_scoreText_end.visible = true;
-        // this.player2_Text_end.visible = true;
-        // this.player2_scoreText_end.setText(parseInt(this.player2.score));
-        // this.player2_scoreText_end.visible = true;
         this.endScroll.visible = true;
         this.endScroll2.visible = true;
         if(this.player1.y > 800){
@@ -1036,6 +898,87 @@ class localgame extends Phaser.Scene{
         }
       }
     }
+  }
+
+
+  /** 
+   * Método que se ejecuta constantemente, en el de momento solo están los controles de movimiento.
+   */
+  update(delta){
+
+    // Actualizamos las animaciones de los personajes teniendo en cuenta la direccion del movimiento
+    // y si se pueden mover
+    this.UpdatePlayerAnim(this.player1, this.player1CanMove, this.player1IZQ);
+    this.UpdatePlayerAnim(this.player2, this.player2CanMove, this.player2IZQ);
+
+    this.UpdateParticles(this.player1, this.player1CanMove, this.emitterNinja1_1, this.emitterNinja1_2, this.emitterNinja1_3);
+    this.UpdateParticles(this.player2, this.player2CanMove, this.emitterNinja2_1, this.emitterNinja2_2, this.emitterNinja2_3);
+
+
+    if(this.player2.y <= 700){
+      this.player2.canLooseLifes = true;
+    }
+
+    if(this.player1.y <= 700){
+      this.player1.canLooseLifes = true;
+    }
+
+    if(this.isPlayable){
+
+      // #region Player Lifes
+      this.player1_scoreText.setText(this.player1.lifes);
+      this.player2_scoreText.setText(parseInt(this.player2.lifes));
+      // #endregion
+
+      // #region Teclas y movimiento
+      if(this.AButton.isDown){
+
+        if(this.player1CanMove)
+          this.player1.setVelocityX(-this.xSpeed);
+
+      }else if(this.DButton.isDown){
+
+        if(this.player1CanMove)
+          this.player1.setVelocityX(this.xSpeed);
+
+      }else{
+
+        this.player1.setVelocityX(0);
+
+      }
+
+      if(this.leftButton.isDown){
+
+        if(this.player2CanMove)
+          this.player2.setVelocityX(-this.xSpeed);
+
+      }else if(this.rightButton.isDown){
+
+        if(this.player2CanMove)
+          this.player2.setVelocityX(this.xSpeed);
+
+      }else{
+
+        this.player2.setVelocityX(0);
+      }
+      // #endregion
+      if(this.WButton.isDown){
+        this.forPlayer(this.player1, this.WButton);
+        if(!this.player1CanMove){
+          this.player1CanMove = true;
+        }
+      }
+
+      if(this.upButton.isDown){
+        this.forPlayer(this.player2, this.upButton);
+        if(!this.player2CanMove){
+          this.player2CanMove = true;
+        }
+      }
+    }
+
+    // #region Fin de partida
+    this.CheckEndGame();
     // #endregion
   }
 }

@@ -92,10 +92,10 @@ class mainMenu extends Phaser.Scene{
             });
             // #endregion
 
-            this.progressB = progressBar;
-            this.progressBx = progressBox;
-            this.loading = loadingText;
-            this.asset = assetText;
+        this.progressB = progressBar;
+        this.progressBx = progressBox;
+        this.loading = loadingText;
+        this.asset = assetText;
     }
 
     create(){        
