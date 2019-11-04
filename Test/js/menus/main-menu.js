@@ -14,6 +14,12 @@ class mainMenu extends Phaser.Scene{
         this.load.image('Online-game'        , 'assets/main-menu/online-game-btn.png');
         this.load.image('Controls'           , 'assets/main-menu/controls-btn.png');
         this.load.image('Credits'            , 'assets/main-menu/credits-btn.png');
+
+        this.load.image('Local-gameSelected'         , 'assets/main-menu/boton_local_game_seleccionado.png');
+        this.load.image('CreditsSelected'        , 'assets/main-menu/boton_credits_seleccionado.png');
+        this.load.image('ControlsSelected'           , 'assets/main-menu/boton_controls_seleccionado.png');
+        this.load.image('Online-gameSelected'         , 'assets/main-menu/boton_online_game_seleccionado.png');
+        
         this.load.image('T1'                 , 'assets/main-menu/tit-1.png');
         this.load.image('T2'                 , 'assets/main-menu/tit-2.png');
         this.load.image('buttons-background' , 'assets/main-menu/PergaminoNinja.png');
@@ -201,10 +207,64 @@ class mainMenu extends Phaser.Scene{
             //that.scene.start('creditsMenu');
         });
 
+        //#region creamos "animaciones" para los botones del menu  
+        this.anims.create({
+            key: 'LocalSelected',
+            frames: [ { key: 'Local-gameSelected'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+          this.anims.create({
+            key: 'LocalUnselected',
+            frames: [ { key: 'Local-game'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+
+          this.anims.create({
+            key: 'OnlineSelected',
+            frames: [ { key: 'Online-gameSelected'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+          this.anims.create({
+            key: 'OnlineUnselected',
+            frames: [ { key: 'Online-game'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+
+          this.anims.create({
+            key: 'CreditsSelected',
+            frames: [ { key: 'CreditsSelected'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+          this.anims.create({
+            key: 'CreditsUnselected',
+            frames: [ { key: 'Credits'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+
+          this.anims.create({
+            key: 'ControlsSelected',
+            frames: [ { key: 'ControlsSelected'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+          this.anims.create({
+            key: 'ControlsUnselected',
+            frames: [ { key: 'Controls'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+        //#endregion
 
         this.Empezar.on('pointerover', function() {
-            this.displayWidth=250; //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
-            this.scaleY=this.scaleX;
+            // this.displayWidth=250; //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
+            // this.scaleY=this.scaleX;
+            that.Empezar.anims.play('LocalSelected');
 
             do{  //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
@@ -214,17 +274,17 @@ class mainMenu extends Phaser.Scene{
   
         // When moves away
         this.Empezar.on('pointerout', function() {
-            //this.Empezar.sprite('Online Game');
-            //this.Empezar.sprite('Online Game');
-            this.displayWidth=230;
-            this.scaleY = this.scaleX;
+            // this.displayWidth=230;
+            // this.scaleY = this.scaleX;
+            that.Empezar.anims.play('LocalUnselected');
+
             this.pointerOver = true;           
         });
 
         this.OnlineGameButton.on('pointerover', function() {
-            this.displayWidth=250;  //Con this accedemos al botón OnlineGameButton, porque ese botón ha desencadenado el evento.
-            this.scaleY = this.scaleX;
-
+            // this.displayWidth=250;  //Con this accedemos al botón OnlineGameButton, porque ese botón ha desencadenado el evento.
+            // this.scaleY = this.scaleX;
+            that.OnlineGameButton.anims.play('OnlineSelected');
             do{   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
@@ -233,16 +293,16 @@ class mainMenu extends Phaser.Scene{
   
         // When moves away
         this.OnlineGameButton.on('pointerout', function() {
-            this.displayWidth=230;  //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
-            this.scaleY = this.scaleX;
-
+            // this.displayWidth=230;  //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
+            // this.scaleY = this.scaleX;
+            that.OnlineGameButton.anims.play('OnlineUnselected');
             this.pointerOver = true;  
         });
 
         this.ControlsButton.on('pointerover', function() {
-            this.displayWidth=250;
-            this.scaleY = this.scaleX;
-
+            // this.displayWidth=250;
+            // this.scaleY = this.scaleX;
+            that.ControlsButton.anims.play('ControlsSelected');
             do{   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
@@ -251,16 +311,16 @@ class mainMenu extends Phaser.Scene{
   
         // When moves away
         this.ControlsButton.on('pointerout', function() {
-            this.displayWidth=230;
-            this.scaleY = this.scaleX;
-
+            // this.displayWidth=230;
+            // this.scaleY = this.scaleX;
+            that.ControlsButton.anims.play('ControlsUnselected');
             this.pointerOver = true;  
         });
 
         this.CreditsButton.on('pointerover', function() {
-            this.displayWidth=250;
-            this.scaleY = this.scaleX;
-
+            // this.displayWidth=250;
+            // this.scaleY = this.scaleX;
+            that.CreditsButton.anims.play('CreditsSelected');
             do{   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
@@ -269,9 +329,9 @@ class mainMenu extends Phaser.Scene{
   
         // When moves away
         this.CreditsButton.on('pointerout', function() {
-            this.displayWidth=230;
-            this.scaleY = this.scaleX;
-
+            // this.displayWidth=230;
+            // this.scaleY = this.scaleX;
+            that.CreditsButton.anims.play('CreditsUnselected');
             this.pointerOver = true;  
         });
         
