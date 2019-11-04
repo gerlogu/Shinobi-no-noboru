@@ -1,4 +1,4 @@
-// import particleConfig from 'particleConfig';
+
 
 //Escena 1
 class localgame extends Phaser.Scene{
@@ -52,6 +52,9 @@ class localgame extends Phaser.Scene{
     this.load.image ('frontground'   , 'assets/game-elements/level-frontground.png');
     this.load.image('beginning_platform' , 'assets/game-elements/platform.png');
     this.load.image('beginning_platform_behind' , 'assets/game-elements/platform_up.png');
+    this.load.image('scroll-background','assets/controls-menu/pergamino.png');   
+    this.load.image('scroll-background2','assets/controls-menu/pergamino2.png');
+    this.load.image('scroll-background3' , 'assets/main-menu/buttons-background-2.png');
    // this.load.image('background' , 'assets/main-menu/e.png');
 
     this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
@@ -584,20 +587,22 @@ class localgame extends Phaser.Scene{
 
   InitializeScores(){
     // #region Scores
-    this.player1_Text = this.add.text(this.width/40, this.height/1.095, 'P1 LIFES', { fontFamily: '"Roboto Condensed"', fontSize: 21 });
+    this.player1_Text = this.add.text(this.width/40, this.height/1.095, 'P1 LIFES', { fontFamily: '"Roboto Condensed"',fontFamily: '"brush_font"', fontSize: 21 });
     this.player1_Text.setDepth(11000);
     this.player1_scoreText = this.add.text(this.width/16, this.height/1.055, this.player1.lifes, {
       fontFamily: '"Roboto Condensed"',
+      fontFamily: '"brush_font"',
       boundsAlignH: "center",
       boundsAlignV: "middle",
       align: "center",
       fontSize: 29 });
     this.player1_scoreText.setDepth(11000);
 
-    this.player2_Text = this.add.text(this.width/1.19, this.height/1.095, 'P2 LIFES', { fontFamily: '"Roboto Condensed"', fontSize: 21 });
+    this.player2_Text = this.add.text(this.width/1.19, this.height/1.095, 'P2 LIFES', { fontFamily: '"Roboto Condensed"', fontFamily: '"brush_font"', fontSize: 21 });
     this.player2_Text.setDepth(11000);
     this.player2_scoreText = this.add.text(this.width/1.14, this.height/1.055, this.player2.lifes, {
       fontFamily: '"Roboto Condensed"' ,
+      fontFamily: '"brush_font"',
       boundsAlignH: "right",
       boundsAlignV: "middle",
       align:'right',
@@ -679,26 +684,39 @@ class localgame extends Phaser.Scene{
       this.endBackground.setDepth(12000);
       this.endBackground.visible = false;
 
-      this.player1_Text_end = this.add.text(this.width/4, this.height/2, 'PLAYER 1  ', { fontFamily: '"Roboto Condensed"', fontSize: 24 });
-      this.player1_Text_end.setDepth(13000);
-      this.player1_Text_end.visible = false;
-      this.player1_scoreText_end = this.add.text(this.width/3.25, this.height/1.75, this.player1_score, { fontFamily: '"Roboto Condensed"' , fontSize: 34 });
-      this.player1_scoreText_end.setDepth(13000);
-      this.player1_scoreText_end.visible = false;
+      // this.player1_Text_end = this.add.text(this.width/4, this.height/2, 'PLAYER 1  ', { fontFamily: '"Roboto Condensed"', fontSize: 24 });
+      // this.player1_Text_end.setDepth(13000);
+      // this.player1_Text_end.visible = false;
+      // this.player1_scoreText_end = this.add.text(this.width/3.25, this.height/1.75, this.player1_score, { fontFamily: '"Roboto Condensed"' , fontSize: 34 });
+      // this.player1_scoreText_end.setDepth(13000);
+      // this.player1_scoreText_end.visible = false;
 
-      this.player2_Text_end = this.add.text(this.width/1.55, this.height/2, 'PLAYER 2  ', { fontFamily: '"Roboto Condensed"', fontSize: 24 });
-      this.player2_Text_end.setDepth(13000);
-      this.player2_Text_end.visible = false;
-      this.player2_scoreText_end = this.add.text(this.width/1.42, this.height/1.75, this.player2_score, { fontFamily: '"Roboto Condensed"' , boundsAlignH: "center",  fontSize: 34  });
-      this.player2_scoreText_end.setDepth(13000);
-      this.player2_scoreText_end.visible = false;
+      // this.player2_Text_end = this.add.text(this.width/1.55, this.height/2, 'PLAYER 2  ', { fontFamily: '"Roboto Condensed"', fontSize: 24 });
+      // this.player2_Text_end.setDepth(13000);
+      // this.player2_Text_end.visible = false;
+      // this.player2_scoreText_end = this.add.text(this.width/1.42, this.height/1.75, this.player2_score, { fontFamily: '"Roboto Condensed"' , boundsAlignH: "center",  fontSize: 34  });
+      // this.player2_scoreText_end.setDepth(13000);
+      // this.player2_scoreText_end.visible = false;
 
-      this.playerX_Text = this.add.text(this.width/4.25, this.height/3, 'PLAYER 1', { fontFamily: '"Roboto Condensed"' ,  fontSize: 40  });
+      this.playerX_Text = this.add.text(this.width/5.7, this.height/2.4, 'PLAYER 1', { fontFamily: '"Roboto Condensed"' , fontFamily: '"brush_font"',  fontSize: 25 ,color:'black' });
       this.playerX_Text.setDepth(13000);
-      this.playerX_Text.visible = false;
-      this.playerX_WinnerTex = this.add.text(this.width/2.1, this.height/3, 'is the WINNER', { fontFamily: '"Roboto Condensed"' ,  fontSize: 40  });
+      this.playerX_Text.visible = true;
+      this.playerX_WinnerTex = this.add.text(this.width/2.1, this.height/2.4, 'is the WINNER', { fontFamily: '"Roboto Condensed"' , fontFamily: '"brush_font"',  fontSize: 25, color: 'black' });
       this.playerX_WinnerTex.setDepth(13000);
-      this.playerX_WinnerTex.visible = false;
+      this.playerX_WinnerTex.visible = true;
+
+      this.endScroll= this.physics.add.sprite(this.width/2, this.height/2,'scroll-background').setGravityY(-1000).setInteractive();
+      this.endScroll.displayWidth = 730;
+      this.endScroll.scaleY= this.endScroll.scaleX;
+      this.endScroll.setDepth(12500);
+      this.endScroll.visible =  true;
+
+      this.endScroll2= this.physics.add.sprite(this.width/13, this.height/2,'scroll-background3').setGravityY(-1000).setInteractive();
+      this.endScroll2.displayWidth = 60;
+      this.endScroll2.scaleY= this.endScroll2.scaleX;
+      this.endScroll2.displayHeight = 250;
+      this.endScroll2.setDepth(12500);
+      this.endScroll2.visible = true;
       // #endregion
   }
 
@@ -973,12 +991,14 @@ class localgame extends Phaser.Scene{
       if(this.ended === false && (this.player1.lifes <= 0 || this.player2.lifes <= 0)){
 
         this.endBackground.visible = true;
-        this.player1_Text_end.visible = true;
-        this.player1_scoreText_end.setText(parseInt(this.player1.score));
-        this.player1_scoreText_end.visible = true;
-        this.player2_Text_end.visible = true;
-        this.player2_scoreText_end.setText(parseInt(this.player2.score));
-        this.player2_scoreText_end.visible = true;
+        // this.player1_Text_end.visible = true;
+        // this.player1_scoreText_end.setText(parseInt(this.player1.score));
+        // this.player1_scoreText_end.visible = true;
+        // this.player2_Text_end.visible = true;
+        // this.player2_scoreText_end.setText(parseInt(this.player2.score));
+        // this.player2_scoreText_end.visible = true;
+        this.endScroll.visible = true;
+        this.endScroll2.visible = true;
         if(this.player1.y > 800){
           this.playerX_Text.setText('PLAYER 2');
         }else if(this.player2.y > 800){

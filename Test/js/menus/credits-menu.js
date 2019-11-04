@@ -10,6 +10,10 @@ class creditsMenu extends Phaser.Scene{
         this.load.image('scroll-background','assets/controls-menu/pergamino.png');   
         this.load.image('scroll-background2','assets/controls-menu/pergamino2.png'); 
         this.load.image('credits' , 'assets/credits.png');
+        this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
+            frameWidth: 800,
+            frameHeight: 600
+        }); 
     }
 
     create(){
@@ -18,15 +22,23 @@ class creditsMenu extends Phaser.Scene{
 
         var that = this;
 
-        this.background = this.add.image(400,300,'background');
+        this.background = this.add.sprite(this.width/2,this.height/2,'backgroundSheet',0);
+
+        this.anims.create({
+            key: 'backgroundAnimation',
+            frames: this.anims.generateFrameNumbers('backgroundSheet', { start: 0, end: 2}),
+            frameRate: 8,
+            repeat: -1
+          });
+        this.background.anims.play('backgroundAnimation');
 
         this.cameras.main.fadeIn(500);
 
-        this.controls1= this.physics.add.sprite(this.width/2, this.height/2,'scroll-background').setGravityY(-1000).setInteractive();
-        this.controls1.displayWidth = 680;
-        this.controls1.scaleY= this.controls1.scaleX;
-        this.controls1.displayHeight = 500;
-        this.controls1.angle += 90;
+        this.credits_background= this.physics.add.sprite(this.width/2, this.height/2,'scroll-background').setGravityY(-1000).setInteractive();
+        this.credits_background.displayWidth = 680;
+        this.credits_background.scaleY= this.credits_background.scaleX;
+        this.credits_background.displayHeight = 500;
+        this.credits_background.angle += 90;
 
         this.credits = this.physics.add.sprite(this.width/2,this.height/2,'credits').setGravityY(-1000).setInteractive();
         this.credits.displayWidth = 300;

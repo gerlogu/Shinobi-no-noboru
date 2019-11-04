@@ -29,16 +29,6 @@ class mainMenu extends Phaser.Scene{
             frameHeight: 600
         }); 
 
-        
-
-        
-
-        //this.load.ima
-   
-        // for (var i = 0; i < 500; i++) {
-        //     this.load.image('logo'+i, 'local-game-btn.png');
-        // }
-
         // #region Loading Bar
             var progressBar = this.add.graphics();
             var progressBox = this.add.graphics();
