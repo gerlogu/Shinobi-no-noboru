@@ -7,18 +7,32 @@ class mainMenu extends Phaser.Scene{
         // #region se cargar los sonidos para el menu
         this.load.audio('MenuSound1','assets/Menu sounds/MenuSound1.mp3');
         this.load.audio('MenuSound2','assets/Menu sounds/MenuSound2.mp3');
-        this.pointerOver = false; // Booleano que se activa y desactiva al pasar por encima de los botones, con el objetivo de que los sonidos se reproduzcan una sola vez , y no se bugee
+        this.pointerOver = true; // Booleano que se activa y desactiva al pasar por encima de los botones, con el objetivo de que los sonidos se reproduzcan una sola vez , y no se bugee
         // //#endregion
 
         this.load.image('Local-game'         , 'assets/main-menu/local-game-btn.png');
         this.load.image('Online-game'        , 'assets/main-menu/online-game-btn.png');
         this.load.image('Controls'           , 'assets/main-menu/controls-btn.png');
         this.load.image('Credits'            , 'assets/main-menu/credits-btn.png');
+
+        this.load.image('Local-gameSelected'         , 'assets/main-menu/boton_local_game_seleccionado.png');
+        this.load.image('CreditsSelected'        , 'assets/main-menu/boton_credits_seleccionado.png');
+        this.load.image('ControlsSelected'           , 'assets/main-menu/boton_controls_seleccionado.png');
+        this.load.image('Online-gameSelected'         , 'assets/main-menu/boton_online_game_seleccionado.png');
+        
         this.load.image('T1'                 , 'assets/main-menu/tit-1.png');
         this.load.image('T2'                 , 'assets/main-menu/tit-2.png');
         this.load.image('buttons-background' , 'assets/main-menu/PergaminoNinja.png');
         this.load.image('buttons-background-2' , 'assets/main-menu/buttons-background-2.png');
-        this.load.image('background' , 'assets/game-elements/level-background.png');
+        this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
+            frameWidth: 800,
+            frameHeight: 600
+        }); 
+
+        
+
+        
+
         //this.load.ima
    
         // for (var i = 0; i < 500; i++) {
@@ -94,7 +108,7 @@ class mainMenu extends Phaser.Scene{
             this.asset = assetText;
     }
 
-    create(){
+    create(){        
         
         this.progressB.destroy();
         this.progressBx.destroy();
@@ -111,11 +125,18 @@ class mainMenu extends Phaser.Scene{
         //Se crean los objetos para los sonidos
         this.sound1 = this.sound.add('MenuSound1');
         this.sound2 = this.sound.add('MenuSound2');
-
-        //Se crea la imagen colocandola de fondo del menu
-        this.background = this.add.image(400,300,'background');
-
         
+        this.background = this.add.sprite(this.width/2,this.height/2,'backgroundSheet',0);
+
+        this.anims.create({
+            key: 'backgroundAnimation',
+            frames: this.anims.generateFrameNumbers('backgroundSheet', { start: 0, end: 2}),
+            frameRate: 8,
+            repeat: -1
+          });
+      
+        this.background.anims.play('backgroundAnimation');
+
         this.btn_bck = this.physics.add.sprite(this.width/1.97, this.height/1.42,'buttons-background').setGravityY(-1000).setVelocityX(0).setInteractive();
         //this.t1.setInteractive();
         this.btn_bck.displayWidth = 400;
@@ -186,77 +207,131 @@ class mainMenu extends Phaser.Scene{
             //that.scene.start('creditsMenu');
         });
 
+        //#region creamos "animaciones" para los botones del menu  
+        this.anims.create({
+            key: 'LocalSelected',
+            frames: [ { key: 'Local-gameSelected'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+          this.anims.create({
+            key: 'LocalUnselected',
+            frames: [ { key: 'Local-game'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+
+          this.anims.create({
+            key: 'OnlineSelected',
+            frames: [ { key: 'Online-gameSelected'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+          this.anims.create({
+            key: 'OnlineUnselected',
+            frames: [ { key: 'Online-game'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+
+          this.anims.create({
+            key: 'CreditsSelected',
+            frames: [ { key: 'CreditsSelected'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+          this.anims.create({
+            key: 'CreditsUnselected',
+            frames: [ { key: 'Credits'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+
+          this.anims.create({
+            key: 'ControlsSelected',
+            frames: [ { key: 'ControlsSelected'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+          this.anims.create({
+            key: 'ControlsUnselected',
+            frames: [ { key: 'Controls'} ],
+            frameRate: 10,
+            repeat: -1
+          });
+        //#endregion
 
         this.Empezar.on('pointerover', function() {
-            this.displayWidth=250; //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
-            this.scaleY=this.scaleX;
+            // this.displayWidth=250; //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
+            // this.scaleY=this.scaleX;
+            that.Empezar.anims.play('LocalSelected');
 
-            if(this.pointerOver == true){   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
+            do{  //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
-            }
+            }while(this.pointerover);
         });
   
         // When moves away
         this.Empezar.on('pointerout', function() {
-            //this.Empezar.sprite('Online Game');
-            //this.Empezar.sprite('Online Game');
-            this.displayWidth=230;
-            this.scaleY = this.scaleX;
+            // this.displayWidth=230;
+            // this.scaleY = this.scaleX;
+            that.Empezar.anims.play('LocalUnselected');
+
             this.pointerOver = true;           
         });
 
         this.OnlineGameButton.on('pointerover', function() {
-            this.displayWidth=250;  //Con this accedemos al botón OnlineGameButton, porque ese botón ha desencadenado el evento.
-            this.scaleY = this.scaleX;
-
-            if(this.pointerOver == true){   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
+            // this.displayWidth=250;  //Con this accedemos al botón OnlineGameButton, porque ese botón ha desencadenado el evento.
+            // this.scaleY = this.scaleX;
+            that.OnlineGameButton.anims.play('OnlineSelected');
+            do{   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
-            }
+            }while(this.pointerOver);
         });
   
         // When moves away
         this.OnlineGameButton.on('pointerout', function() {
-            this.displayWidth=230;  //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
-            this.scaleY = this.scaleX;
-
+            // this.displayWidth=230;  //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
+            // this.scaleY = this.scaleX;
+            that.OnlineGameButton.anims.play('OnlineUnselected');
             this.pointerOver = true;  
         });
 
         this.ControlsButton.on('pointerover', function() {
-            this.displayWidth=250;
-            this.scaleY = this.scaleX;
-
-            if(this.pointerOver == true){   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
+            // this.displayWidth=250;
+            // this.scaleY = this.scaleX;
+            that.ControlsButton.anims.play('ControlsSelected');
+            do{   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
-            }
+            }while(this.pointerOver);
         });
   
         // When moves away
         this.ControlsButton.on('pointerout', function() {
-            this.displayWidth=230;
-            this.scaleY = this.scaleX;
-
+            // this.displayWidth=230;
+            // this.scaleY = this.scaleX;
+            that.ControlsButton.anims.play('ControlsUnselected');
             this.pointerOver = true;  
         });
 
         this.CreditsButton.on('pointerover', function() {
-            this.displayWidth=250;
-            this.scaleY = this.scaleX;
-
-            if(this.pointerOver == true){   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
+            // this.displayWidth=250;
+            // this.scaleY = this.scaleX;
+            that.CreditsButton.anims.play('CreditsSelected');
+            do{   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
-            }
+            }while(this.pointerOver);
         });
   
         // When moves away
         this.CreditsButton.on('pointerout', function() {
-            this.displayWidth=230;
-            this.scaleY = this.scaleX;
-
+            // this.displayWidth=230;
+            // this.scaleY = this.scaleX;
+            that.CreditsButton.anims.play('CreditsUnselected');
             this.pointerOver = true;  
         });
         
