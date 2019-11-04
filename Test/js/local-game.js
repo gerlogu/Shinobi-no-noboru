@@ -23,10 +23,10 @@ class localgame extends Phaser.Scene{
     this.minTrunkTimer         = 900;
     this.maxTrunkTimer         = 1100;
     this.nullGravity           = -1000;
-    this.trunksVelocity        = 310;
+    this.trunksVelocity        = 310; // 310
     this.jumpForce             = -535;
-    this.xSpeed                = 280;
-    this.trunkSpeedAceleration = 0.01;
+    this.xSpeed                = 320; // 280
+    this.trunkSpeedAceleration = 1.00001;
     this.ended                 = false;
     this.isPlayable            = false;
     this.player1CanMove        = false;
@@ -44,9 +44,6 @@ class localgame extends Phaser.Scene{
 
     // #region Sprites
     this.load.image('ground'         , 'assets/game-elements/ground.png');
-
-    // this.load.image('player1'        , 'assets/game-elements/p5.png');
-    // this.load.image('player2'        , 'assets/game-elements/p2.jpg');
     this.load.image('trunk'          , 'assets/game-elements/trunk.png');
     this.load.image('end-background' , 'assets/end-game-background.png');
     this.load.image('particle'       , 'assets/Particle2.png');
@@ -726,6 +723,8 @@ class localgame extends Phaser.Scene{
   // lugares aleatorios, actualizar puntuaciones,
   // y derribar los troncos golpeados.
   update(delta){
+
+    this.trunksVelocity *= this.trunkSpeedAceleration;
 
     if(this.player1CanMove){
       this.emitterNinja1_3.setAngle(-270);
