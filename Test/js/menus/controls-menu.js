@@ -11,7 +11,7 @@ class controlsMenu extends Phaser.Scene{
         this.load.image('scroll-background2','assets/controls-menu/pergamino2.png');
 
 
-        this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
+        this.load.spritesheet('backgroundSheet'     , 'assets/main-menu/tailsheetmenubackground.png',{
             frameWidth: 800,
             frameHeight: 600
         }); 
