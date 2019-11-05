@@ -7,8 +7,8 @@ class creditsMenu extends Phaser.Scene{
         this.load.image('controls-player1'  , 'assets/controls-menu/controls-player1.png');    
         this.load.image('controls-player2'  , 'assets/controls-menu/controls-player2.png');  
         this.load.image('return-btn'        , 'assets/controls-menu/return-btn.jpg');       
-        this.load.image('scroll-background' , 'assets/controls-menu/pergamino.png');   
-        this.load.image('scroll-background2', 'assets/controls-menu/pergamino2.png'); 
+        this.load.image('scroll-background-credits' , 'assets/main-menu/pergamino-vertical.png');   
+        //this.load.image('scroll-background2', 'assets/controls-menu/pergamino2.png'); 
         this.load.image('credits'           , 'assets/credits.png');
         this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
             frameWidth: 800,
@@ -22,6 +22,8 @@ class creditsMenu extends Phaser.Scene{
 
         var that = this;
 
+
+
         this.background = this.add.sprite(this.width/2,this.height/2,'backgroundSheet',0);
 
         this.anims.create({
@@ -34,11 +36,10 @@ class creditsMenu extends Phaser.Scene{
 
         this.cameras.main.fadeIn(500);
 
-        this.credits_background= this.physics.add.sprite(this.width/2, this.height/2,'scroll-background').setGravityY(-1000).setInteractive();
-        this.credits_background.displayWidth = 680;
-        this.credits_background.scaleY= this.credits_background.scaleX;
-        this.credits_background.displayHeight = 500;
-        this.credits_background.angle += 90;
+        this.credits_background= this.physics.add.sprite(this.width/2, this.height/2,'scroll-background-credits').setGravityY(-1000).setInteractive();
+        this.credits_background.displayWidth = 450;
+        //this.credits_background.scaleY= this.credits_background.scaleX;
+        //this.credits_background.angle += 90;
 
         this.credits = this.physics.add.sprite(this.width/2,this.height/2,'credits').setGravityY(-1000).setInteractive();
         this.credits.displayWidth = 300;
@@ -48,7 +49,7 @@ class creditsMenu extends Phaser.Scene{
         var that= this;
         this.sound1 = this.sound.add('MenuSound1');
         this.sound2 = this.sound.add('MenuSound2');
-
+        
         this.returnButton = this.physics.add.sprite(this.width/2,this.height/1.08,'Return').setGravityY(-1000).setGravityX(0).setInteractive();
         this.returnButton.setInteractive();
         this.returnButton.displayWidth = 230;

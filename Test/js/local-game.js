@@ -185,6 +185,8 @@ class localgame extends Phaser.Scene{
     this.loading.destroy();
     this.asset.destroy();
 
+    
+
     /**
    * Funcion for, que recibe un personaje, y hace las comprobaciones de colision con los troncos
    * @param {*} player Personaje
@@ -329,8 +331,8 @@ class localgame extends Phaser.Scene{
    */
   InitPlayers(){
     //Al escribir physics, le indicamos que el objeto está sujeto a las leyes de la física, indicadas en el archivo game.js
-    this.player1   = this.physics.add.sprite(this.width/10,this.height/1.7,'ocre',4);
-    this.player2   = this.physics.add.sprite(this.width/1.1,this.height/3,'purpura',4);
+    this.player1   = this.physics.add.sprite(this.width/10,this.height/1.6,'ocre',4);
+    this.player2   = this.physics.add.sprite(this.width/1.1,this.height/1.6,'purpura',4);
 
     this.anims.create({
       key: 'leftup0',

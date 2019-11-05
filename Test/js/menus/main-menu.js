@@ -5,8 +5,11 @@ class mainMenu extends Phaser.Scene{
 
     preload(){  
         // #region se cargar los sonidos para el menu
-        this.load.audio('MenuSound1','assets/Menu sounds/MenuSound1.mp3');
-        this.load.audio('MenuSound2','assets/Menu sounds/MenuSound2.mp3');
+        this.load.audio('MenuSound1','assets/Menu sounds/PaperSound4.mp3');
+        this.load.audio('MenuSound2','assets/Menu sounds/PaperSound3.mp3');
+        this.load.audio('PaperSound1', 'assets/Menu sounds/PaperSound1.mp3');
+        this.load.audio('Waterfall', 'assets/Menu sounds/WaterfallSound.mp3');
+
         this.pointerOver = true; // Booleano que se activa y desactiva al pasar por encima de los botones, con el objetivo de que los sonidos se reproduzcan una sola vez , y no se bugee
         // //#endregion
 
@@ -30,6 +33,7 @@ class mainMenu extends Phaser.Scene{
         this.load.image('buttons-background' , 'assets/main-menu/PergaminoNinja.png');
         this.load.image('buttons-background-2' , 'assets/main-menu/buttons-background-2.png');
         this.load.image('scroll-background'         , 'assets/controls-menu/pergamino.png');
+
         this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
             frameWidth: 800,
             frameHeight: 600
@@ -60,6 +64,7 @@ class mainMenu extends Phaser.Scene{
                     fill: '#ffffff'
                 }
             });
+            
             loadingText.setDepth(11000);
             
             var assetText = this.make.text({
@@ -121,6 +126,15 @@ class mainMenu extends Phaser.Scene{
         //Se crean los objetos para los sonidos
         this.sound1 = this.sound.add('MenuSound1');
         this.sound2 = this.sound.add('MenuSound2');
+        this.sound3 = this.sound.add('PaperSound1');
+        if(this.waterfallSound){
+            this.waterfallSound.volume = 0.04;
+        }else if(!this.waterfallSound){
+            this.waterfallSound = this.sound.add('Waterfall');
+            this.waterfallSound.play({
+                volume: 0.04,
+            });
+        }
         
         this.background = this.add.sprite(this.width/2,this.height/2,'backgroundSheet',0);
 
@@ -165,6 +179,8 @@ class mainMenu extends Phaser.Scene{
         this.localGameButton.setDepth(2000);
         this.localGameButton.on('pointerup', function(){
             that.sound2.play();
+            that.waterfallSound.volume = 0;
+            //that.DestroyMusic();
             that.cameras.main.fadeOut(200);
             that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('localgame');}, callbackScope:this, loop:false});
         });
@@ -175,7 +191,7 @@ class mainMenu extends Phaser.Scene{
         this.OnlineGameButton.scaleY= this.localGameButton.scaleX;
         this.OnlineGameButton.setDepth(2000);
         this.OnlineGameButton.on('pointerup', function(){
-            that.sound2.play();
+            that.sound3.play();
             that.returnButton.visible = true;
             that.playerX_Text.visible = true;
             that.endScroll.visible =  true;
@@ -320,6 +336,10 @@ class mainMenu extends Phaser.Scene{
         this.InitSubmenus();
         
     }
+
+    // DestroyMusic(){
+    //     this.waterfallSound.destroy();
+    // }
 
     InitSubmenus(){
         var that= this;
