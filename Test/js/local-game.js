@@ -234,19 +234,22 @@ class localgame extends Phaser.Scene{
     this.allSoundtracksLoop = [this.sound.add('soundtrackLoop'),this.sound.add('soundtrack2Loop')];
 
     var playLoop1 = function(){
-      this.allSoundtracksLoop[0].play({
-        mute: false,
-        volume: 0.5,
-        rate: 1,
-        detune: 0,
-        seek: 0,
-        loop: false,
-        delay: 0
-      });
+      if(!this.ended){
+        this.allSoundtracksLoop[0].play({
+          mute: false,
+          volume: 0.5,
+          rate: 1,
+          detune: 0,
+          seek: 0,
+          loop: false,
+          delay: 0
+        });
+      }
       this.scene.get("localgame").time.addEvent({delay: 23800, callback: playLoop1, callbackScope:this, loop:false});
     }
 
     var playLoop2 = function(){
+      if(!this.ended){
       this.allSoundtracksLoop[1].play({
         mute: false,
         volume: 0.5,
@@ -256,6 +259,7 @@ class localgame extends Phaser.Scene{
         loop: true,
         delay: 0
       });
+    }
     }
     switch(numeroCancion){
       case 0:
