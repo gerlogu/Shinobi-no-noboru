@@ -87,12 +87,12 @@ class localgame extends Phaser.Scene{
     // #endregion
 
     // #region Sounds (no son los sonidos finales, son para testeos)
-    this.load.audio('jump-audio'      , 'assets/Jumping-sounds/jump_10.mp3');
+    this.load.audio('jump-audio'      , 'assets/Jumping-sounds/jumpSound.mp3');
     this.load.audio('soundtrack'      , 'assets/Soundtrack/Shinobi song 1.mp3');
     this.load.audio('soundtrack2'     , 'assets/Soundtrack/Shinobi song 2.mp3');
     this.load.audio('soundtrackLoop'  , 'assets/Soundtrack/Shinobi song 1 loop.mp3');
     this.load.audio('soundtrack2Loop' , 'assets/Soundtrack/Shinobi song 2 loop.mp3');
-    this.load.audio('FinalSound'      , 'assets/Game over sound/GameOver.mp3');
+    this.load.audio('FinalSound'      , 'assets/Game over sound/GameOver3.mp3');
 
     // #endregion
 
@@ -209,7 +209,7 @@ class localgame extends Phaser.Scene{
             player.setVelocityY(this.jumpForce);
             //Sonido de salto
             this.jumpaudio.play({
-              volume: 0.2
+              volume: 0.5
             });
             // Comprobación para tirar el tronco abajo (provisional)
             if(((player.x <= (this.cols[i].x+this.cols[i].width*1.25))
@@ -309,13 +309,13 @@ class localgame extends Phaser.Scene{
     this.platforms = this.physics.add.staticGroup(); // Al ser static, nos aseguramos de que cuando colisione con el prota, las plataformas no reciban una fuerza y se muevan.
     //this.platforms.create(1100, this.height/1.5, 'ground').setScale(2).refreshBody();
 
-    this.platforms.create(this.width/13,this.height/1.2, 'beginning_platform').setScale(0.45).refreshBody();
+    this.platformLeft = this.platforms.create(this.width/13,this.height/1.2, 'beginning_platform').setScale(0.45).refreshBody();
     this.platforms.setDepth(9000);
-    this.platform_left_backgroubd = this.add.image(this.width/13,this.height/1.53,'beginning_platform_behind').setScale(0.43);
+    this.platform_left_background = this.add.image(this.width/13,this.height/1.53,'beginning_platform_behind').setScale(0.43);
 
-    this.platforms.create(this.width/1.07,this.height/1.2, 'beginning_platform').setScale(0.45).refreshBody().setFlipX(true);
+    this.platformRight = this.platforms.create(this.width/1.07,this.height/1.2, 'beginning_platform').setScale(0.45).refreshBody().setFlipX(true);
     this.platforms.setDepth(9000);
-    this.platform_left_backgroubd = this.add.image(this.width/1.07,this.height/1.53,'beginning_platform_behind').setScale(0.43).setFlipX(true);
+    this.platform_right_background = this.add.image(this.width/1.07,this.height/1.53,'beginning_platform_behind').setScale(0.43).setFlipX(true);
     // #endregion
 
     this.cols        =  this.physics;
@@ -1111,6 +1111,8 @@ class localgame extends Phaser.Scene{
         this.ForPlayer(this.player1, this.WButton);
         if(!this.player1CanMove){
           this.player1CanMove = true;
+          this.platformLeft.destroy();
+          this.platform_left_background.destroy();
         }
       }
 
@@ -1118,6 +1120,8 @@ class localgame extends Phaser.Scene{
         this.ForPlayer(this.player2, this.upButton);
         if(!this.player2CanMove){
           this.player2CanMove = true;
+          this.platformRight.destroy();
+          this.platform_right_background.destroy();
         }
       }
     }
