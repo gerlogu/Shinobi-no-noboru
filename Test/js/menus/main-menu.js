@@ -132,6 +132,7 @@ class mainMenu extends Phaser.Scene{
             this.waterfallSound = this.sound.add('Waterfall');
             this.waterfallSound.play({
                 volume: 0.04,
+                loop: true
             });
         }
 
