@@ -19,11 +19,17 @@ class mainMenu extends Phaser.Scene{
         this.load.image('CreditsSelected'        , 'assets/main-menu/boton_credits_seleccionado.png');
         this.load.image('ControlsSelected'           , 'assets/main-menu/boton_controls_seleccionado.png');
         this.load.image('Online-gameSelected'         , 'assets/main-menu/boton_online_game_seleccionado.png');
+
+        this.load.image('Return'              , 'assets/game-elements/boton_return.png');
+        this.load.image('ReturnSelected'      , 'assets/game-elements/boton_return_seleccionado.png');
+        this.load.image('Playagain'           , 'assets/game-elements/boton_play_again.png');
+        this.load.image('PlayagainSelected'   , 'assets/game-elements/boton_play_again_seleccionado.png');
         
         this.load.image('T1'                 , 'assets/main-menu/tit-1.png');
         this.load.image('T2'                 , 'assets/main-menu/tit-2.png');
         this.load.image('buttons-background' , 'assets/main-menu/PergaminoNinja.png');
         this.load.image('buttons-background-2' , 'assets/main-menu/buttons-background-2.png');
+        this.load.image('scroll-background'         , 'assets/controls-menu/pergamino.png');
         this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
             frameWidth: 800,
             frameHeight: 600
@@ -57,7 +63,7 @@ class mainMenu extends Phaser.Scene{
             loadingText.setDepth(11000);
             
             var assetText = this.make.text({
-                x: width / 1.23,
+                x: width / 1.28,
                 y: height / 1.03 - 50,
                 text: '',
                 boundsAlignH: "right",
@@ -152,12 +158,12 @@ class mainMenu extends Phaser.Scene{
         this.t2.displayWidth = 350;
         this.t2.scaleY= this.t2.scaleX;
 
-        this.Empezar = this.physics.add.sprite(this.width/2, this.height/1.69,'Local-game').setGravityY(-1000).setInteractive();
-        this.Empezar.setInteractive();
-        this.Empezar.displayWidth = 230;
-        this.Empezar.scaleY= this.Empezar.scaleX;
-        this.Empezar.setDepth(2000);
-        this.Empezar.on('pointerup', function(){
+        this.localGameButton = this.physics.add.sprite(this.width/2, this.height/1.70,'Local-game').setGravityY(-1000).setInteractive();
+        this.localGameButton.setInteractive();
+        this.localGameButton.displayWidth = 230;
+        this.localGameButton.scaleY= this.localGameButton.scaleX;
+        this.localGameButton.setDepth(2000);
+        this.localGameButton.on('pointerup', function(){
             that.sound2.play();
             that.cameras.main.fadeOut(200);
             that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('localgame');}, callbackScope:this, loop:false});
@@ -166,18 +172,20 @@ class mainMenu extends Phaser.Scene{
         this.OnlineGameButton = this.physics.add.sprite(this.width/2, this.height/1.5,'Online-game').setGravityY(-1000).setGravityX(0).setInteractive();
         this.OnlineGameButton.setInteractive();
         this.OnlineGameButton.displayWidth = 230;
-        this.OnlineGameButton.scaleY= this.Empezar.scaleX;
+        this.OnlineGameButton.scaleY= this.localGameButton.scaleX;
         this.OnlineGameButton.setDepth(2000);
         this.OnlineGameButton.on('pointerup', function(){
             that.sound2.play();
-            that.cameras.main.fadeOut(200);
-            that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('localgame');}, callbackScope:this, loop:false});
+            that.returnButton.visible = true;
+            that.playerX_Text.visible = true;
+            that.endScroll.visible =  true;
+            that.endScroll2.visible = true;
         });
 
         this.ControlsButton = this.physics.add.sprite(this.width/2,this.height/1.35,'Controls').setGravityY(-1000).setGravityX(0).setInteractive();
         this.ControlsButton.setInteractive();
         this.ControlsButton.displayWidth = 230;
-        this.ControlsButton.scaleY= this.Empezar.scaleX;
+        this.ControlsButton.scaleY= this.localGameButton.scaleX;
         this.ControlsButton.setDepth(2000);
         this.ControlsButton.on('pointerup', function(){
             that.sound2.play();
@@ -185,10 +193,10 @@ class mainMenu extends Phaser.Scene{
             that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('controlsMenu');}, callbackScope:this, loop:false});
         });
         
-        this.CreditsButton = this.physics.add.sprite(this.width/2,this.height/1.23,'Credits').setGravityY(-1000).setGravityX(0).setInteractive();
+        this.CreditsButton = this.physics.add.sprite(this.width/2,this.height/1.225,'Credits').setGravityY(-1000).setGravityX(0).setInteractive();
         this.CreditsButton.setInteractive();
         this.CreditsButton.displayWidth = 230;
-        this.CreditsButton.scaleY= this.Empezar.scaleX;
+        this.CreditsButton.scaleY= this.localGameButton.scaleX;
         this.CreditsButton.setDepth(2000);
         this.CreditsButton.on('pointerup', function(){
             that.sound2.play();
@@ -251,55 +259,42 @@ class mainMenu extends Phaser.Scene{
           });
         //#endregion
 
-        this.Empezar.on('pointerover', function() {
-            // this.displayWidth=250; //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
-            // this.scaleY=this.scaleX;
-            that.Empezar.anims.play('LocalSelected');
+        this.localGameButton.on('pointerover', function() {
 
+            that.localGameButton.anims.play('LocalSelected');
             do{  //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
             }while(this.pointerover);
         });
-  
-        // When moves away
-        this.Empezar.on('pointerout', function() {
-            // this.displayWidth=230;
-            // this.scaleY = this.scaleX;
-            that.Empezar.anims.play('LocalUnselected');
+
+        this.localGameButton.on('pointerout', function() {
+            that.localGameButton.anims.play('LocalUnselected');
 
             this.pointerOver = true;           
         });
 
         this.OnlineGameButton.on('pointerover', function() {
-            // this.displayWidth=250;  //Con this accedemos al botón OnlineGameButton, porque ese botón ha desencadenado el evento.
-            // this.scaleY = this.scaleX;
             that.OnlineGameButton.anims.play('OnlineSelected');
             do{   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
             }while(this.pointerOver);
         });
-  
-        // When moves away
+
         this.OnlineGameButton.on('pointerout', function() {
-            // this.displayWidth=230;  //Con this accedemos al botón Empezar, porque ese botón ha desencadenado el evento.
-            // this.scaleY = this.scaleX;
             that.OnlineGameButton.anims.play('OnlineUnselected');
             this.pointerOver = true;  
         });
 
         this.ControlsButton.on('pointerover', function() {
-            // this.displayWidth=250;
-            // this.scaleY = this.scaleX;
             that.ControlsButton.anims.play('ControlsSelected');
             do{   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
             }while(this.pointerOver);
         });
-  
-        // When moves away
+
         this.ControlsButton.on('pointerout', function() {
             // this.displayWidth=230;
             // this.scaleY = this.scaleX;
@@ -308,28 +303,98 @@ class mainMenu extends Phaser.Scene{
         });
 
         this.CreditsButton.on('pointerover', function() {
-            // this.displayWidth=250;
-            // this.scaleY = this.scaleX;
             that.CreditsButton.anims.play('CreditsSelected');
             do{   //Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
                 that.sound1.play();         //el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
                 this.pointerOver = false;
             }while(this.pointerOver);
         });
-  
-        // When moves away
+
         this.CreditsButton.on('pointerout', function() {
             // this.displayWidth=230;
             // this.scaleY = this.scaleX;
             that.CreditsButton.anims.play('CreditsUnselected');
             this.pointerOver = true;  
         });
+
+        this.InitSubmenus();
         
+    }
+
+    InitSubmenus(){
+        var that= this;
+              //#region Se crean los botones "playagain" y "return" para reiniciar la partida, o volver al menú principal, una vez la partida termina.
+        this.sound1 = this.sound.add('MenuSound1');
+        this.sound2 = this.sound.add('MenuSound2');
+
+
+        this.returnButton = this.physics.add.sprite(this.width/2,this.height/1.58,'Return').setGravityY(-1000).setGravityX(0).setInteractive();
+        this.returnButton.setInteractive();
+        this.returnButton.displayWidth = 230;
+        this.returnButton.scaleY= this.returnButton.scaleX;
+        this.returnButton.setDepth(13000);
+        this.returnButton.on('pointerup', function(){
+                that.sound2.play();
+                that.returnButton.visible = false;
+                that.playerX_Text.visible = false;
+                that.endScroll.visible =  false;
+                that.endScroll2.visible = false;
+        });
+
+        this.anims.create({
+            key: 'return',
+            frames: [ { key: 'Return'} ],
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'returnSelected',
+            frames: [ { key: 'ReturnSelected'} ],
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.returnButton.on('pointerover', function() {
+            that.returnButton.anims.play('returnSelected');
+            do{                     // Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
+                that.sound1.play(); // el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
+                this.pointerOver = false;
+            }while(this.pointerover);
+        });
+
+        // Cuando apartas el raton
+        this.returnButton.on('pointerout', function() {
+            that.returnButton.anims.play('return');
+            this.pointerOver = true;
+        });
+
+        // Texto del ganador
+        this.playerX_Text = this.add.text(this.width/7, this.height/2.3, 'Sorry, but this option is not available\nat this moment.', { fontFamily: '"Roboto Condensed"' , fontFamily: '"kouzan_font"',  fontSize: 30 ,color:'black' });
+        this.playerX_Text.setDepth(13000);
+        this.playerX_Text.visible = false;
+
+        // Background del pergamino en la pantalla final
+        this.endScroll= this.physics.add.sprite(this.width/2, this.height/1.8,'scroll-background').setGravityY(-1000).setInteractive();
+        this.endScroll.displayWidth = 730;
+        this.endScroll.scaleY= this.endScroll.scaleX;
+        this.endScroll.setDepth(12500);
+        this.endScroll.visible =  false;
+
+        // Rollo del pergamino
+        this.endScroll2= this.physics.add.sprite(this.width/13, this.height/1.8,'buttons-background-2').setGravityY(-1000).setInteractive();
+        this.endScroll2.displayWidth = 60;
+        this.endScroll2.scaleY= this.endScroll2.scaleX;
+        this.endScroll2.displayHeight = 250;
+        this.endScroll2.setDepth(12500);
+        this.endScroll2.visible = false;
+
+        this.returnButton.visible = false;
+      
     }
 
     update(){
         if(this.t1.x>=this.width/2.18){
-            this.Empezar.setGravityX(0).setVelocityX(0);
+            this.localGameButton.setGravityX(0).setVelocityX(0);
             this.OnlineGameButton.setGravityX(0).setVelocityX(0);
             this.ControlsButton.setGravityX(0).setVelocityX(0);
             this.t1.setGravityX(0).setVelocityX(0);

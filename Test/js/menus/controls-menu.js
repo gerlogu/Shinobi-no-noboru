@@ -55,6 +55,9 @@ class controlsMenu extends Phaser.Scene{
         } );
     }
 
+    /**
+     * Inicializa los pergaminos
+     */
     InitControlsBackground(){
         this.controls_background= this.physics.add.sprite(this.width/2.1, this.height/4.3,'scroll-background2').setGravityY(-1000).setInteractive();
         this.controls_background.displayWidth = 730;
@@ -79,6 +82,9 @@ class controlsMenu extends Phaser.Scene{
         this.btn_bck2.setDepth(2000);
     }
 
+    /**
+     * Inicializa las imagenes de los pergaminos
+     */
     InitControls(){
         this.ochre= this.physics.add.sprite(this.width/3.9, this.height/4.3,'ochre-controls').setGravityY(-1000).setInteractive();
         this.ochre.displayWidth = 190;
