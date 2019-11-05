@@ -237,19 +237,22 @@ class localgame extends Phaser.Scene{
     this.allSoundtracksLoop = [this.sound.add('soundtrackLoop'),this.sound.add('soundtrack2Loop')];
 
     var playLoop1 = function(){
-      this.allSoundtracksLoop[0].play({
-        mute: false,
-        volume: 0.5,
-        rate: 1,
-        detune: 0,
-        seek: 0,
-        loop: false,
-        delay: 0
-      });
+      if(!this.ended){
+        this.allSoundtracksLoop[0].play({
+          mute: false,
+          volume: 0.5,
+          rate: 1,
+          detune: 0,
+          seek: 0,
+          loop: false,
+          delay: 0
+        });
+      }
       this.scene.get("localgame").time.addEvent({delay: 23800, callback: playLoop1, callbackScope:this, loop:false});
     }
 
     var playLoop2 = function(){
+      if(!this.ended){
       this.allSoundtracksLoop[1].play({
         mute: false,
         volume: 0.5,
@@ -259,6 +262,7 @@ class localgame extends Phaser.Scene{
         loop: true,
         delay: 0
       });
+    }
     }
     switch(numeroCancion){
       case 0:
@@ -682,7 +686,7 @@ class localgame extends Phaser.Scene{
    */
   InitEndGameScreen(){
       var that = this;
-
+      
       // #region FIN PARTIDA
       this.endBackground = this.add.sprite(0,0,'end-background');
       this.endBackground.displayWidth = 20000;
@@ -1007,11 +1011,12 @@ class localgame extends Phaser.Scene{
 
         //Paramos la banda sonora, y reproducimos el sonido de game over
         this.soundtrack.stop();
+        this.allSoundtracksLoop[0].stop();
+        this.allSoundtracksLoop[1].stop();
         this.gameOver.play();
         this.ended = true;
         this.isPlayable = false;
 
-        this.soundtrack.stop();
       }
       else if(this.ended === false){
         if(this.player1.y >= 800){
