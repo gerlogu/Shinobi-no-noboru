@@ -667,7 +667,8 @@ class localgame extends Phaser.Scene{
    */
   InitEndGameScreen(){
       var that = this;
-
+      //Paramos la banda sonora, y reproducimos el sonido de game over
+      this.soundtrack.stop();
       // #region FIN PARTIDA
       this.endBackground = this.add.sprite(0,0,'end-background');
       this.endBackground.displayWidth = 20000;
@@ -988,13 +989,10 @@ class localgame extends Phaser.Scene{
         this.playerX_Text.visible = true;
         //this.playerX_WinnerText.visible = true;
 
-        //Paramos la banda sonora, y reproducimos el sonido de game over
-        this.soundtrack.stop();
         this.gameOver.play();
         this.ended = true;
         this.isPlayable = false;
 
-        this.soundtrack.stop();
       }
       else if(this.ended === false){
         if(this.player1.y >= 800){
