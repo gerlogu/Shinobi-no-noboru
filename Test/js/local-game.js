@@ -990,6 +990,8 @@ class localgame extends Phaser.Scene{
 
         //Paramos la banda sonora, y reproducimos el sonido de game over
         this.soundtrack.stop();
+        this.allSoundtracksLoop[0].stop();
+        this.allSoundtracksLoop[1].stop();
         this.gameOver.play();
         this.ended = true;
         this.isPlayable = false;
