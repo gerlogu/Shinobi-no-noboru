@@ -3,7 +3,7 @@ class mainMenu extends Phaser.Scene{
         super({key:"mainMenu"});
       }
 
-    preload(){  
+    preload(){
         // #region se cargar los sonidos para el menu
         this.load.audio('MenuSound1','assets/Menu sounds/PaperSound4.mp3');
         this.load.audio('MenuSound2','assets/Menu sounds/PaperSound3.mp3');
@@ -27,31 +27,30 @@ class mainMenu extends Phaser.Scene{
         this.load.image('ReturnSelected'      , 'assets/game-elements/boton_return_seleccionado.png');
         this.load.image('Playagain'           , 'assets/game-elements/boton_play_again.png');
         this.load.image('PlayagainSelected'   , 'assets/game-elements/boton_play_again_seleccionado.png');
-        
+
         this.load.image('T1'                 , 'assets/main-menu/tit-1.png');
         this.load.image('T2'                 , 'assets/main-menu/tit-2.png');
         this.load.image('buttons-background' , 'assets/main-menu/PergaminoNinja.png');
         this.load.image('buttons-background-2' , 'assets/main-menu/buttons-background-2.png');
         this.load.image('scroll-background'         , 'assets/controls-menu/pergamino.png');
-
-        this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
+        this.load.spritesheet('backgroundSheet'     , 'assets/main-menu/tailsheetmenubackground.png',{
             frameWidth: 800,
             frameHeight: 600
-        }); 
+        });
 
         // #region Loading Bar
             var progressBar = this.add.graphics();
             var progressBox = this.add.graphics();
             progressBox.fillStyle(0xffe0ac, 0.8).setDepth(6000);
             progressBox.fillRect(20, 555, 760, 20).setDepth(5000);
-    
+
             this.load.on('progress', function (value) {
                 console.log(value);
                 progressBar.clear();
                 progressBar.fillStyle(0xffffff, 1);
                 progressBar.fillRect(25, 560, 750 * value, 10);
                 });
-            
+
             // Texto loading
             var width = this.cameras.main.width;
             var height = this.cameras.main.height;
@@ -64,9 +63,9 @@ class mainMenu extends Phaser.Scene{
                     fill: '#ffffff'
                 }
             });
-            
+
             loadingText.setDepth(11000);
-            
+
             var assetText = this.make.text({
                 x: width / 1.28,
                 y: height / 1.03 - 50,
@@ -86,7 +85,7 @@ class mainMenu extends Phaser.Scene{
 
                 console.log(value);
             });
-                        
+
             this.load.on('fileprogress', function (file) {
                 assetText.setText('Loading asset: ' + file.key);
                 console.log(file.src);
@@ -109,8 +108,8 @@ class mainMenu extends Phaser.Scene{
         this.asset = assetText;
     }
 
-    create(){        
-        
+    create(){
+
         this.progressB.destroy();
         this.progressBx.destroy();
         this.loading.destroy();
@@ -135,7 +134,7 @@ class mainMenu extends Phaser.Scene{
                 volume: 0.04,
             });
         }
-        
+
         this.background = this.add.sprite(this.width/2,this.height/2,'backgroundSheet',0);
 
         this.anims.create({
@@ -144,7 +143,7 @@ class mainMenu extends Phaser.Scene{
             frameRate: 8,
             repeat: -1
           });
-      
+
         this.background.anims.play('backgroundAnimation');
 
         this.btn_bck = this.physics.add.sprite(this.width/1.97, this.height/1.42,'buttons-background').setGravityY(-1000).setVelocityX(0).setInteractive();
@@ -152,7 +151,7 @@ class mainMenu extends Phaser.Scene{
         this.btn_bck.displayWidth = 400;
         this.btn_bck.scaleY= this.btn_bck.scaleX;
         this.btn_bck.setDepth(1000);
-        
+
         this.btn_bck2 = this.physics.add.sprite(this.width/3.8, this.height/1.41,'buttons-background-2').setGravityY(-1000).setVelocityX(0).setInteractive();
         //this.t1.setInteractive();
         this.btn_bck2.displayWidth = 81;
@@ -208,7 +207,7 @@ class mainMenu extends Phaser.Scene{
             that.cameras.main.fadeOut(200);
             that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('controlsMenu');}, callbackScope:this, loop:false});
         });
-        
+
         this.CreditsButton = this.physics.add.sprite(this.width/2,this.height/1.225,'Credits').setGravityY(-1000).setGravityX(0).setInteractive();
         this.CreditsButton.setInteractive();
         this.CreditsButton.displayWidth = 230;
@@ -221,7 +220,7 @@ class mainMenu extends Phaser.Scene{
             //that.scene.start('creditsMenu');
         });
 
-        //#region creamos "animaciones" para los botones del menu  
+        //#region creamos "animaciones" para los botones del menu
         this.anims.create({
             key: 'LocalSelected',
             frames: [ { key: 'Local-gameSelected'} ],
@@ -287,7 +286,7 @@ class mainMenu extends Phaser.Scene{
         this.localGameButton.on('pointerout', function() {
             that.localGameButton.anims.play('LocalUnselected');
 
-            this.pointerOver = true;           
+            this.pointerOver = true;
         });
 
         this.OnlineGameButton.on('pointerover', function() {
@@ -300,7 +299,7 @@ class mainMenu extends Phaser.Scene{
 
         this.OnlineGameButton.on('pointerout', function() {
             that.OnlineGameButton.anims.play('OnlineUnselected');
-            this.pointerOver = true;  
+            this.pointerOver = true;
         });
 
         this.ControlsButton.on('pointerover', function() {
@@ -315,7 +314,7 @@ class mainMenu extends Phaser.Scene{
             // this.displayWidth=230;
             // this.scaleY = this.scaleX;
             that.ControlsButton.anims.play('ControlsUnselected');
-            this.pointerOver = true;  
+            this.pointerOver = true;
         });
 
         this.CreditsButton.on('pointerover', function() {
@@ -330,11 +329,11 @@ class mainMenu extends Phaser.Scene{
             // this.displayWidth=230;
             // this.scaleY = this.scaleX;
             that.CreditsButton.anims.play('CreditsUnselected');
-            this.pointerOver = true;  
+            this.pointerOver = true;
         });
 
         this.InitSubmenus();
-        
+
     }
 
     // DestroyMusic(){
@@ -409,7 +408,7 @@ class mainMenu extends Phaser.Scene{
         this.endScroll2.visible = false;
 
         this.returnButton.visible = false;
-      
+
     }
 
     update(){

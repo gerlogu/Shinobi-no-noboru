@@ -64,7 +64,7 @@ class localgame extends Phaser.Scene{
     this.load.audio('MenuSound2','assets/Menu sounds/MenuSound2.mp3');
    // this.load.image('background' , 'assets/main-menu/e.png');
 
-    this.load.spritesheet('backgroundSheet' , 'assets/game-elements/BackgroundSheet.png',{
+    this.load.spritesheet('lightbackgroundSheet' , 'assets/game-elements/BackgroundSheet.png',{
       frameWidth: 800,
       frameHeight: 600
     });
@@ -281,16 +281,16 @@ class localgame extends Phaser.Scene{
 
     //Se crea la imagen colocandola de fondo del menu
 
-    this.background = this.add.sprite(this.width/2,this.height/2,'backgroundSheet',0);
+    this.lightbackground = this.add.sprite(this.width/2,this.height/2,'lightbackgroundSheet',0);
 
     this.anims.create({
-      key: 'backgroundAnimation',
-      frames: this.anims.generateFrameNumbers('backgroundSheet', { start: 0, end: 2}),
+      key: 'lightbackgroundAnimation',
+      frames: this.anims.generateFrameNumbers('lightbackgroundSheet', { start: 0, end: 2}),
       frameRate: 8,
       repeat: -1
     });
 
-    this.background.anims.play('backgroundAnimation');
+    this.lightbackground.anims.play('lightbackgroundAnimation');
 
     this.frontground = this.add.image(this.width/2, this.height/2,'frontground');
     this.frontground.setDepth(10000);
@@ -989,6 +989,8 @@ class localgame extends Phaser.Scene{
         this.gameOver.play();
         this.ended = true;
         this.isPlayable = false;
+
+        this.soundtrack.stop();
       }
       else if(this.ended === false){
         if(this.player1.y >= 800){
