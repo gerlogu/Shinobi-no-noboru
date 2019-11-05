@@ -32,6 +32,8 @@ class localgame extends Phaser.Scene{
     this.player1IZQ            = false;
     this.player2IZQ            = false;
     this.pointerOver           = true;
+    this.fallingP1 = false;
+    this.fallingP2 = false;
 
     this.DButton = this.input.keyboard.addKey('D');
     this.AButton = this.input.keyboard.addKey('A');
@@ -72,11 +74,11 @@ class localgame extends Phaser.Scene{
       frameHeight: 600
     });
 
-    this.load.spritesheet('ocre' , 'assets/game-elements/ocrev2.png',{
+    this.load.spritesheet('ocre' , 'assets/game-elements/ocrev3.png',{
       frameWidth: 100,
       frameHeight: 175
     });
-    this.load.spritesheet('purpura' , 'assets/game-elements/purpurav2.png',{
+    this.load.spritesheet('purpura' , 'assets/game-elements/purpurav3.png',{
       frameWidth: 100,
       frameHeight: 175
     });
@@ -374,6 +376,13 @@ class localgame extends Phaser.Scene{
       frameRate: 10,
       repeat: -1
     });
+    
+    this.anims.create({
+      key: 'falling0',
+      frames: [ { key: 'ocre', frame: 5 } ],
+      frameRate: 10,
+      repeat: -1
+    });
 
     this.player1.anims.play('start0');
 
@@ -408,6 +417,13 @@ class localgame extends Phaser.Scene{
     this.anims.create({
       key: 'start1',
       frames: [ { key: 'purpura', frame: 4 } ],
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'falling1',
+      frames: [ { key: 'purpura', frame: 5 } ],
       frameRate: 10,
       repeat: -1
     });
@@ -653,6 +669,9 @@ class localgame extends Phaser.Scene{
         this.jumpaudio.play({
           volume: 0.2
         });
+
+        this.fallingP2 = true;
+        this.scene.get("localgame").time.addEvent({delay: 250, callback: function(){this.fallingP2 = false}, callbackScope:this, loop:false});
       }
 
       if(Phaser.Input.Keyboard.JustDown(this.upButton)){
@@ -664,6 +683,8 @@ class localgame extends Phaser.Scene{
         this.jumpaudio.play({
           volume: 0.2
         });
+        this.fallingP1 = true;
+        this.scene.get("localgame").time.addEvent({delay: 250, callback: function(){this.fallingP1 = false}, callbackScope:this, loop:false});
       }
     };
 
@@ -945,42 +966,46 @@ class localgame extends Phaser.Scene{
    * @param {*} playerCanMove Booleano que determina si se puede mover
    * @param {*} playerIZQ Boolean que determina hacia donde mira el personaje
    */
-  UpdatePlayerAnim(player, playerCanMove, playerIZQ){
-    if(!player.body.touching.down && playerCanMove){
-      if(player.body.velocity.x >0){
-        if(player.body.velocity.y <0){
-          player.anims.play("rightup" + player.id); // player1.id == 0 && player2.id == 1
-        }else{
-          player.anims.play("rightdown" + player.id);
-        }
+  UpdatePlayerAnim(player, playerCanMove, playerIZQ, falling){
+    if(!falling){
+      if(!player.body.touching.down && playerCanMove){
+        if(player.body.velocity.x >0){
+          if(player.body.velocity.y <0){
+            player.anims.play("rightup" + player.id); // player1.id == 0 && player2.id == 1
+          }else{
+            player.anims.play("rightdown" + player.id);
+          }
 
-        playerIZQ = false;
+          playerIZQ = false;
 
-      }else if(player.body.velocity.x <0 ){
-        if(player.body.velocity.y <0){
-          player.anims.play("leftup" + player.id);
-        }else{
-          player.anims.play("leftdown" + player.id);
-        }
-
-        playerIZQ = true;
-
-      }else{
-        if(playerIZQ){
+        }else if(player.body.velocity.x <0 ){
           if(player.body.velocity.y <0){
             player.anims.play("leftup" + player.id);
           }else{
             player.anims.play("leftdown" + player.id);
           }
+
+          playerIZQ = true;
+
         }else{
-          if(player.body.velocity.y <0){
-            player.anims.play("rightup" + player.id);
+          if(playerIZQ){
+            if(player.body.velocity.y <0){
+              player.anims.play("leftup" + player.id);
+            }else{
+              player.anims.play("leftdown" + player.id);
+            }
           }else{
-            player.anims.play("rightdown" + player.id);
+            if(player.body.velocity.y <0){
+              player.anims.play("rightup" + player.id);
+            }else{
+              player.anims.play("rightdown" + player.id);
+            }
           }
         }
+        return playerIZQ;
       }
-      return playerIZQ;
+    }else{
+      player.anims.play("falling" + player.id);
     }
   }
 
@@ -1052,8 +1077,8 @@ class localgame extends Phaser.Scene{
 
     // Actualizamos las animaciones de los personajes teniendo en cuenta la direccion del movimiento
     // y si se pueden mover
-    this.player1IZQ = this.UpdatePlayerAnim(this.player1, this.player1CanMove, this.player1IZQ);
-    this.player2IZQ = this.UpdatePlayerAnim(this.player2, this.player2CanMove, this.player2IZQ);
+    this.player1IZQ = this.UpdatePlayerAnim(this.player1, this.player1CanMove, this.player1IZQ, this.fallingP1);
+    this.player2IZQ = this.UpdatePlayerAnim(this.player2, this.player2CanMove, this.player2IZQ, this.fallingP2);
 
     // Actualizamos la posicion de las particulas que desprenden los personajes
     this.UpdateParticles(this.player1, this.player1CanMove, this.emitterNinja1_1, this.emitterNinja1_2, this.emitterNinja1_3);
