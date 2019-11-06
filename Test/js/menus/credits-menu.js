@@ -94,8 +94,7 @@ class creditsMenu extends Phaser.Scene{
         this.sound1 = this.sound.add('MenuSound1');
         this.sound2 = this.sound.add('MenuSound2');
         
-        this.returnButton = this.physics.add.sprite(this.width/2,this.height/1.08,'Return').setGravityY(-1000).setGravityX(0).setInteractive();
-        this.returnButton.setInteractive();
+        this.returnButton = this.add.sprite(this.width/2,this.height/1.08,'Return').setInteractive();
         this.returnButton.displayWidth = 230;
         this.returnButton.scaleY= this.returnButton.scaleX;
         this.returnButton.setDepth(13000);

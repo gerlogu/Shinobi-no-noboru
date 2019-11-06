@@ -61,8 +61,8 @@ class localgame extends Phaser.Scene{
     this.load.image('wall'                      ,  'assets/game-elements/wall.png');
     this.load.image('miniTutorial'              ,  'assets/game-elements/miniTutorial.png');
 
-    this.load.image('purpleBanner', 'assets/game-elements/estandartePurpura.png');
-    this.load.image('ochreBanner', 'assets/game-elements/estandarteOcre.png');
+    this.load.image('purpleBanner' , 'assets/game-elements/estandartePurpura.png');
+    this.load.image('ochreBanner'  , 'assets/game-elements/estandarteOcre.png');
 
     this.load.image('Return'              , 'assets/game-elements/boton_return.png');
     this.load.image('ReturnSelected'      , 'assets/game-elements/boton_return_seleccionado.png');

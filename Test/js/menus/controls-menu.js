@@ -52,21 +52,21 @@ class controlsMenu extends Phaser.Scene{
      * Inicializa los pergaminos
      */
     InitControlsBackground(){
-        this.controls_background= this.physics.add.sprite(this.width/2.1, this.height/4.3,'scroll-background2').setGravityY(-1000).setInteractive();
+        this.controls_background= this.add.sprite(this.width/2.1, this.height/4.3,'scroll-background2').setInteractive();
         this.controls_background.displayWidth = 730;
         this.controls_background.scaleY= this.controls_background.scaleX;
 
-        this.btn_bck1 = this.physics.add.sprite(this.width/1.05, this.height/4.3,'buttons-background-2').setGravityY(-1000).setInteractive();
+        this.btn_bck1 = this.add.sprite(this.width/1.05, this.height/4.3,'buttons-background-2').setInteractive();
         this.btn_bck1.displayWidth = 80;
         this.btn_bck1.scaleY= this.btn_bck1.scaleX;
         this.btn_bck1.displayWidth = 65;
         this.btn_bck1.setDepth(2000);
 
-        this.controls_background2= this.physics.add.sprite(this.width/1.9, this.height/1.5,'scroll-background').setGravityY(-1000).setInteractive();
+        this.controls_background2= this.add.sprite(this.width/1.9, this.height/1.5,'scroll-background').setInteractive();
         this.controls_background2.displayWidth = 730;
         this.controls_background2.scaleY= this.controls_background2.scaleX;
 
-        this.btn_bck2 = this.physics.add.sprite(this.width/20, this.height/1.5,'buttons-background-2').setGravityY(-1000).setInteractive();
+        this.btn_bck2 = this.add.sprite(this.width/20, this.height/1.5,'buttons-background-2').setInteractive();
         this.btn_bck2.displayWidth = 80;
         this.btn_bck2.scaleY= this.btn_bck2.scaleX;
         this.btn_bck2.displayWidth = 65;
@@ -81,7 +81,7 @@ class controlsMenu extends Phaser.Scene{
             fontSize: 20 });
         this.tutorialText.setDepth(11000);
 
-        this.returnButtonBackground = this.physics.add.sprite(this.width/2, this.height/1.06,'return-background').setGravityY(-1000).setInteractive();
+        this.returnButtonBackground = this.add.sprite(this.width/2, this.height/1.06,'return-background').setInteractive();
         this.returnButtonBackground.displayWidth = 805;
         this.returnButtonBackground.setDepth(2000);
 
@@ -89,8 +89,7 @@ class controlsMenu extends Phaser.Scene{
         this.sound1 = this.sound.add('MenuSound1');
         this.sound2 = this.sound.add('MenuSound2');
         
-        this.returnButton = this.physics.add.sprite(this.width/2,this.height/1.06,'Return').setGravityY(-1000).setGravityX(0).setInteractive();
-        this.returnButton.setInteractive();
+        this.returnButton = this.add.sprite(this.width/2,this.height/1.06,'Return').setInteractive();
         this.returnButton.displayWidth = 230;
         this.returnButton.scaleY= this.returnButton.scaleX;
         this.returnButton.setDepth(13000);
@@ -129,7 +128,7 @@ class controlsMenu extends Phaser.Scene{
             this.pointerOver = true;
         });
 
-        this.tutorial = this.physics.add.sprite(this.width/3, this.height/1.55,'tutorial').setGravityY(-1000).setInteractive();
+        this.tutorial = this.add.sprite(this.width/3, this.height/1.55,'tutorial').setInteractive();
         this.tutorial.setDepth(2000);
     }
 
@@ -137,11 +136,11 @@ class controlsMenu extends Phaser.Scene{
      * Inicializa las imagenes de los pergaminos
      */
     InitControls(){
-        this.ochre= this.physics.add.sprite(this.width/3.5, this.height/4.3,'ochre-controls').setGravityY(-1000).setInteractive();
+        this.ochre= this.add.sprite(this.width/3.5, this.height/4.3,'ochre-controls').setInteractive();
         this.ochre.displayWidth = 190;
         this.ochre.scaleY= this.ochre.scaleX;
 
-        this.purple= this.physics.add.sprite(this.width/1.4, this.height/4.25,'purple-controls').setGravityY(-1000).setInteractive();
+        this.purple= this.add.sprite(this.width/1.4, this.height/4.25,'purple-controls').setInteractive();
         this.purple.displayWidth = 190;
         this.purple.scaleY= this.purple.scaleX;
     }

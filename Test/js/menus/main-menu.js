@@ -9,6 +9,7 @@ class mainMenu extends Phaser.Scene{
         this.load.audio('MenuSound2','assets/Menu sounds/PaperSound3.mp3');
         this.load.audio('PaperSound1', 'assets/Menu sounds/PaperSound1.mp3');
         this.load.audio('Waterfall', 'assets/Menu sounds/WaterfallSound.mp3');
+        this.load.image('black-background' ,  'assets/end-game-background.png');
 
         this.pointerOver = true; // Booleano que se activa y desactiva al pasar por encima de los botones, con el objetivo de que los sonidos se reproduzcan una sola vez , y no se bugee
         // //#endregion
@@ -117,6 +118,12 @@ class mainMenu extends Phaser.Scene{
         this.loading.destroy();
         this.asset.destroy();
 
+        this.blackBackground = this.add.sprite(0,0,'black-background').setInteractive();
+        this.blackBackground.displayWidth = 20000;
+        this.blackBackground.scaleY       = this.blackBackground.scaleX;
+        this.blackBackground.setDepth(12000);
+        this.blackBackground.visible = false;
+
         //Variable auxiliar que guarda la escena actual en ella. Es importante porque en los eventos, si ponemos this, no devuelve la escena,
         //sino el objeto que ha llamado al evento (eso objeto puede ser un botón, por ejemplo)
         var that = this;
@@ -194,8 +201,7 @@ class mainMenu extends Phaser.Scene{
             repeat: -1
         });
 
-        this.localGameButton = this.physics.add.sprite(this.width/2, this.height/1.70,'Local-game').setGravityY(-1000).setInteractive();
-        this.localGameButton.setInteractive();
+        this.localGameButton = this.add.sprite(this.width/2, this.height/1.70,'Local-game').setInteractive();
         this.localGameButton.displayWidth = 230;
         this.localGameButton.scaleY= this.localGameButton.scaleX;
         this.localGameButton.setDepth(2000);
@@ -207,21 +213,20 @@ class mainMenu extends Phaser.Scene{
             that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('localgame');}, callbackScope:this, loop:false});
         });
 
-        this.OnlineGameButton = this.physics.add.sprite(this.width/2, this.height/1.5,'Online-game').setGravityY(-1000).setGravityX(0).setInteractive();
-        this.OnlineGameButton.setInteractive();
+        this.OnlineGameButton = this.add.sprite(this.width/2, this.height/1.5,'Online-game').setInteractive();
         this.OnlineGameButton.displayWidth = 230;
         this.OnlineGameButton.scaleY= this.localGameButton.scaleX;
         this.OnlineGameButton.setDepth(2000);
         this.OnlineGameButton.on('pointerup', function(){
             that.sound3.play();
+            that.blackBackground.visible = true;
             that.returnButton.visible = true;
             that.playerX_Text.visible = true;
             that.endScroll.visible =  true;
             that.endScroll2.visible = true;
         });
 
-        this.ControlsButton = this.physics.add.sprite(this.width/2,this.height/1.35,'Controls').setGravityY(-1000).setGravityX(0).setInteractive();
-        this.ControlsButton.setInteractive();
+        this.ControlsButton = this.add.sprite(this.width/2,this.height/1.35,'Controls').setInteractive();
         this.ControlsButton.displayWidth = 230;
         this.ControlsButton.scaleY= this.localGameButton.scaleX;
         this.ControlsButton.setDepth(2000);
@@ -231,8 +236,7 @@ class mainMenu extends Phaser.Scene{
             that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('controlsMenu');}, callbackScope:this, loop:false});
         });
 
-        this.CreditsButton = this.physics.add.sprite(this.width/2,this.height/1.225,'Credits').setGravityY(-1000).setGravityX(0).setInteractive();
-        this.CreditsButton.setInteractive();
+        this.CreditsButton = this.add.sprite(this.width/2,this.height/1.225,'Credits').setInteractive();
         this.CreditsButton.displayWidth = 230;
         this.CreditsButton.scaleY= this.localGameButton.scaleX;
         this.CreditsButton.setDepth(2000);
@@ -370,17 +374,17 @@ class mainMenu extends Phaser.Scene{
         this.sound2 = this.sound.add('MenuSound2');
 
 
-        this.returnButton = this.physics.add.sprite(this.width/2,this.height/1.58,'Return').setGravityY(-1000).setGravityX(0).setInteractive();
-        this.returnButton.setInteractive();
+        this.returnButton = this.add.sprite(this.width/2,this.height/1.58,'Return').setInteractive();
         this.returnButton.displayWidth = 230;
         this.returnButton.scaleY= this.returnButton.scaleX;
         this.returnButton.setDepth(13000);
         this.returnButton.on('pointerup', function(){
                 that.sound2.play();
-                that.returnButton.visible = false;
-                that.playerX_Text.visible = false;
-                that.endScroll.visible =  false;
-                that.endScroll2.visible = false;
+                that.returnButton.visible  = false;
+                that.playerX_Text.visible  = false;
+                that.endScroll.visible     =  false;
+                that.endScroll2.visible    = false;
+                that.blackBackground.visible = false;
         });
 
         this.anims.create({
@@ -436,9 +440,6 @@ class mainMenu extends Phaser.Scene{
 
     update(){
         if(this.t1.x>=this.width/2.18){
-            this.localGameButton.setGravityX(0).setVelocityX(0);
-            this.OnlineGameButton.setGravityX(0).setVelocityX(0);
-            this.ControlsButton.setGravityX(0).setVelocityX(0);
             this.t1.setGravityX(0).setVelocityX(0);
             this.t2.setGravityX(0).setVelocityX(0);
         }
