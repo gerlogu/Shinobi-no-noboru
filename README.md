@@ -169,3 +169,35 @@ El menú inicial contará con una opción para acceder menú opciones para confi
 - Distancia recorrida por los jugadores (in game).
 
 --------------
+
+## Fase 2
+
+### Capturas de cada página y explicaciones
+
+- Captura 1
+
+Se trata del menú principal, el primero que sale al iniciar el juego. En el tenemos varias opciones. "Local game" nos permite iniciar una partida en local, para 2 jugadores en el mismo ordenador. "Online game" permitirá enfrentarse a otros jugadores a traves de internet en un futuro, ya que todavía no está implementado. "Controls" nos lleva a un menú para aprender a jugar, y "Credits" muestra los créditos del juego. 
+
+- Captura 2
+
+Al seleccionar el botón "Online game" en el menú principal, aparecerá un mensaje, indicando que ese modo no está disponible todavía.
+
+- Captura 3
+
+Es el menú de controles. En el se muestran las teclas que se usan para jugar, y las reglas del juego.
+
+- Captura 4
+
+Es el menú de créditos. En el aparecen los creadores del videojuego, así como referencias a materiales externos.
+
+- Captura 5
+
+Es como se vería la partida en si. En ella hay dos ninjas, cada uno controlado por un jugador, y van apareciendo troncos. Los ninjas deben saltar de tronco en tronco para no caerse, y pueden saltar sobre el ninja rival para empujarle hacia abajo. Si un jugador cae por debajo de la pantalla, pierde una vida y vuelve a subir. Si un jugador las pierde todas, se acaba la partida.
+
+- captura 6
+
+Cuando uno de los jugadores pierde todas las vidas, aparece un cartel indicando que jugador ha ganado, y cuantos segundos ha durado la partida. Además hay 2 botones, uno para reinciar la partida y jugar de nuevo; y otro para volver al menú principal.
+
+- captura 7
+
+Se trata de una pantalla de carga, la cual aparece cuando se quiere pasar de una escena a otra. En ella aparece una barra que se va rellenando conforme se cargan los elementos, hasta llegar al final, indicando al jugador el progreso de la carga. También aparece el nombre del elemento que se está cargando en ese momento.
