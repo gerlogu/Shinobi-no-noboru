@@ -38,13 +38,7 @@ class creditsMenu extends Phaser.Scene{
 
         this.credits_background= this.physics.add.sprite(this.width/2, this.height/2,'scroll-background-credits').setGravityY(-1000).setInteractive();
         this.credits_background.displayWidth = 700;
-        //this.credits_background.scaleY= this.credits_background.scaleX;
-        //this.credits_background.angle += 90;
 
-        // this.credits = this.physics.add.sprite(this.width/2,this.height/2,'credits').setGravityY(-1000).setInteractive();
-        // this.credits.displayWidth = 300;
-        // this.credits.scaleY= this.credits.scaleX;
-        // this.credits.setDepth(200);
 
         this.creditsDevText = this.add.text(this.width/2.85, this.height/16, "CREDITS", {
             fontFamily: '"Roboto Condensed"',

@@ -85,8 +85,6 @@ class mainMenu extends Phaser.Scene{
 
 
             this.load.on('progress', function (value) {
-                // percentText.setText(parseInt(value * 100) + '%');
-
                 console.log(value);
             });
 
@@ -131,11 +129,11 @@ class mainMenu extends Phaser.Scene{
         this.sound2 = this.sound.add('MenuSound2');
         this.sound3 = this.sound.add('PaperSound1');
         if(this.waterfallSound){
-            this.waterfallSound.volume = 0.04;
+            this.waterfallSound.volume = 0.2;
         }else if(!this.waterfallSound){
             this.waterfallSound = this.sound.add('Waterfall');
             this.waterfallSound.play({
-                volume: 0.04,
+                volume: 0.2,
                 loop: true
             });
         }
@@ -171,10 +169,30 @@ class mainMenu extends Phaser.Scene{
         this.t1.displayWidth = 600;
         this.t1.scaleY= this.t1.scaleX;
 
+        var titleAnim1 = this.tweens.add({
+            targets: this.t1,
+            scaleX: 0.702,
+            scaleY: 0.702,
+            ease: 'Sine.easeInOut',
+            duration: 1200,
+            yoyo: true,
+            repeat: -1
+        });
+
         this.t2 = this.physics.add.sprite(this.width, this.height/2.92,'T2').setGravityY(-1000).setGravityX(-3000).setInteractive();
         this.t2.setInteractive();
         this.t2.displayWidth = 350;
         this.t2.scaleY= this.t2.scaleX;
+
+        var titleAnim2 = this.tweens.add({
+            targets: this.t2,
+            scaleX: 0.596,
+            scaleY: 0.596,
+            ease: 'Sine.easeInOut',
+            duration: 1200,
+            yoyo: true,
+            repeat: -1
+        });
 
         this.localGameButton = this.physics.add.sprite(this.width/2, this.height/1.70,'Local-game').setGravityY(-1000).setInteractive();
         this.localGameButton.setInteractive();

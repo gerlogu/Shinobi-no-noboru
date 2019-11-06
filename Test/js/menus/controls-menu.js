@@ -72,7 +72,7 @@ class controlsMenu extends Phaser.Scene{
         this.btn_bck2.displayWidth = 65;
         this.btn_bck2.setDepth(2000);
 
-        this.tutorialText = this.add.text(this.width/2.2, this.height/9, "- You have jump over trunks\n  that are falling down.\n\n- Press the jumping key at the\n  right moment to jump correctly.\n\n- Do all this or you will DIE.", {
+        this.tutorialText = this.add.text(this.width/2, this.height/1.83, "- You have jump over trunks\n  that are falling down.\n\n- Press the jumping key at the\n  right moment to jump correctly.\n\n- Do all this or you will DIE.", {
             fontFamily: '"Roboto Condensed"',
             fontFamily: '"kouzan_font"',
             boundsAlignH: "center",
@@ -137,11 +137,11 @@ class controlsMenu extends Phaser.Scene{
      * Inicializa las imagenes de los pergaminos
      */
     InitControls(){
-        this.ochre= this.physics.add.sprite(this.width/3.9, this.height/4.3,'ochre-controls').setGravityY(-1000).setInteractive();
+        this.ochre= this.physics.add.sprite(this.width/3.5, this.height/4.3,'ochre-controls').setGravityY(-1000).setInteractive();
         this.ochre.displayWidth = 190;
         this.ochre.scaleY= this.ochre.scaleX;
 
-        this.purple= this.physics.add.sprite(this.width/1.35, this.height/1.5,'purple-controls').setGravityY(-1000).setInteractive();
+        this.purple= this.physics.add.sprite(this.width/1.4, this.height/4.25,'purple-controls').setGravityY(-1000).setInteractive();
         this.purple.displayWidth = 190;
         this.purple.scaleY= this.purple.scaleX;
     }

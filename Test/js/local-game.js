@@ -21,7 +21,7 @@ class localgame extends Phaser.Scene{
     this.minTrunkTimer         = 900;
     this.maxTrunkTimer         = 1100;
     this.nullGravity           = -1000;
-    this.trunksVelocity        = 310; // 310
+    this.trunksVelocity        = 270; // 310
     this.jumpForce             = -535;
     this.xSpeed                = 320; // 280
     this.trunkSpeedAceleration = 1.00001;
@@ -34,6 +34,7 @@ class localgame extends Phaser.Scene{
     this.pointerOver           = true;
     this.fallingP1             = false;
     this.fallingP2             = false;
+    this.maxLifes              = 5;
 
     this.DButton = this.input.keyboard.addKey('D');
     this.AButton = this.input.keyboard.addKey('A');
@@ -46,17 +47,18 @@ class localgame extends Phaser.Scene{
 
 
     // #region Sprites
-    this.load.image('ground'                    , 'assets/game-elements/ground.png');
-    this.load.image('trunk'                     , 'assets/game-elements/trunk.png');
-    this.load.image('end-background'            , 'assets/end-game-background.png');
-    this.load.image('particle'                  , 'assets/Particle2.png');
-    this.load.image ('frontground'              , 'assets/game-elements/level-frontground.png');
-    this.load.image('beginning_platform'        , 'assets/game-elements/platform.png');
-    this.load.image('beginning_platform_behind' , 'assets/game-elements/platform_up.png');
-    this.load.image('scroll-background'         , 'assets/controls-menu/pergamino.png');
-    this.load.image('scroll-background2'        , 'assets/controls-menu/pergamino2.png');
-    this.load.image('scroll-background3'        , 'assets/main-menu/buttons-background-2.png');
-    this.load.image('wall'                      , 'assets/game-elements/wall.png');
+    this.load.image('ground'                    ,  'assets/game-elements/ground.png');
+    this.load.image('trunk'                     ,  'assets/game-elements/trunk.png');
+    this.load.image('end-background'            ,  'assets/end-game-background.png');
+    this.load.image('particle'                  ,  'assets/Particle2.png');
+    this.load.image ('frontground'              ,  'assets/game-elements/level-frontground.png');
+    this.load.image('beginning_platform'        ,  'assets/game-elements/platform.png');
+    this.load.image('beginning_platform_behind' ,  'assets/game-elements/platform_up.png');
+    this.load.image('scroll-background'         ,  'assets/controls-menu/pergamino.png');
+    this.load.image('scroll-background2'        ,  'assets/controls-menu/pergamino2.png');
+    this.load.image('scroll-background3'        ,  'assets/main-menu/buttons-background-2.png');
+    this.load.image('wall'                      ,  'assets/game-elements/wall.png');
+    this.load.image('miniTutorial'              ,  'assets/game-elements/miniTutorial.png');
 
     this.load.image('purpleBanner', 'assets/game-elements/estandartePurpura.png');
     this.load.image('ochreBanner', 'assets/game-elements/estandarteOcre.png');
@@ -68,6 +70,7 @@ class localgame extends Phaser.Scene{
 
     this.load.audio('MenuSound1','assets/Menu sounds/MenuSound1.mp3');
     this.load.audio('MenuSound2','assets/Menu sounds/MenuSound2.mp3');
+    this.load.audio('ManScream','assets/manScream.mp3');
    // this.load.image('background' , 'assets/main-menu/e.png');
 
     this.load.spritesheet('lightbackgroundSheet' , 'assets/game-elements/BackgroundSheet.png',{
@@ -90,13 +93,13 @@ class localgame extends Phaser.Scene{
     // #endregion
 
     // #region Sounds (no son los sonidos finales, son para testeos)
-    this.load.audio('jump-audio'      , 'assets/Jumping-sounds/jumpSound.mp3');
-    this.load.audio('soundtrack'      , 'assets/Soundtrack/Shinobi song 1.mp3');
-    this.load.audio('soundtrack2'     , 'assets/Soundtrack/Shinobi song 2.mp3');
-    this.load.audio('soundtrackLoop'  , 'assets/Soundtrack/Shinobi song 1 loop.mp3');
-    this.load.audio('soundtrack2Loop' , 'assets/Soundtrack/Shinobi song 2 loop.mp3');
-    this.load.audio('FinalSound'      , 'assets/Game over sound/GameOver3.mp3');
-    this.load.audio('LooseHP'      , 'assets/looseHP3.mp3');
+    this.load.audio('jump-audio'      ,  'assets/Jumping-sounds/jumpSound.mp3');
+    this.load.audio('soundtrack'      ,  'assets/Soundtrack/Shinobi song 1.mp3');
+    this.load.audio('soundtrack2'     ,  'assets/Soundtrack/Shinobi song 2.mp3');
+    this.load.audio('soundtrackLoop'  ,  'assets/Soundtrack/Shinobi song 1 loop.mp3');
+    this.load.audio('soundtrack2Loop' ,  'assets/Soundtrack/Shinobi song 2 loop.mp3');
+    this.load.audio('FinalSound'      ,  'assets/Game over sound/GameOver3.mp3');
+    this.load.audio('LooseHP'         ,  'assets/looseHP3.mp3');
 
     // #endregion
 
@@ -173,10 +176,10 @@ class localgame extends Phaser.Scene{
     // #endregion
 
 
-    this.progressB = progressBar;
+    this.progressB  = progressBar;
     this.progressBx = progressBox;
-    this.loading = loadingText;
-    this.asset = assetText;
+    this.loading    = loadingText;
+    this.asset      = assetText;
 
   }
 
@@ -192,7 +195,32 @@ class localgame extends Phaser.Scene{
     this.asset.destroy();
 
     this.looseHP_Sound = this.sound.add('LooseHP');
+    this.ninjaScream = this.sound.add('ManScream');
 
+    this.miniTutorialText = this.add.image(this.width/2, this.height/6, 'miniTutorial').setDepth(14000);
+
+    var jumpTitleAnim = this.tweens.add({
+        targets: this.miniTutorialText,
+        scaleX: 0.97,
+        scaleY: 0.97,
+        ease: 'Sine.easeInOut',
+        duration: 800,
+        yoyo: true,
+        repeat: -1
+    });
+
+    this.miniTutorialText.on('pointerdown', function () {
+
+      if (jumpTitleAnim.isPlaying())
+      {
+          jumpTitleAnim.pause();
+      }
+      else
+      {
+          jumpTitleAnim.resume();
+      }
+
+    });
 
     /**
    * Funcion for, que recibe un personaje, y hace las comprobaciones de colision con los troncos
@@ -305,6 +333,31 @@ class localgame extends Phaser.Scene{
 
     this.frontground = this.add.image(this.width/2, this.height/2,'frontground');
     this.frontground.setDepth(10000);
+    // this.frontground.displayWidth = 800;
+    // this.frontground.scaleY= this.frontground.scaleX;
+
+    var frontgroundAnim = this.tweens.add({
+      targets: this.frontground,
+      scaleX: 1.02,
+      scaleY: 1.02,
+      ease: 'Sine.easeInOut',
+      duration: 3000,
+      yoyo: true,
+      repeat: -1
+  });
+
+  this.frontground.on('pointerdown', function () {
+
+    if (frontgroundAnim.isPlaying())
+    {
+        frontgroundAnim.pause();
+    }
+    else
+    {
+        frontgroundAnim.resume();
+    }
+
+  });
     // #endregion
 
     this.InitSpawns();
@@ -435,7 +488,7 @@ class localgame extends Phaser.Scene{
     });
 
     this.player1.score = 0;
-    this.player1.lifes = 3;
+    this.player1.lifes = this.maxLifes;
     this.player1.id = 0;
     this.player1.z = 100;
 
@@ -449,7 +502,7 @@ class localgame extends Phaser.Scene{
 
     // #region Personaje 2
     this.player2.score = 0;
-    this.player2.lifes = 3;
+    this.player2.lifes = this.maxLifes;
     this.player2.id =1
     this.player2.canLooseLifes = true;
 
@@ -608,11 +661,14 @@ class localgame extends Phaser.Scene{
     this.player2_HP_Text = this.add.text(this.width/1.255, this.height/1.175, this.player2.lifes, {
       fontFamily: '"Roboto Condensed"' ,
       fontFamily: '"brush_font"',
-      boundsAlignH: "right",
+      boundsAlignH: "center",
       boundsAlignV: "middle",
-      align:'right',
+      align:'center',
       color: 'black',
       fontSize: 29  });
+
+      
+
       this.ochreBanner  = this.add.image(this.width/5,this.height/1.18,'ochreBanner');
       this.ochreBanner.displayWidth = 100;
       this.ochreBanner.scaleY = this.ochreBanner.scaleX;
@@ -626,7 +682,26 @@ class localgame extends Phaser.Scene{
       this.purpleBanner.setDepth(9500);
       // this.ochreBanner  = this.add.sprite(this.width/1.1,this.height/1.6,'ochreBanner',4);
       // this.ochreBanner.setDepth(9500);
-    this.player2_HP_Text.setDepth(11000);
+     this.player2_HP_Text.setDepth(11000);
+      this.lifesAnim1 = this.tweens.add({
+        targets: this.player2_HP_Text,
+        scale: 1.1,
+        ease: 'Sine.easeInOut',
+        duration: 100,
+        yoyo: true,
+        
+      });
+
+      this.lifesAnim2 = this.tweens.add({
+        targets: this.player1_HP_Text,
+        scale: 1.1,
+        ease: 'Sine.easeInOut',
+        duration: 100,
+        yoyo: true,
+        
+      });
+
+    
     // #endregion
   }
 
@@ -670,7 +745,9 @@ class localgame extends Phaser.Scene{
     this.wall_right.setAlpha(0);
 
     var playersCollide = function players(){
+      
       if(Phaser.Input.Keyboard.JustDown(this.WButton)){
+        this.ninjaScream.play();
         // Salto
         this.player1.setVelocityY(this.jumpForce);
         this.particles.emitParticleAt(this.player1.x,this.player1.y+40,50);
@@ -681,10 +758,11 @@ class localgame extends Phaser.Scene{
         });
 
         this.fallingP2 = true;
-        this.scene.get("localgame").time.addEvent({delay: 250, callback: function(){this.fallingP2 = false}, callbackScope:this, loop:false});
+        this.scene.get("localgame").time.addEvent({delay: 400, callback: function(){this.fallingP2 = false}, callbackScope:this, loop:false});
       }
 
       if(Phaser.Input.Keyboard.JustDown(this.upButton)){
+        this.ninjaScream.play();
         // Salto
         this.player2.setVelocityY(this.jumpForce);
         this.particles.emitParticleAt(this.player2.x,this.player2.y+40,50);
@@ -694,7 +772,7 @@ class localgame extends Phaser.Scene{
           volume: 0.2
         });
         this.fallingP1 = true;
-        this.scene.get("localgame").time.addEvent({delay: 250, callback: function(){this.fallingP1 = false}, callbackScope:this, loop:false});
+        this.scene.get("localgame").time.addEvent({delay: 400, callback: function(){this.fallingP1 = false}, callbackScope:this, loop:false});
       }
     };
 
@@ -816,7 +894,7 @@ class localgame extends Phaser.Scene{
       this.playagainButton.visible = false;
 
       // Texto del ganador
-      this.playerX_Text = this.add.text(this.width/3.8, this.height/2.6, 'XXXXX is the WINNER', { fontFamily: '"Roboto Condensed"' , fontFamily: '"kouzan_font"',  fontSize: 40 ,color:'black' });
+      this.playerX_Text = this.add.text(this.width/3.8, this.height/2.6, "XXXXX is the WINNER", { fontFamily: '"Roboto Condensed"' , fontFamily: '"kouzan_font"',  fontSize: 40 ,color:'black',align:'center',boundsAlignH: 'center', boundsAlignV: 'middle' });
       this.playerX_Text.setDepth(13000);
       this.playerX_Text.visible = false;
 
@@ -918,12 +996,14 @@ class localgame extends Phaser.Scene{
 
     this.height2 = 60;
     this.height3 = 300;
-
+    this.alpha = 1;
     // Animación del timerBox al acabar el contador
     function Anim(){
       if(this.cont<1){
         this.height2 = this.height2-6;
         this.height3 = this.height3+3;
+        this.alpha -= 0.1;
+        this.miniTutorialText.setAlpha(this.alpha);
         if(this.height2 >= 0){
           this.timerBox.displayHeight = this.height2;
           this.timerBox.destroy();
@@ -1061,6 +1141,7 @@ class localgame extends Phaser.Scene{
         if(this.player1.y >= 800){
           if(this.player1.canLooseLifes === true){
             this.looseHP_Sound.play();
+            this.lifesAnim2.play();
             this.player1.lifes--;
             this.player1.canLooseLifes = false;
           }
@@ -1070,6 +1151,7 @@ class localgame extends Phaser.Scene{
 
           if(this.player2.canLooseLifes === true){
             this.looseHP_Sound.play();
+            this.lifesAnim1.play();
             this.player2.lifes--;
             this.player2.canLooseLifes = false;
           }
