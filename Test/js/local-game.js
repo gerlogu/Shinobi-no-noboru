@@ -86,7 +86,7 @@ class localgame extends Phaser.Scene{
     this.load.spritesheet('tronco'  , 'assets/game-elements/troncos.png',{
       frameWidth: 67,
       frameHeight: 30
-    });   
+    });
     // #endregion
 
     // #region Sounds (no son los sonidos finales, son para testeos)
@@ -103,7 +103,7 @@ class localgame extends Phaser.Scene{
     // Usando este método, guardamos en la variables los
     // parámetros de las flechas del teclado
     // que se usaran para programar el control.
-    this.cursors = this.input.keyboard.createCursorKeys(); 
+    this.cursors = this.input.keyboard.createCursorKeys();
 
     // #region Objetos
     this.player1;
@@ -192,7 +192,7 @@ class localgame extends Phaser.Scene{
     this.asset.destroy();
 
     this.looseHP_Sound = this.sound.add('LooseHP');
-    
+
 
     /**
    * Funcion for, que recibe un personaje, y hace las comprobaciones de colision con los troncos
@@ -330,7 +330,7 @@ class localgame extends Phaser.Scene{
     this.cols.length =  0;
     //this.cols[0]     =  this.physics.add.sprite(-100,0,'tronco').body.setGravityY(-1000);
 
-    
+
     this.InitPlayers();
     this.InitUI();
     this.InitEndGameScreen();
@@ -382,7 +382,7 @@ class localgame extends Phaser.Scene{
       frameRate: 10,
       repeat: -1
     });
-    
+
     this.anims.create({
       key: 'falling0',
       frames: [ { key: 'ocre', frame: 5 } ],
@@ -647,7 +647,7 @@ class localgame extends Phaser.Scene{
 
       var spawnTrunkMiddle = function(){
         this.cols[this.cols.length] = this.physics.add.sprite(Phaser.Math.Between(this.width/3, this.width/2),0,'tronco').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
-        
+
         this.cols.length++;
       }
       // #endregion
@@ -704,7 +704,7 @@ class localgame extends Phaser.Scene{
     this.physics.add.collider(this.wall_right, this.player1);
     this.physics.add.collider(this.wall_left, this.player2);
     this.physics.add.collider(this.wall_right, this.player2);
-    
+
     // Entre los personajes no hay colision, pero se puede saltar encima del otro, para ello utilizamos la funcion overlap
     this.physics.add.overlap(this.player1,  this.player2, playersCollide, null, this);
 
@@ -723,7 +723,7 @@ class localgame extends Phaser.Scene{
    */
   InitEndGameScreen(){
       var that = this;
-      
+
       // #region FIN PARTIDA
       this.endBackground = this.add.sprite(0,0,'end-background');
       this.endBackground.displayWidth = 20000;
@@ -844,7 +844,7 @@ class localgame extends Phaser.Scene{
       this.startTime = new Date();
       this.totalTime = 0;
       this.currentTime = 0;
-      this.timerText = this.add.text(this.width/2.7, this.height/2.08, "00:00",{fontFamily: '"Roboto Condensed"', fontFamily: '"kouzan_font"',fontSize: 22, fill: "black"}).setDepth(13000); 
+      this.timerText = this.add.text(this.width/2.7, this.height/2.08, "00:00",{fontFamily: '"Roboto Condensed"', fontFamily: '"kouzan_font"',fontSize: 22, fill: "black"}).setDepth(13000);
       this.timerText.visible = false;
       this.scene.get("localgame").time.addEvent({delay: 100, callback: this.UpdateTimer, callbackScope:this, loop:true});
   }
@@ -861,7 +861,7 @@ class localgame extends Phaser.Scene{
         this.timeElapsed = Math.abs(timeDifference / 1000);
 
         //Time remaining in seconds
-        this.currentTime = this.totalTime+this.timeElapsed; 
+        this.currentTime = this.totalTime+this.timeElapsed;
 
         //Convert seconds into minutes and seconds
         var minutes = Math.floor(this.currentTime / 60);
@@ -869,14 +869,14 @@ class localgame extends Phaser.Scene{
 
         var result = "Time survived: "
         //Display minutes, add a 0 to the start if less than 10
-        result += (minutes < 10) ? "0" + minutes : minutes; 
+        result += (minutes < 10) ? "0" + minutes : minutes;
 
         //Display seconds, add a 0 to the start if less than 10
-        result += (seconds < 10) ? ":0" + seconds : ":" + seconds; 
+        result += (seconds < 10) ? ":0" + seconds : ":" + seconds;
 
         this.timerText.text = result;
       }
-      
+
   }
 
   /**
@@ -1147,9 +1147,9 @@ class localgame extends Phaser.Scene{
       // #endregion
       if(this.WButton.isDown){
         this.ForPlayer(this.player1, this.WButton);
-        if(!this.player1CanMove){          
+        if(!this.player1CanMove){
           this.player1CanMove = true;
-          
+
           //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
           this.platformLeft.body.immovable = false;
           this.platformLeft.body.allowGravity = true;
@@ -1162,6 +1162,27 @@ class localgame extends Phaser.Scene{
             this.platformLeft.destroy();
             this.platform_left_background.destroy();
           }, callbackScope:this, loop:false});
+
+          //Si el otro jugador no salta en 2 segundos,su plataforma se cae, y el salta automaticamente una vez, para así iniciar la partida.
+          this.scene.get("localgame").time.addEvent({delay: 2000, callback: function(){
+            if(!this.player2CanMove){
+              this.player2CanMove = true;
+              this.player2.setVelocityY(this.jumpForce);
+            }
+            //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
+            this.platformRight.body.immovable = false;
+            this.platformRight.body.allowGravity = true;
+
+            this.platformRight.setGravityY(0);
+            this.platform_right_background.setGravityY(0);
+
+            //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
+            this.scene.get("localgame").time.addEvent({delay: 500, callback: function(){
+              this.platformRight.destroy();
+              this.platform_right_background.destroy();
+            }, callbackScope:this, loop:false});
+
+          }, callbackScope:this, loop:false});
         }
       }
 
@@ -1172,7 +1193,7 @@ class localgame extends Phaser.Scene{
 
           //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
           this.platformRight.body.immovable = false;
-          this.platformRight.body.allowGravity = true;         
+          this.platformRight.body.allowGravity = true;
 
           this.platformRight.setGravityY(0);
           this.platform_right_background.setGravityY(0);
@@ -1181,6 +1202,27 @@ class localgame extends Phaser.Scene{
           this.scene.get("localgame").time.addEvent({delay: 500, callback: function(){
             this.platformRight.destroy();
             this.platform_right_background.destroy();
+          }, callbackScope:this, loop:false});
+
+          //Si el otro jugador no salta en 2 segundos,su plataforma se cae, y el salta automaticamente una vez, para así iniciar la partida.
+          this.scene.get("localgame").time.addEvent({delay: 2000, callback: function(){
+            if(!this.player1CanMove){
+              this.player1CanMove = true;
+              this.player1.setVelocityY(this.jumpForce);
+            }
+            //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
+            this.platformLeft.body.immovable = false;
+            this.platformLeft.body.allowGravity = true;
+
+            this.platformLeft.setGravityY(0);
+            this.platform_left_background.setGravityY(0);
+
+            //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
+            this.scene.get("localgame").time.addEvent({delay: 500, callback: function(){
+              this.platformLeft.destroy();
+              this.platform_left_background.destroy();
+            }, callbackScope:this, loop:false});
+
           }, callbackScope:this, loop:false});
         }
       }
