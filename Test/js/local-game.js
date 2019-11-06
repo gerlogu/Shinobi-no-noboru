@@ -1151,11 +1151,15 @@ class localgame extends Phaser.Scene{
           this.player1CanMove = true;
 
           //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
-          this.platformLeft.body.immovable = false;
+          if(this.platformLeft.body){
+            if(this.platformLeft.body.immovable)
+              this.platformLeft.body.immovable = false;
           this.platformLeft.body.allowGravity = true;
 
           this.platformLeft.setGravityY(0);
           this.platform_left_background.setGravityY(0);
+          }
+          
 
           //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
           this.scene.get("localgame").time.addEvent({delay: 500, callback: function(){
@@ -1170,11 +1174,16 @@ class localgame extends Phaser.Scene{
               this.player2.setVelocityY(this.jumpForce);
             }
             //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
-            this.platformRight.body.immovable = false;
-            this.platformRight.body.allowGravity = true;
 
-            this.platformRight.setGravityY(0);
+            if(this.platformRight.body){
+              if(this.platformRight.body.immovable)
+                this.platformRight.body.immovable = false;
+              this.platformRight.body.allowGravity = true;
+              this.platformRight.setGravityY(0);
             this.platform_right_background.setGravityY(0);
+            }
+
+            
 
             //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
             this.scene.get("localgame").time.addEvent({delay: 500, callback: function(){
@@ -1192,11 +1201,14 @@ class localgame extends Phaser.Scene{
           this.player2CanMove = true;
 
           //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
-          this.platformRight.body.immovable = false;
-          this.platformRight.body.allowGravity = true;
+          if(this.platformRight.body != undefined){
+            this.platformRight.body.immovable = false;
+            this.platformRight.body.allowGravity = true;
 
-          this.platformRight.setGravityY(0);
-          this.platform_right_background.setGravityY(0);
+            this.platformRight.setGravityY(0);
+            this.platform_right_background.setGravityY(0);
+          }
+            
 
           //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
           this.scene.get("localgame").time.addEvent({delay: 500, callback: function(){
@@ -1211,11 +1223,14 @@ class localgame extends Phaser.Scene{
               this.player1.setVelocityY(this.jumpForce);
             }
             //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
-            this.platformLeft.body.immovable = false;
-            this.platformLeft.body.allowGravity = true;
+            if(this.platformLeft.body != undefined){
+              this.platformLeft.body.immovable = false;
+              this.platformLeft.body.allowGravity = true;
 
-            this.platformLeft.setGravityY(0);
-            this.platform_left_background.setGravityY(0);
+              this.platformLeft.setGravityY(0);
+              this.platform_left_background.setGravityY(0);
+            }
+              
 
             //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
             this.scene.get("localgame").time.addEvent({delay: 500, callback: function(){
