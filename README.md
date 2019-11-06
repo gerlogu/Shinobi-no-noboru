@@ -47,6 +47,10 @@
 	- Email de la urjc: a.romeroa.2017@alumnos.urjc.es
 
 	- Email de GitHub: romeroabarca.alberto@gmail.com
+	
+- Github del equipo:
+
+	- https://github.com/gerlogu/Shinobi-no-noboru
 
 #### Trello del grupo
 
