@@ -32,8 +32,8 @@ class localgame extends Phaser.Scene{
     this.player1IZQ            = false;
     this.player2IZQ            = false;
     this.pointerOver           = true;
-    this.fallingP1 = false;
-    this.fallingP2 = false;
+    this.fallingP1             = false;
+    this.fallingP2             = false;
 
     this.DButton = this.input.keyboard.addKey('D');
     this.AButton = this.input.keyboard.addKey('A');
@@ -104,7 +104,6 @@ class localgame extends Phaser.Scene{
     this.cursors = this.input.keyboard.createCursorKeys(); 
 
     // #region Objetos
-    this.platforms;
     this.player1;
     this.player2;
     this.cols = [];
@@ -308,16 +307,22 @@ class localgame extends Phaser.Scene{
     this.InitSpawns();
 
     // #region Plataformas (suelo)
-    this.platforms = this.physics.add.staticGroup(); // Al ser static, nos aseguramos de que cuando colisione con el prota, las plataformas no reciban una fuerza y se muevan.
+    //this.platforms = this.physics.add.Group(); // Al ser static, nos aseguramos de que cuando colisione con el prota, las plataformas no reciban una fuerza y se muevan.
     //this.platforms.create(1100, this.height/1.5, 'ground').setScale(2).refreshBody();
 
-    this.platformLeft = this.platforms.create(this.width/13,this.height/1.2, 'beginning_platform').setScale(0.45).refreshBody();
-    this.platforms.setDepth(9000);
-    this.platform_left_background = this.add.image(this.width/13,this.height/1.53,'beginning_platform_behind').setScale(0.43);
+    this.platformLeft = this.physics.add.image(this.width/13,this.height/1.2, 'beginning_platform').setScale(0.45).setDepth(9000);
+    //Hacemos la plataforma inmovible, e inmune a la gravedad. Así aunque el jugador salte encima, esta no se mueve.
+    this.platformLeft.body.allowGravity = false;
+    this.platformLeft.body.immovable = true;
+    //this.platforms.setDepth(9000);
+    this.platform_left_background = this.physics.add.image(this.width/13,this.height/1.53,'beginning_platform_behind').setScale(0.43).setGravityY(-1000).setDepth(9000);
 
-    this.platformRight = this.platforms.create(this.width/1.07,this.height/1.2, 'beginning_platform').setScale(0.45).refreshBody().setFlipX(true);
-    this.platforms.setDepth(9000);
-    this.platform_right_background = this.add.image(this.width/1.07,this.height/1.53,'beginning_platform_behind').setScale(0.43).setFlipX(true);
+    this.platformRight = this.physics.add.image(this.width/1.07,this.height/1.2, 'beginning_platform').setScale(0.45).setFlipX(true).setDepth(9000);
+    //Hacemos la plataforma inmovible, e inmune a la gravedad. Así aunque el jugador salte encima, esta no se mueve.
+    this.platformRight.body.allowGravity = false;
+    this.platformRight.body.immovable = true;
+    //this.platforms.setDepth(9000);
+    this.platform_right_background = this.physics.add.image(this.width/1.07,this.height/1.53,'beginning_platform_behind').setScale(0.43).setFlipX(true).setGravityY(-1000).setDepth(9000);
     // #endregion
 
     this.cols        =  this.physics;
@@ -688,15 +693,16 @@ class localgame extends Phaser.Scene{
       }
     };
 
-    this.physics.add.collider(this.platforms);
+    // this.physics.add.collider(this.platformLeft);
+    // this.physics.add.collider(this.platformRight);
     // Entre los personajes no hay colision, pero se puede saltar encima del otro, para ello utilizamos la funcion overlap
     this.physics.add.overlap(this.player1,  this.player2, playersCollide, null, this);
 
-    this.physics.add.collider(this.player1,  this.platforms, function(){
+    this.physics.add.collider(this.player1,  this.platformLeft, function(){
       if(Phaser.Input.Keyboard.JustDown(this.WButton))
         this.player1.setVelocityY(this.jumpForce);
     }, null, this);
-    this.physics.add.collider(this.player2, this.platforms,function(){
+    this.physics.add.collider(this.player2, this.platformRight,function(){
       if(Phaser.Input.Keyboard.JustDown(this.upButton))
         this.player2.setVelocityY(this.jumpForce);
     }, null, this);
@@ -1134,10 +1140,21 @@ class localgame extends Phaser.Scene{
       // #endregion
       if(this.WButton.isDown){
         this.ForPlayer(this.player1, this.WButton);
-        if(!this.player1CanMove){
+        if(!this.player1CanMove){          
           this.player1CanMove = true;
-          this.platformLeft.destroy();
-          this.platform_left_background.destroy();
+          
+          //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
+          this.platformLeft.body.immovable = false;
+          this.platformLeft.body.allowGravity = true;
+
+          this.platformLeft.setGravityY(0);
+          this.platform_left_background.setGravityY(0);
+
+          //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
+          this.scene.get("localgame").time.addEvent({delay: 500, callback: function(){
+            this.platformRight.destroy();
+            this.platform_right_background.destroy();
+          }, callbackScope:this, loop:false});
         }
       }
 
@@ -1145,8 +1162,19 @@ class localgame extends Phaser.Scene{
         this.ForPlayer(this.player2, this.upButton);
         if(!this.player2CanMove){
           this.player2CanMove = true;
-          this.platformRight.destroy();
-          this.platform_right_background.destroy();
+
+          //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
+          this.platformRight.body.immovable = false;
+          this.platformRight.body.allowGravity = true;         
+
+          this.platformRight.setGravityY(0);
+          this.platform_right_background.setGravityY(0);
+
+          //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
+          this.scene.get("localgame").time.addEvent({delay: 500, callback: function(){
+            this.platformRight.destroy();
+            this.platform_right_background.destroy();
+          }, callbackScope:this, loop:false});
         }
       }
     }
