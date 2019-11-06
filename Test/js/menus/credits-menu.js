@@ -37,14 +37,64 @@ class creditsMenu extends Phaser.Scene{
         this.cameras.main.fadeIn(500);
 
         this.credits_background= this.physics.add.sprite(this.width/2, this.height/2,'scroll-background-credits').setGravityY(-1000).setInteractive();
-        this.credits_background.displayWidth = 450;
+        this.credits_background.displayWidth = 700;
         //this.credits_background.scaleY= this.credits_background.scaleX;
         //this.credits_background.angle += 90;
 
-        this.credits = this.physics.add.sprite(this.width/2,this.height/2,'credits').setGravityY(-1000).setInteractive();
-        this.credits.displayWidth = 300;
-        this.credits.scaleY= this.credits.scaleX;
-        this.credits.setDepth(200);
+        // this.credits = this.physics.add.sprite(this.width/2,this.height/2,'credits').setGravityY(-1000).setInteractive();
+        // this.credits.displayWidth = 300;
+        // this.credits.scaleY= this.credits.scaleX;
+        // this.credits.setDepth(200);
+
+        this.creditsDevText = this.add.text(this.width/2.85, this.height/16, "CREDITS", {
+            fontFamily: '"Roboto Condensed"',
+            fontFamily: '"kouzan_font"',
+            boundsAlignH: "center",
+            boundsAlignV: "middle",
+            align:'center',
+            color: 'black',
+            fontSize: 72 });
+        this.creditsDevText.setDepth(11000);
+
+        this.creditsDevText = this.add.text(this.width/3, this.height/3.6, "GAME DEVELOPED BY", {
+            fontFamily: '"Roboto Condensed"',
+            fontFamily: '"kouzan_font"',
+            boundsAlignH: "center",
+            boundsAlignV: "middle",
+            align:'center',
+            color: 'black',
+            fontSize: 32 });
+        this.creditsDevText.setDepth(11000);
+
+        this.creditsText = this.add.text(this.width/2.71, this.height/3, "German Lopez Gutierrez\nJorge Sanchez Sanchez\nIgnacio Atance Loras\nAlberto Romero Abarca", {
+            fontFamily: '"Roboto Condensed"',
+            fontFamily: '"kouzan_font"',
+            boundsAlignH: "center",
+            boundsAlignV: "middle",
+            align:'center',
+            color: 'black',
+            fontSize: 20 });
+        this.creditsText.setDepth(11000);
+
+        this.otherText = this.add.text(this.width/2.2, this.height/1.75, "OTHER", {
+            fontFamily: '"Roboto Condensed"',
+            fontFamily: '"kouzan_font"',
+            boundsAlignH: "center",
+            boundsAlignV: "middle",
+            align:'center',
+            color: 'black',
+            fontSize: 32 });
+        this.otherText.setDepth(11000);
+
+        this.otherContentText = this.add.text(this.width/2.92, this.height/1.6, "Additional sound effects from\nhttps://www.zapsplat.com", {
+            fontFamily: '"Roboto Condensed"',
+            fontFamily: '"kouzan_font"',
+            boundsAlignH: "center",
+            boundsAlignV: "middle",
+            align:'center',
+            color: 'black',
+            fontSize: 18 });
+        this.otherContentText.setDepth(11000);
 
         var that= this;
         this.sound1 = this.sound.add('MenuSound1');
@@ -60,6 +110,8 @@ class creditsMenu extends Phaser.Scene{
                 that.cameras.main.fadeOut(200);
                 that.scene.get("creditsMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('mainMenu');}, callbackScope:this, loop:false});
         });
+
+        
 
         this.anims.create({
             key: 'return',
