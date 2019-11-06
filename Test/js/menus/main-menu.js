@@ -33,10 +33,14 @@ class mainMenu extends Phaser.Scene{
         this.load.image('buttons-background' , 'assets/main-menu/PergaminoNinja.png');
         this.load.image('buttons-background-2' , 'assets/main-menu/buttons-background-2.png');
         this.load.image('scroll-background'         , 'assets/controls-menu/pergamino.png');
-        this.load.spritesheet('backgroundSheet'     , 'assets/main-menu/tailsheetmenubackground.png',{
+        // this.load.spritesheet('backgroundSheet'     , 'assets/main-menu/tailsheetmenubackground.png',{
+        //     frameWidth: 800,
+        //     frameHeight: 600
+        // });
+        this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
             frameWidth: 800,
             frameHeight: 600
-        });
+        }); 
 
         // #region Loading Bar
             var progressBar = this.add.graphics();
@@ -67,7 +71,7 @@ class mainMenu extends Phaser.Scene{
             loadingText.setDepth(11000);
 
             var assetText = this.make.text({
-                x: width / 1.28,
+                x: width / 1.35,
                 y: height / 1.03 - 50,
                 text: '',
                 boundsAlignH: "right",

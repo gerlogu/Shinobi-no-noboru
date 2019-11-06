@@ -56,6 +56,7 @@ class localgame extends Phaser.Scene{
     this.load.image('scroll-background'         , 'assets/controls-menu/pergamino.png');
     this.load.image('scroll-background2'        , 'assets/controls-menu/pergamino2.png');
     this.load.image('scroll-background3'        , 'assets/main-menu/buttons-background-2.png');
+    this.load.image('wall'                      , 'assets/game-elements/wall.png');
 
     this.load.image('purpleBanner', 'assets/game-elements/estandartePurpura.png');
     this.load.image('ochreBanner', 'assets/game-elements/estandarteOcre.png');
@@ -95,6 +96,7 @@ class localgame extends Phaser.Scene{
     this.load.audio('soundtrackLoop'  , 'assets/Soundtrack/Shinobi song 1 loop.mp3');
     this.load.audio('soundtrack2Loop' , 'assets/Soundtrack/Shinobi song 2 loop.mp3');
     this.load.audio('FinalSound'      , 'assets/Game over sound/GameOver3.mp3');
+    this.load.audio('LooseHP'      , 'assets/looseHP3.mp3');
 
     // #endregion
 
@@ -138,7 +140,7 @@ class localgame extends Phaser.Scene{
     loadingText.setDepth(11000);
 
     var assetText = this.make.text({
-        x: width / 1.28,
+        x: width / 1.35,
         y: height / 1.03 - 50,
         text: '',
         boundsAlignH: "right",
@@ -189,6 +191,7 @@ class localgame extends Phaser.Scene{
     this.loading.destroy();
     this.asset.destroy();
 
+    this.looseHP_Sound = this.sound.add('LooseHP');
     
 
     /**
@@ -307,27 +310,25 @@ class localgame extends Phaser.Scene{
     this.InitSpawns();
 
     // #region Plataformas (suelo)
-    //this.platforms = this.physics.add.Group(); // Al ser static, nos aseguramos de que cuando colisione con el prota, las plataformas no reciban una fuerza y se muevan.
-    //this.platforms.create(1100, this.height/1.5, 'ground').setScale(2).refreshBody();
 
     this.platformLeft = this.physics.add.image(this.width/13,this.height/1.2, 'beginning_platform').setScale(0.45).setDepth(9000);
     //Hacemos la plataforma inmovible, e inmune a la gravedad. Así aunque el jugador salte encima, esta no se mueve.
     this.platformLeft.body.allowGravity = false;
     this.platformLeft.body.immovable = true;
     //this.platforms.setDepth(9000);
-    this.platform_left_background = this.physics.add.image(this.width/13,this.height/1.53,'beginning_platform_behind').setScale(0.43).setGravityY(-1000).setDepth(9000);
+    this.platform_left_background = this.physics.add.image(this.width/13,this.height/1.53,'beginning_platform_behind').setScale(0.43).setGravityY(-1000).setDepth(1000);
 
     this.platformRight = this.physics.add.image(this.width/1.07,this.height/1.2, 'beginning_platform').setScale(0.45).setFlipX(true).setDepth(9000);
     //Hacemos la plataforma inmovible, e inmune a la gravedad. Así aunque el jugador salte encima, esta no se mueve.
     this.platformRight.body.allowGravity = false;
     this.platformRight.body.immovable = true;
     //this.platforms.setDepth(9000);
-    this.platform_right_background = this.physics.add.image(this.width/1.07,this.height/1.53,'beginning_platform_behind').setScale(0.43).setFlipX(true).setGravityY(-1000).setDepth(9000);
+    this.platform_right_background = this.physics.add.image(this.width/1.07,this.height/1.53,'beginning_platform_behind').setScale(0.43).setFlipX(true).setGravityY(-1000).setDepth(1000);
     // #endregion
 
     this.cols        =  this.physics;
-    this.cols.length =  1;
-    this.cols[0]     =  this.physics.add.sprite(-100,0,'tronco').body.setGravityY(-1000);
+    this.cols.length =  0;
+    //this.cols[0]     =  this.physics.add.sprite(-100,0,'tronco').body.setGravityY(-1000);
 
     
     this.InitPlayers();
@@ -646,6 +647,7 @@ class localgame extends Phaser.Scene{
 
       var spawnTrunkMiddle = function(){
         this.cols[this.cols.length] = this.physics.add.sprite(Phaser.Math.Between(this.width/3, this.width/2),0,'tronco').body.setGravityY(this.nullGravity).setVelocityY(this.trunksVelocity);
+        
         this.cols.length++;
       }
       // #endregion
@@ -661,6 +663,12 @@ class localgame extends Phaser.Scene{
    * pueden colisionar entre sí
    */
   InitColliders(){
+    this.walls = this.physics.add.staticGroup();
+    this.wall_left = this.walls.create(-25,this.height/2,'wall');
+    this.wall_left.setAlpha(0);
+    this.wall_right   = this.walls.create(825,this.height/2,'wall');
+    this.wall_right.setAlpha(0);
+
     var playersCollide = function players(){
       if(Phaser.Input.Keyboard.JustDown(this.WButton)){
         // Salto
@@ -692,6 +700,11 @@ class localgame extends Phaser.Scene{
 
     // this.physics.add.collider(this.platformLeft);
     // this.physics.add.collider(this.platformRight);
+    this.physics.add.collider(this.wall_left, this.player1);
+    this.physics.add.collider(this.wall_right, this.player1);
+    this.physics.add.collider(this.wall_left, this.player2);
+    this.physics.add.collider(this.wall_right, this.player2);
+    
     // Entre los personajes no hay colision, pero se puede saltar encima del otro, para ello utilizamos la funcion overlap
     this.physics.add.overlap(this.player1,  this.player2, playersCollide, null, this);
 
@@ -865,6 +878,7 @@ class localgame extends Phaser.Scene{
       }
       
   }
+
   /**
    * Inicializa la cuenta atrás para que empiece la partida al inicio
    * de la escena
@@ -1027,15 +1041,12 @@ class localgame extends Phaser.Scene{
         this.timerText.visible = true;
         this.endScroll.visible = true;
         this.endScroll2.visible = true;
-        // this.allSoundtracksLoop[0].stop();
-        // this.allSoundtracksLoop[1].stop();
         if(this.player1.y > 800){
           this.playerX_Text.setText('PURPLE is the WINNER');
         }else if(this.player2.y > 800){
           this.playerX_Text.setText('OCHRE is the WINNER');
         }
         this.playerX_Text.visible = true;
-        //this.playerX_WinnerText.visible = true;
 
         //Paramos la banda sonora, y reproducimos el sonido de game over
         this.soundtrack.stop();
@@ -1049,18 +1060,17 @@ class localgame extends Phaser.Scene{
       else if(this.ended === false){
         if(this.player1.y >= 800){
           if(this.player1.canLooseLifes === true){
+            this.looseHP_Sound.play();
             this.player1.lifes--;
-            //console.log("Vidas: " + this.player2.lifes);
             this.player1.canLooseLifes = false;
           }
           if(this.player1.lifes >= 1)
             this.player1.setVelocityY(this.jumpForce * 2);
-          console.log("Player 2 lifes: " + this.player1.lifes);
         }else if(this.player2.y >= 800){
 
           if(this.player2.canLooseLifes === true){
+            this.looseHP_Sound.play();
             this.player2.lifes--;
-            //console.log("Vidas: " + this.player2.lifes);
             this.player2.canLooseLifes = false;
           }
           if(this.player2.lifes >= 1)
@@ -1175,7 +1185,11 @@ class localgame extends Phaser.Scene{
         }
       }
     }
-
+    for(var i = 0; i < this.cols.length-1; i++){
+        if(this.cols[i].y > 640){
+          this.cols[i] = this.physics.add.sprite(this.cols[i].x,this.cols[i].y,'tronco' ).body.setGravityY(this.nullGravity).setVelocityX(10000);
+        }
+    }
     this.CheckEndGame();
   }
 }

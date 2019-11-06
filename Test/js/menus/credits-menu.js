@@ -10,7 +10,7 @@ class creditsMenu extends Phaser.Scene{
         this.load.image('scroll-background-credits' , 'assets/main-menu/pergamino-vertical.png');   
         //this.load.image('scroll-background2', 'assets/controls-menu/pergamino2.png'); 
         this.load.image('credits'           , 'assets/credits.png');
-        this.load.spritesheet('backgroundSheet'     , 'assets/main-menu/tailsheetmenubackground.png',{
+        this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
             frameWidth: 800,
             frameHeight: 600
         }); 

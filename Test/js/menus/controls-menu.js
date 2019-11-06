@@ -12,7 +12,7 @@ class controlsMenu extends Phaser.Scene{
         this.load.image('tutorial' , 'assets/main-menu/instructions.png');
         this.load.image('return-background' , 'assets/main-menu/return-button-background.png');
 
-        this.load.spritesheet('backgroundSheet'     , 'assets/main-menu/tailsheetmenubackground.png',{
+        this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
             frameWidth: 800,
             frameHeight: 600
         }); 
@@ -72,13 +72,13 @@ class controlsMenu extends Phaser.Scene{
         this.btn_bck2.displayWidth = 65;
         this.btn_bck2.setDepth(2000);
 
-        this.tutorialText = this.add.text(this.width/2.05, this.height/9, "- You have jump over trunks\n  that are falling down.\n\n- Press the jumping key at the\n  right moment to jump correctly.\n\n- Do all this or you will DIE.", {
+        this.tutorialText = this.add.text(this.width/2.2, this.height/9, "- You have jump over trunks\n  that are falling down.\n\n- Press the jumping key at the\n  right moment to jump correctly.\n\n- Do all this or you will DIE.", {
             fontFamily: '"Roboto Condensed"',
             fontFamily: '"kouzan_font"',
             boundsAlignH: "center",
             boundsAlignV: "middle",
             color: 'black',
-            fontSize: 18 });
+            fontSize: 20 });
         this.tutorialText.setDepth(11000);
 
         this.returnButtonBackground = this.physics.add.sprite(this.width/2, this.height/1.06,'return-background').setGravityY(-1000).setInteractive();
