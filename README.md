@@ -174,30 +174,50 @@ El menú inicial contará con una opción para acceder menú opciones para confi
 
 ### Capturas de cada página y explicaciones
 
-- Captura 1
+- Menú principal:
+
+![Screenshot menú principal](https://user-images.githubusercontent.com/44704611/68335951-b86ac980-00dd-11ea-9f78-66501bfea109.PNG)
 
 Este es el menú inicial, el primero que sale al iniciar el juego. En el tenemos varias opciones. "Local game" nos permite iniciar una partida en local, para 2 jugadores en el mismo ordenador. "Online game" permitirá enfrentarse a otros jugadores a través de internet en un futuro, ya que todavía no está implementado. "Controls" nos lleva a un menú para aprender a jugar, y "Credits" muestra los créditos del juego. 
 
-- Captura 2
+- Modo online:
+
+![Screenshot modo online](https://user-images.githubusercontent.com/44704611/68336169-20211480-00de-11ea-94e2-294ac0660786.png)
 
 Al seleccionar el botón "Online game" en el menú principal, aparecerá un mensaje, indicando que ese modo no está disponible todavía.
 
-- Captura 3
+- Menú de controles:
+
+![Screenshot controles](https://user-images.githubusercontent.com/44704611/68336333-768e5300-00de-11ea-847d-3ca1dc0bee43.png)
 
 En el menú de controles se muestran las teclas que se usan para jugar, y las reglas del juego.
 
-- Captura 4
+- Menú de créditos:
+
+![Screenshot creditos](https://user-images.githubusercontent.com/44704611/68332607-658e1380-00d7-11ea-89bd-33e66c624f66.png)
 
 En el menú de créditos aparecen los creadores del videojuego, así como referencias a materiales externos.
 
-- Captura 5
+- Partida en proceso:
+
+![Screenshot partida](https://user-images.githubusercontent.com/44704611/68332636-7179d580-00d7-11ea-9c96-325bbf99d399.png)
 
 Es como se vería la partida en sí. En ella hay dos ninjas, cada uno controlado por un jugador, y van apareciendo troncos. Los ninjas deben saltar de tronco en tronco para no caerse, y pueden saltar sobre el ninja rival para empujarle hacia abajo. Si un jugador cae por debajo de la pantalla, pierde una vida y vuelve a subir. Si un jugador las pierde todas, se acaba la partida.
 
-- captura 6
+- Fin de la partida:
+
+![Screenshot final de partida](https://user-images.githubusercontent.com/44704611/68336407-9c1b5c80-00de-11ea-8d4a-9ac5a9d08eea.png)
 
 Cuando uno de los jugadores pierde todas las vidas, aparece un cartel indicando qué jugador ha ganado, y cuantos segundos ha durado la partida. Además hay 2 botones, uno para reiniciar la partida y jugar de nuevo; y otro para volver al menú principal.
 
-- captura 7
+- Pantalla de carga:
+
+![Screenshot pantalla de carga](https://user-images.githubusercontent.com/44704611/68332707-8c4c4a00-00d7-11ea-839a-4ab6c7a7627e.png)
 
 También está incluida una pantalla de carga, la cual aparece cuando se quiere pasar de una escena a otra. En ella aparece una barra que se va rellenando conforme se cargan los elementos, hasta llegar al final, indicando al jugador el progreso de la carga. También aparece el nombre del elemento que se está cargando en ese momento.
+
+
+
+### Diagrama de navegación
+
+![Diagrama en blanco](https://user-images.githubusercontent.com/44704611/68335290-7a20da80-00dc-11ea-8c27-d6fbdf751cd7.jpeg)
