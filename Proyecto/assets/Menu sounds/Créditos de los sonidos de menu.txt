@@ -1,0 +1,5 @@
+Sonido 1: https://www.zapsplat.com/music/game-menu-item-select-1/
+
+Sonido 2: https://www.zapsplat.com/music/game-tone-sci-fi-button-select-or-menu-sound-13/
+
+Ambos se pueden usar si se referencia a la página de origen: https://www.zapsplat.com
