@@ -1149,8 +1149,8 @@ class localgame extends Phaser.Scene{
 
           //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
           this.scene.get("localgame").time.addEvent({delay: 500, callback: function(){
-            this.platformRight.destroy();
-            this.platform_right_background.destroy();
+            this.platformLeft.destroy();
+            this.platform_left_background.destroy();
           }, callbackScope:this, loop:false});
         }
       }
