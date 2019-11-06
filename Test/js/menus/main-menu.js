@@ -31,7 +31,7 @@ class mainMenu extends Phaser.Scene{
         this.load.image('T1'                 , 'assets/main-menu/tit-1.png');
         this.load.image('T2'                 , 'assets/main-menu/tit-2.png');
         this.load.image('buttons-background' , 'assets/main-menu/PergaminoNinja.png');
-        this.load.image('buttons-background-2' , 'assets/main-menu/buttons-background-2.png');
+        this.load.image('buttons-background-2' , 'assets/main-menu/pergamino ninja rollo.png');
         this.load.image('scroll-background'         , 'assets/controls-menu/pergamino.png');
         // this.load.spritesheet('backgroundSheet'     , 'assets/main-menu/tailsheetmenubackground.png',{
         //     frameWidth: 800,
