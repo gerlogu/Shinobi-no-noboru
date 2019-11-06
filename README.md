@@ -186,7 +186,7 @@ Este es el menú inicial, el primero que sale al iniciar el juego. En el tenemos
 
 - Modo online:
 
-![Screenshot modo online](https://user-images.githubusercontent.com/44704611/68336169-20211480-00de-11ea-94e2-294ac0660786.png)
+![Screenshot modo online](https://user-images.githubusercontent.com/44704611/68344681-ec4eea80-00ef-11ea-9b5f-30479d7d7ada.png)
 
 Al seleccionar el botón "Online game" en el menú principal, aparecerá un mensaje, indicando que ese modo no está disponible todavía.
 
