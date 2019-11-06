@@ -335,7 +335,7 @@ class localgame extends Phaser.Scene{
     this.InitEndGameScreen();
     this.InitColliders();
     this.InitStartTimer();
-    this.CreateParticles(this.player1);
+    this.CreateParticles();
 
   }
 
@@ -467,7 +467,7 @@ class localgame extends Phaser.Scene{
   /**
    * Inicializa las particulas que apareceran en la escena
    */
-  CreateParticles(player){
+  CreateParticles(){
     this.particles = this.add.particles('particle').setDepth(12000);
     this.emitter= this.particles.createEmitter({
       x: 400,
@@ -488,99 +488,96 @@ class localgame extends Phaser.Scene{
     this.particles2 = this.add.particles('particle').setDepth(0);
 
     this.emitterNinja1_3= this.particles2.createEmitter({
-      x: player.x,
-      y: player.y,
+      x: 0,
+      y: 0,
       lifespan:400,
       speed: {min:50, max: 100},
-      angle: -player.body.gravity,
+      angle: -this.player1.body.gravity,
       blendMode: 'ADD',
       gravityY: 100,
       scale:{
           start:0.5, end:0
       },
-      alpha: 0.1,
+      alpha: 0.2,
       quantity: 0.7
     });
 
     this.particles2_1 = this.add.particles('particle').setDepth(0);
     this.emitterNinja1_1= this.particles2.createEmitter({
-      x: player.x-10,
-      y: player.y,
+      x: 0,
+      y: 0,
       lifespan:400,
       speed: {min:50, max: 100},
-      angle: -player.body.gravity,
+      angle: -this.player2.body.gravity,
       blendMode: 'ADD',
       gravityY: 100,
       scale:{
           start:0.5, end:0
       },
-      alpha: 0.2,
+      alpha: 0,
       quantity: 0.5
     });
 
     this.particles2_2 = this.add.particles('particle').setDepth(0);
     this.emitterNinja1_2= this.particles2.createEmitter({
-      x: player.x-10,
-      y: player.y,
+      x: 0,
+      y: 0,
       lifespan:400,
       speed: {min:50, max: 100},
-      angle: -player.body.gravity,
+      angle: -this.player2.body.gravity,
       blendMode: 'ADD',
       gravityY: 100,
       scale:{
           start:0.5, end:0
       },
-      alpha: 0.2,
+      alpha: 0,
       quantity: 0.5
     });
     // #endregion
 
     // #region player 2 particles
     this.emitterNinja2_1= this.particles2.createEmitter({
-      x: player.x,
-      y: player.y,
+      x: 0,
+      y: 0,
       lifespan:400,
       speed: {min:50, max: 100},
-      angle: -player.body.gravity,
+      angle: -this.player2.body.gravity,
       blendMode: 'ADD',
       gravityY: 100,
-      //maxParticles: 50,
       scale:{
           start:0.5, end:0
       },
-      alpha: 0.1,
+      alpha: 0,
       quantity: 1
     });
 
     this.emitterNinja2_2= this.particles2.createEmitter({
-      x: player.x,
-      y: player.y,
+      x: 0,
+      y: 0,
       lifespan:400,
       speed: {min:50, max: 100},
-      angle: -player.body.gravity,
+      angle: -this.player2.body.gravity,
       blendMode: 'ADD',
       gravityY: 100,
-      //maxParticles: 50,
       scale:{
           start:0.5, end:0
       },
-      alpha: 0.1,
+      alpha: 0,
       quantity: 1
     });
 
     this.emitterNinja2_3= this.particles2.createEmitter({
-      x: player.x,
-      y: player.y,
+      x: 0,
+      y: 0,
       lifespan:400,
       speed: {min:50, max: 100},
-      angle: -player.body.gravity,
+      angle: -this.player2.body.gravity,
       blendMode: 'ADD',
       gravityY: 100,
-      //maxParticles: 50,
       scale:{
           start:0.5, end:0
       },
-      alpha: 0.1,
+      alpha: 0.2,
       quantity: 1
     });
     // #endregion

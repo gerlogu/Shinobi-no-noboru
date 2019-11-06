@@ -9,7 +9,8 @@ class controlsMenu extends Phaser.Scene{
         this.load.image('return-btn','assets/controls-menu/return-btn.jpg');       
         this.load.image('scroll-background','assets/controls-menu/pergamino.png');   
         this.load.image('scroll-background2','assets/controls-menu/pergamino2.png');
-
+        this.load.image('tutorial' , 'assets/main-menu/instructions.png');
+        this.load.image('return-background' , 'assets/main-menu/return-button-background.png');
 
         this.load.spritesheet('backgroundSheet'     , 'assets/main-menu/tailsheetmenubackground.png',{
             frameWidth: 800,
@@ -45,14 +46,6 @@ class controlsMenu extends Phaser.Scene{
         this.InitControlsBackground();
 
         this.InitControls();
-
-        this.returnBtn = this.physics.add.sprite(this.width/2,this.height/1.06,'return-btn').setGravityY(-1000).setInteractive();
-        this.returnBtn.displayWidth = 300;
-        this.returnBtn.scaleY= this.returnBtn.scaleX;
-        this.returnBtn.on('pointerup', function(){
-            that.cameras.main.fadeOut(200);
-            that.scene.get("controlsMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('mainMenu');}, callbackScope:this, loop:false});
-        } );
     }
 
     /**
@@ -69,8 +62,6 @@ class controlsMenu extends Phaser.Scene{
         this.btn_bck1.displayWidth = 65;
         this.btn_bck1.setDepth(2000);
 
-        
-
         this.controls_background2= this.physics.add.sprite(this.width/1.9, this.height/1.5,'scroll-background').setGravityY(-1000).setInteractive();
         this.controls_background2.displayWidth = 730;
         this.controls_background2.scaleY= this.controls_background2.scaleX;
@@ -80,6 +71,66 @@ class controlsMenu extends Phaser.Scene{
         this.btn_bck2.scaleY= this.btn_bck2.scaleX;
         this.btn_bck2.displayWidth = 65;
         this.btn_bck2.setDepth(2000);
+
+        this.tutorialText = this.add.text(this.width/2.05, this.height/9, "- You have jump over trunks\n  that are falling down.\n\n- Press the jumping key at the\n  right moment to jump correctly.\n\n- Do all this or you will DIE.", {
+            fontFamily: '"Roboto Condensed"',
+            fontFamily: '"kouzan_font"',
+            boundsAlignH: "center",
+            boundsAlignV: "middle",
+            color: 'black',
+            fontSize: 18 });
+        this.tutorialText.setDepth(11000);
+
+        this.returnButtonBackground = this.physics.add.sprite(this.width/2, this.height/1.06,'return-background').setGravityY(-1000).setInteractive();
+        this.returnButtonBackground.displayWidth = 805;
+        this.returnButtonBackground.setDepth(2000);
+
+        var that= this;
+        this.sound1 = this.sound.add('MenuSound1');
+        this.sound2 = this.sound.add('MenuSound2');
+        
+        this.returnButton = this.physics.add.sprite(this.width/2,this.height/1.06,'Return').setGravityY(-1000).setGravityX(0).setInteractive();
+        this.returnButton.setInteractive();
+        this.returnButton.displayWidth = 230;
+        this.returnButton.scaleY= this.returnButton.scaleX;
+        this.returnButton.setDepth(13000);
+        this.returnButton.on('pointerup', function(){
+                that.sound2.play();
+                that.cameras.main.fadeOut(200);
+                that.scene.get("controlsMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('mainMenu');}, callbackScope:this, loop:false});
+        });
+
+        
+
+        this.anims.create({
+            key: 'return',
+            frames: [ { key: 'Return'} ],
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'returnSelected',
+            frames: [ { key: 'ReturnSelected'} ],
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.returnButton.on('pointerover', function() {
+            that.returnButton.anims.play('returnSelected');
+            do{                     // Reproducimos el sonido unicamente si no se ha reproducido antes, es decir, si acabamos de entrar con el raton al botón. Si ya llevamos un rato
+                that.sound1.play(); // el sonido no se reproducirá gracias al booleano. El booleano vuelve a true, al sacar el ratón del botón.
+                this.pointerOver = false;
+            }while(this.pointerover);
+        });
+
+        // Cuando apartas el raton
+        this.returnButton.on('pointerout', function() {
+            that.returnButton.anims.play('return');
+            this.pointerOver = true;
+        });
+
+        this.tutorial = this.physics.add.sprite(this.width/3, this.height/1.55,'tutorial').setGravityY(-1000).setInteractive();
+        this.tutorial.setDepth(2000);
     }
 
     /**
