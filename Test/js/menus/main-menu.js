@@ -131,16 +131,17 @@ class mainMenu extends Phaser.Scene{
         this.height = 600;
 
         this.cameras.main.fadeIn(1000);
+        
         //Se crean los objetos para los sonidos
         this.sound1 = this.sound.add('MenuSound1');
         this.sound2 = this.sound.add('MenuSound2');
         this.sound3 = this.sound.add('PaperSound1');
         if(this.waterfallSound){
-            this.waterfallSound.volume = 0.2;
+            this.waterfallSound.volume = 0.15;
         }else if(!this.waterfallSound){
             this.waterfallSound = this.sound.add('Waterfall');
             this.waterfallSound.play({
-                volume: 0.2,
+                volume: 0.15,
                 loop: true
             });
         }
@@ -152,7 +153,7 @@ class mainMenu extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('backgroundSheet', { start: 0, end: 2}),
             frameRate: 8,
             repeat: -1
-          });
+        });
 
         this.background.anims.play('backgroundAnimation');
 
