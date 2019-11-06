@@ -1,3 +1,13 @@
+/**
+ * Codigo desarrollado por:
+ * -
+ * German Lopez Gutierrez
+ * Ignacio Atance Loras
+ * Alberto Romero Abarca
+ * Jorge Sanchez Sanchez
+ * -
+ */
+
 class mainMenu extends Phaser.Scene{
     constructor(){
         super({key:"mainMenu"});
@@ -34,10 +44,6 @@ class mainMenu extends Phaser.Scene{
         this.load.image('buttons-background' , 'assets/main-menu/PergaminoNinja.png');
         this.load.image('buttons-background-2' , 'assets/main-menu/pergamino-ninja-rollo.png');
         this.load.image('scroll-background'         , 'assets/controls-menu/pergamino.png');
-        // this.load.spritesheet('backgroundSheet'     , 'assets/main-menu/tailsheetmenubackground.png',{
-        //     frameWidth: 800,
-        //     frameHeight: 600
-        // });
         this.load.spritesheet('backgroundSheet'     , 'assets/game-elements/BackgroundSheet.png',{
             frameWidth: 800,
             frameHeight: 600
@@ -209,7 +215,6 @@ class mainMenu extends Phaser.Scene{
         this.localGameButton.on('pointerup', function(){
             that.sound2.play();
             that.waterfallSound.volume = 0;
-            //that.DestroyMusic();
             that.cameras.main.fadeOut(200);
             that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('localgame');}, callbackScope:this, loop:false});
         });
@@ -245,7 +250,6 @@ class mainMenu extends Phaser.Scene{
             that.sound2.play();
             that.cameras.main.fadeOut(200);
             that.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){that.scene.start('creditsMenu');}, callbackScope:this, loop:false});
-            //that.scene.start('creditsMenu');
         });
 
         //#region creamos "animaciones" para los botones del menu

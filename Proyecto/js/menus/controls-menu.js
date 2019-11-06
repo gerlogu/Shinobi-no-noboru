@@ -1,3 +1,13 @@
+/**
+ * Codigo desarrollado por:
+ * -
+ * German Lopez Gutierrez
+ * Ignacio Atance Loras
+ * Alberto Romero Abarca
+ * Jorge Sanchez Sanchez
+ * -
+ */
+
 class controlsMenu extends Phaser.Scene{
     constructor(){
         super({key:"controlsMenu"});
