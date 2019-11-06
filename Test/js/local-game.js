@@ -35,6 +35,7 @@ class localgame extends Phaser.Scene{
     this.fallingP1             = false;
     this.fallingP2             = false;
     this.maxLifes              = 5;
+    this.screamPool            = [];
 
     this.DButton = this.input.keyboard.addKey('D');
     this.AButton = this.input.keyboard.addKey('A');
@@ -56,7 +57,7 @@ class localgame extends Phaser.Scene{
     this.load.image('beginning_platform_behind' ,  'assets/game-elements/platform_up.png');
     this.load.image('scroll-background'         ,  'assets/controls-menu/pergamino.png');
     this.load.image('scroll-background2'        ,  'assets/controls-menu/pergamino2.png');
-    this.load.image('scroll-background3'        ,  'assets/main-menu/buttons-background-2.png');
+    this.load.image('scroll-background3'        ,  'assets/main-menu/pergamino-ninja-rollo.png');
     this.load.image('wall'                      ,  'assets/game-elements/wall.png');
     this.load.image('miniTutorial'              ,  'assets/game-elements/miniTutorial.png');
 
@@ -71,6 +72,10 @@ class localgame extends Phaser.Scene{
     this.load.audio('MenuSound1','assets/Menu sounds/MenuSound1.mp3');
     this.load.audio('MenuSound2','assets/Menu sounds/MenuSound2.mp3');
     this.load.audio('ManScream','assets/manScream.mp3');
+    this.load.audio('ManScream2','assets/manScream2.mp3');
+    this.load.audio('ManScream3','assets/manScream3.mp3');
+    this.load.audio('ManScream4','assets/manScream4.mp3');
+    this.load.audio('ManScream5','assets/manScream5.mp3');
    // this.load.image('background' , 'assets/main-menu/e.png');
 
     this.load.spritesheet('lightbackgroundSheet' , 'assets/game-elements/BackgroundSheet.png',{
@@ -195,8 +200,8 @@ class localgame extends Phaser.Scene{
     this.asset.destroy();
 
     this.looseHP_Sound = this.sound.add('LooseHP');
-    this.ninjaScream = this.sound.add('ManScream');
-
+    this.screamPool = [this.sound.add('ManScream'), this.sound.add('ManScream2'), this.sound.add('ManScream3'), this.sound.add('ManScream4'), this.sound.add('ManScream5')]
+    
     this.miniTutorialText = this.add.image(this.width/2, this.height/6, 'miniTutorial').setDepth(14000);
 
     var jumpTitleAnim = this.tweens.add({
@@ -747,6 +752,8 @@ class localgame extends Phaser.Scene{
     var playersCollide = function players(){
       
       if(Phaser.Input.Keyboard.JustDown(this.WButton)){
+
+        this.ninjaScream = this.screamPool[Math.floor(Math.random() * 5)];
         this.ninjaScream.play();
         // Salto
         this.player1.setVelocityY(this.jumpForce);
@@ -762,6 +769,8 @@ class localgame extends Phaser.Scene{
       }
 
       if(Phaser.Input.Keyboard.JustDown(this.upButton)){
+
+        this.ninjaScream = this.screamPool[Math.floor(Math.random() * 5)];
         this.ninjaScream.play();
         // Salto
         this.player2.setVelocityY(this.jumpForce);
@@ -786,14 +795,8 @@ class localgame extends Phaser.Scene{
     // Entre los personajes no hay colision, pero se puede saltar encima del otro, para ello utilizamos la funcion overlap
     this.physics.add.overlap(this.player1,  this.player2, playersCollide, null, this);
 
-    this.physics.add.collider(this.player1,  this.platformLeft, function(){
-      if(Phaser.Input.Keyboard.JustDown(this.WButton))
-        this.player1.setVelocityY(this.jumpForce);
-    }, null, this);
-    this.physics.add.collider(this.player2, this.platformRight,function(){
-      if(Phaser.Input.Keyboard.JustDown(this.upButton))
-        this.player2.setVelocityY(this.jumpForce);
-    }, null, this);
+    this.physics.add.collider(this.player1,  this.platformLeft);
+    this.physics.add.collider(this.player2, this.platformRight);
   }
 
   /**

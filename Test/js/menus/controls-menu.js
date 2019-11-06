@@ -72,7 +72,7 @@ class controlsMenu extends Phaser.Scene{
         this.btn_bck2.displayWidth = 65;
         this.btn_bck2.setDepth(2000);
 
-        this.tutorialText = this.add.text(this.width/2, this.height/1.83, "- You have jump over trunks\n  that are falling down.\n\n- Press the jumping key at the\n  right moment to jump correctly.\n\n- Do all this or you will DIE.", {
+        this.tutorialText = this.add.text(this.width/2, this.height/1.88, "- Jummp from log to log to keep\n  your ninja from falling.\n\n- Press the jump key at the\n  right moment to do it.\n\n- The ninja that stays in the\n  fall the longer wins.", {
             fontFamily: '"Roboto Condensed"',
             fontFamily: '"kouzan_font"',
             boundsAlignH: "center",

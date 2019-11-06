@@ -31,7 +31,7 @@ class mainMenu extends Phaser.Scene{
         this.load.image('T1'                 , 'assets/main-menu/tit-1.png');
         this.load.image('T2'                 , 'assets/main-menu/tit-2.png');
         this.load.image('buttons-background' , 'assets/main-menu/PergaminoNinja.png');
-        this.load.image('buttons-background-2' , 'assets/main-menu/pergamino ninja rollo.png');
+        this.load.image('buttons-background-2' , 'assets/main-menu/pergamino-ninja-rollo.png');
         this.load.image('scroll-background'         , 'assets/controls-menu/pergamino.png');
         // this.load.spritesheet('backgroundSheet'     , 'assets/main-menu/tailsheetmenubackground.png',{
         //     frameWidth: 800,
@@ -411,7 +411,7 @@ class mainMenu extends Phaser.Scene{
         });
 
         // Texto del ganador
-        this.playerX_Text = this.add.text(this.width/7, this.height/2.3, 'Sorry, but this option is not available\nat this moment.', { fontFamily: '"Roboto Condensed"' , fontFamily: '"kouzan_font"',  fontSize: 30 ,color:'black' });
+        this.playerX_Text = this.add.text(this.width/7, this.height/2.3, 'Sorry, but this option is not available\nat the moment.', { fontFamily: '"Roboto Condensed"' , fontFamily: '"kouzan_font"',  fontSize: 30 ,color:'black' });
         this.playerX_Text.setDepth(13000);
         this.playerX_Text.visible = false;
 
