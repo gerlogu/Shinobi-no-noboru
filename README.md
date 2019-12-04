@@ -225,3 +225,41 @@ También está incluida una pantalla de carga, la cual aparece cuando se quiere 
 ### Diagrama de navegación
 
 ![Diagrama en blanco](https://user-images.githubusercontent.com/44704611/68335290-7a20da80-00dc-11ea-8c27-d6fbdf751cd7.jpeg)
+
+## Fase 3
+
+### Navegación
+
+- Para jugar online al pulsar el botón "Online Game" se muestra en pantalla un cuadro donde se debe escribir la IP del servidor del lobby al que se desea acceder.
+
+[Captura1 - raton sobre el boton online game]
+
+El botón "Online Game", a diferencia de la fase anterior, en la cual aparecía un mensaje avisando de que ese modo no estaba disponible, ahora permite acceder a una nueva escena donde encontrarse con otro jugador con el que se jugaría una supuesta partida al juego. Para entrar hay que hacer click en el botón e introducir la ip del servidor. En el caso de que la ip sea real, el servidor esté activo y haya espacio en la sala (solo puede haber 2 jugadores por sala)  se accederá a la sala en cuestión. Si la ip es incorrecta, o el servidor no está activo, aparecerá un mensaje avisando de ello al jugador, y si la sala está llena, aparecerá otro mensaje de advertencia.
+
+[Captura2 - cuadro de la IP]
+
+Tras pulsar el botón "online Game" aparecerá este recuadro para introducir la ip del servidor. Tras escribirla, se debe pulsar el botón "Find out" para intentar acceder al servidor en cuestión.
+ 
+[Captura3 - suriken]
+
+El suriken girando se utiliza como indicación de que se está intentando acceder al sevidor. Si no encuentra el servidor debido a que no existe o no esté activado, se muestra un mensaje donde se le comunica al jugador que el servidor que ha escrito no está disponible y un botón con el que puede volver al menú principal.
+
+[Captura4 - pantalla: servidor no disponible]
+
+En el caso de que el servidor no funcione o no esté disponible, se muestra este mensaje por pantalla a modo de aviso, con un botón para volver al menú.
+
+[Captura5 - pantalla: lobby lleno]
+
+En el caso de que ya haya 2 jugadores en ese servidor, se muestra un mensaje por pantalla indicando esto, con un botón para volver al menú.
+
+[Captura6 - pantalla: elegir nickname]
+
+Si la sala está disponible se cambia de escena, donde aparece un cuadro de texto donde el usuario debe escribir su nombre para poder acceder a la sala, junto a un botón de confirmar. Al acceder se muestra el nombre escogido junto a los saltos realizados por el jugador.
+
+[Captura7 - pantalla: Online Game]
+
+Tras introducir el nickname, se mostrará este por pantalla, junto a los troncos que haya saltado en total durante sus partidas a modo de estadísticas del jugador. Esta información se guarda asociada al nickname, por lo que, incluso si el servidor se apaga y se vuelve a encender, si el jugador entrá con un mismo nickname que en una sesión anterior, sus estadísticas seguiran iguales. Si no entra un segundo jugador, el juego de dicho jugador aparecerá vacío, y si entra se mostrará su nickname y sus troncos saltados. A la derecha aparecen siempre (independientemente de si en la escena hay uno o dos jugadores) el número de victorias del clan Ochre y el número de victorias del clan Púrpura. Estos datos representan todas las victorias que los jugadores en su conjunto han logrado con el ninja de color ochre y el ninja de color púrpura, respectivamente. Es importante aclarar que estas estadícticas actualmente no se aumentan de forma real (las victorias o los saltos no influyen) sino que para cambiarlas se deben usar los 4 botones de la escena. Los 2 botones de las flechas aumentan los saltos del jugador 1 y 2, y los botones con surikens para aumentar las victorias de cada clan, respectivamente. 
+
+### Diagrama de clases y API REST
+
+### Instrucciones precisas para ejecutar la aplicación
