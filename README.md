@@ -224,48 +224,74 @@ También está incluida una pantalla de carga, la cual aparece cuando se quiere 
 
 ### Diagrama de navegación
 
+
 ![Diagrama en blanco](https://user-images.githubusercontent.com/44704611/68335290-7a20da80-00dc-11ea-8c27-d6fbdf751cd7.jpeg)
 
 ## Fase 3
 
 ### Navegación
 
-Para jugar online al pulsar el botón "Online Game" se muestra en pantalla un cuadro donde se debe escribir la IP del servidor del lobby al que se desea acceder.
+- Para jugar online al pulsar el botón "Online Game" se muestra en pantalla un cuadro donde se debe escribir la IP del servidor del lobby al que se desea acceder.
 
-[Captura1 - raton sobre el boton online game]
 
-El botón "Online Game", a diferencia de la fase anterior, en la cual aparecía un mensaje avisando de que ese modo no estaba disponible, ahora permite acceder a una nueva escena donde es posible encontrarse con otro jugador con el que se jugaría una supuesta partida. Para entrar hay que hacer click en el botón e introducir la ip del servidor. En el caso de que la ip sea real, el servidor esté activo y haya espacio en la sala (solo puede haber 2 jugadores por sala)  se accederá a la sala en cuestión. Si la ip es incorrecta o el servidor no está activo, aparecerá un mensaje avisando de ello al jugador y, si la sala está llena, aparecerá otro mensaje de advertencia.
+#### Raton sobre el boton online game
+![Captura1 - raton sobre el boton online game](https://user-images.githubusercontent.com/44704611/70210070-123cce80-1732-11ea-805f-8e0c01553a9c.png)
 
-[Captura2 - cuadro de la IP]
+El botón "Online Game", a diferencia de la fase anterior, en la cual aparecía un mensaje avisando de que ese modo no estaba disponible, ahora permite acceder a una nueva escena donde encontrarse con otro jugador con el que se jugaría una supuesta partida al juego. Para entrar hay que hacer click en el botón e introducir la ip del servidor. En el caso de que la ip sea real, el servidor esté activo y haya espacio en la sala (solo puede haber 2 jugadores por sala)  se accederá a la sala en cuestión. Si la ip es incorrecta, o el servidor no está activo, aparecerá un mensaje avisando de ello al jugador, y si la sala está llena, aparecerá otro mensaje de advertencia.
 
-Tras pulsar el botón "Online Game" aparecerá este recuadro para introducir la ip del servidor. Tras escribirla, se debe pulsar el botón "Find out" para intentar acceder al servidor en cuestión.
+
+#### Cuadro de la IP
+![Captura2 - cuadro de la IP](https://user-images.githubusercontent.com/44704611/70210366-b9ba0100-1732-11ea-879e-fc6dfd8414f0.png)
+
+Tras pulsar el botón "online Game" aparecerá este recuadro para introducir la ip del servidor. Tras escribirla, se debe pulsar el botón "Find out" para intentar acceder al servidor en cuestión.
  
-[Captura3 - suriken]
+ 
+#### Suriken como pantalla de carga
+![Captura3 - suriken](https://user-images.githubusercontent.com/44704611/70210400-d5250c00-1732-11ea-9866-24a44fe9208d.png)
 
-El shuriken girando se utiliza como indicación de que se está intentando acceder al sevidor. Si no encuentra el servidor debido a que no existe o no esté activado, se muestra un mensaje donde se le comunica al jugador que el servidor que ha escrito no está disponible y un botón con el que puede volver al menú principal.
+El suriken girando se utiliza como indicación de que se está intentando acceder al sevidor. Si no encuentra el servidor debido a que no existe o no esté activado, se muestra un mensaje donde se le comunica al jugador que el servidor que ha escrito no está disponible y un botón con el que puede volver al menú principal.
 
-[Captura4 - pantalla: servidor no disponible]
+
+#### Pantalla: servidor no disponible
+![Captura4 - pantalla: servidor no disponible](https://user-images.githubusercontent.com/44704611/70210433-eb32cc80-1732-11ea-8296-dbca3d8c3551.png)
 
 En el caso de que el servidor no funcione o no esté disponible, se muestra este mensaje por pantalla a modo de aviso, con un botón para volver al menú.
 
-[Captura5 - pantalla: lobby lleno]
 
-En el caso de que ya haya 2 jugadores en ese servidor, se muestra un mensaje por pantalla indicando que este esta lleno, con un botón para volver al menú.
+#### pantalla: lobby lleno
+![Captura5 - pantalla: lobby lleno](https://user-images.githubusercontent.com/44704611/70210450-fa197f00-1732-11ea-9c19-cde1f0e6f489.png)
 
-[Captura6 - pantalla: elegir nickname]
+En el caso de que ya haya 2 jugadores en ese servidor, se muestra un mensaje por pantalla indicando esto, con un botón para volver al menú.
 
-Si la sala está disponible se cambia de escena, donde aparece un cuadro de texto donde el usuario debe escribir su nombre antes de acceder a la sala.
 
-[Captura7 - pantalla: Online Game]
+#### Pantalla: elegir nickname
+![Captura6 - pantalla: elegir nickname](https://user-images.githubusercontent.com/44704611/70210469-0998c800-1733-11ea-9dbd-28b154bbded4.png)
 
-Tras introducir el nickname, se mostrará este por pantalla, junto a los troncos que haya saltado en total durante sus partidas a modo de estadísticas del jugador. Esta información se guarda asociada al nickname, por lo que, incluso si el servidor se apaga y se vuelve a encender, si el jugador entra con un mismo nickname que en una sesión anterior, sus estadísticas seguiran iguales. Si no entra un segundo jugador, su espacio aparecerá vacío. Si entra, también se mostrarán su nickname y sus troncos saltados. A la derecha aparecen siempre (independientemente de si en la escena hay uno o dos jugadores) el número de victorias del clan Ocre y el número de victorias del clan Púrpura. Estos datos representan todas las victorias que los jugadores en su conjunto han logrado con el ninja de color ochre y el ninja de color púrpura, respectivamente. Es importante aclarar que estas estadícticas actualmente no se aumentan de forma real (las victorias o los saltos no influyen) sino que para cambiarlas se deben usar los 4 botones de la escena. Los 2 botones de las flechas aumentan los saltos del jugador 1 y 2, y los botones con shurikens para aumentar las victorias de cada clan. 
+Si la sala está disponible se cambia de escena, donde aparece un cuadro de texto donde el usuario debe escribir su nombre para poder acceder a la sala, junto a un botón de confirmar. Al acceder se muestra el nombre escogido junto a los saltos realizados por el jugador.
+
+
+#### Pantalla: Online Game
+![Captura7 - pantalla: Online Game](https://user-images.githubusercontent.com/44704611/70210493-1ae1d480-1733-11ea-8aa0-58bace1300c2.png)
+
+
+Tras introducir el nickname, se mostrará este por pantalla, junto a los troncos que haya saltado en total durante sus partidas a modo de estadísticas del jugador. Esta información se guarda asociada al nickname, por lo que, incluso si el servidor se apaga y se vuelve a encender, si el jugador entrá con un mismo nickname que en una sesión anterior, sus estadísticas seguiran iguales. Si no entra un segundo jugador, el juego de dicho jugador aparecerá vacío, y si entra se mostrará su nickname y sus troncos saltados. A la derecha aparecen siempre (independientemente de si en la escena hay uno o dos jugadores) el número de victorias del clan Ochre y el número de victorias del clan Púrpura. Estos datos representan todas las victorias que los jugadores en su conjunto han logrado con el ninja de color ochre y el ninja de color púrpura, respectivamente. Es importante aclarar que estas estadícticas actualmente no se aumentan de forma real (las victorias o los saltos no influyen) sino que para cambiarlas se deben usar los 4 botones de la escena. Los 2 botones de las flechas aumentan los saltos del jugador 1 y 2, y los botones con surikens para aumentar las victorias de cada clan, respectivamente. 
+
 
 ### Diagrama de clases y API REST
-[Captura de los 2 diagramas de clases]
 
-En la parte de cliente primero encontramos que el index.html tiene una agregacion de phaser.js y game.js; ya que se incluyen con la etiqueta de <script>. Tambien se podria decir que las otras escenas tambien actuan como agregados del index, pero en realidad son clases que actuan como agregados del propio game.js ya que este contiene la configuracion de todo el juego y, por tanto, tambien maneja las diversas escenas (main-menu, credits-menu, controls-menu, local-menu y online-lobby). Por otra parte, existe una asociacion entre la escena del main-menu y las escenas del menu de créditos, controles, local y menu ya que podemos acceder desde el main a ellas. Por ultimo, en online-lobby encontramos como agregados input.html e input-url.html ya que contienen los input de los que se hacen uso dentro de la escena.
-En la parte de servidor tenemos tres clases. Primero, aplication.java se encarga del correcto funcionamiento de toda la aplicacion. Se trata de una clase independiente por lo que no encontramos ninguna composicion ni agregacion, pero existe una agregacion con Player-Controller ya que consigue que esta clase funcione adecuadamente dentro de la aplicacion. Player-Controller a su vez tiene una asociacion de composicion con Player pues si este se elimina, Player-Controller no podria existir.
+![Captura de los 2 diagramas de clases](https://user-images.githubusercontent.com/44704611/70210034-f5080000-1731-11ea-9699-ac2ff7bc6ee5.jpeg)
+
+
+En la parte de cliente primero encontramos el index.html tiene una agregacion del phaser.js y game.js; ya que se incluyen con la etiqueta de <script>. Tambien se podria decir que las otras escenas tambien actuan como agregados del index, pero en realidad son clases que actuan como agregados del propio game.js ya que este contiene la configuracion de todo el juego y por tanto tambien maneja las diversas escenas (main-menu, credits-menu, controls-menu, local-menu y online-lobby). Por otra parte, existe una asociacion entre la escena del main-menu y las escenas del menu de creditos, controles, local y menu ya que podemos acceder desde el main a las otras escenas. Por ultimo, en online-lobby encontramos como agregados input.html e input-url.html ya que contienen los input que se hacen uso dentro de esta escena.
+En la parte de servidor tenemos tres clases. Primero aplication.java, esta clase se encarga del correcto funcionamiento de toda la aplicacion. Se trata de una clase independiente por lo que no encontramos ninguna composicion ni agregacion, pero existe una agregacion con players-controlers ya que consigue que esta clase funcione adecuajamente dentro de la aplicacion. Player-controlers a su vez tiene una asociacion de composicion con players pues si este se elimina players-controlers no podria existir.
+
 
 ### Instrucciones precisas para ejecutar la aplicación
 
-Para la ejecución de la aplicación unicamente será necesario el archivo ".jar" de la misma, incluido en la entrega, y en el repositorio de github. Se puede ejecutar haciendo doble click en él, o bien con el CMD. Para este caso, hay que acceder al directorio que contiene el ".jar" mediante el comando "cd" para entrar por las carpetas. Una vez en el directorio, se escribe "java -jar 'nombre del fichero.jar'". Una vez ejecutado, desde un navegador web, se introducirá como url la dirección IP del servidor seguido de 2 puntos y el puerto 8080 (ejemplo: 10.10.115.189:8080). Para saber la Ip se introduce en el CMD el comando ipconfig y se utiliza la direccion ipv4 mostrada. Otra opcion, si se quiere entrar desde el mismo ordenador en el que está el servidor, es poner localhost:8080. Eso mostrará el menú principal del juego. Habrá que hacer click en "Online Game" e introducir de nuevo o la ip con el puerto, o localhost con el puerto. No se debe añadir http al principio, eso lo hace el juego automaticamente. Una vez dentro, se introduce el apodo que se desea, y cuando este se ha introducido y se haya creado el jugador, apareceran las estadísticas del mismo. Se pueden usar los 4 botones presentes en la escena para aumentar las estadísticas. El cuadrado sirve para marcar si el jugador está listo o no para iniciar la partida (recordemos que estas partidas no se pueden iniciar de verdad). En la parte inferior de la pantalla hay un chat. Se puede escribir en la barra y mandar el mensaje pulsando el botón. El botón "return" sirve para volver al menú principal.
+Para la ejecución de la aplicación unicamente será necesario el archivo "jar" de la misma, incluido en la entrega, y en el repositorio de github. Se puede ejecutar haciendo doble click en él, o bien con el CMD. Para este caso, hay que acceder al directorio que contiene el "jar" mediante el comando "cd" para entrar por las carpetas. Una vez en el directorio, se escribe "java -jar 'nombre del fichero.jar'". Una vez ejecutado, desde un navegador web, se introducirá como url la dirección IP del servidor seguido de 2 puntos y el puerto 8080 (ejemplo: 10.10.115.189:8080). Para saber la Ip se introduce en el CMD el comando ipconfig, y se utiliza la direccion ipv4 mostrada. Otra opcion, si se quiere entrar desde el mismo ordenador en el que está el servidor, es poner localhost:8080. Eso mostrará el menú principal del juego. Habrá que hacer click en "Online Game" e introducir de nuevo o la ip con el puerto, o localhost con el puerto. No se debe añadir http al principio, eso lo hace el juego automaticamente. Una vez dentro, se introduce el apodo que se desea, y cuando este se ha introducido y se haya creado el jugador, apareceran las estadísticas del mismo. Se pueden usar los 4 botones presentes en la escena para aumentar dichas estadísticas. Y el cuadrado sirve para marcar si el jugador está listo o no para iniciar la partida (recordemos que estas partidas no se pueden iniciar de verdad). En la parte inferior de la pantalla hay un chat. Se puede escribir en la barra y mandar el mensaje pulsando el botón. El botón "return" sirve para volver al menú principal.
+
+
+### Diagrama de estados de la fase 3
+
+![DiagramaEstados](https://user-images.githubusercontent.com/44704611/70209935-c2f69e00-1731-11ea-9a39-a46b5c23cfab.jpeg)
+
