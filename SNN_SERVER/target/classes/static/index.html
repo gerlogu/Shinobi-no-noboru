@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title> Shinobi No Noboru </title>
+
+    <style media='screen' type='text/css'>
+      @font-face {
+        font-family: brush_font;
+        src: url('assets/Fonts/JAPAB___.ttf');
+      }
+
+      @font-face {
+        font-family: kouzan_font;
+        src: url('assets/Fonts/KouzanGyousho.ttf');
+      }
+    </style>  
+
+    <div style="font-family:brush_font; position:absolute; left:-1000px; visibility:hidden;">.</div>
+    <div style="font-family:kouzan_font; position:absolute; left:-1000px; visibility:hidden;">.</div>
+
+    <!--Se cargan todos los archivos necesarios, empezando por el archivo de phaser, despues se cargan las escenas, y por último el archivo de configuración del juego como tal.
+    No se debe cargar el game.js antes que las escenas, pues en el archivo se indican por que escenas estará formado el juego, pero si estas no están cargadas, dará error.-->
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="js/phaser.js"> </script>
+    <script src="js/menus/controls-menu.js"> </script>
+    <script src="js/menus/online-lobby.js"> </script>
+    <script src="js/local-game.js"> </script>
+    <script src="js/menus/credits-menu.js"> </script>
+    <script src="js/menus/main-menu.js"> </script>
+    <script src="js/menus/prueba.js"> </script>
+
+    
+    <script src="js/game.js"> </script>
+  </head>
+  <body>
+    <div id="game"></div>
+  </body>
+</html>
