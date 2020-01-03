@@ -586,13 +586,15 @@ public class PlayersController {
 	 * @throws IOException
 	 */
 	void loadStats() throws IOException{
-		
-		BufferedReader br = new BufferedReader(new FileReader(file)); 
+		if(file.exists()) {
+			BufferedReader br = new BufferedReader(new FileReader(file)); 
 
-		jumpedLogs1 = Integer.parseInt(br.readLine());
-		jumpedLogs2 = Integer.parseInt(br.readLine());
+			jumpedLogs1 = Integer.parseInt(br.readLine());
+			jumpedLogs2 = Integer.parseInt(br.readLine());
+			
+			br.close();
+		}
 		
-		br.close();
 	}
 	
 	/**

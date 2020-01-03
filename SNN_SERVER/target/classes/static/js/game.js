@@ -22,7 +22,7 @@ var config = {
       gravity: { y: 1000}
     }
   },
-  scene: [mainMenu, controlsMenu, creditsMenu,onlineLobby, localgame]
+  scene: [mainMenu, controlsMenu, creditsMenu,onlineLobby, localgame, onlinegame]
   
 };
 

@@ -390,10 +390,13 @@ class onlineLobby extends Phaser.Scene{
                     that.gameStarted = false;
                     
                 }else if(items == true){
-                    that.gameStarted = true;
-                    that.startedGameText.visible = true;
-                    that.startedGameScroll.visible = true;
-                    that.startedGameScroll2.visible = true;
+                    // that.gameStarted = true;
+                    // that.startedGameText.visible = true;
+                    // that.startedGameScroll.visible = true;
+                    // that.startedGameScroll2.visible = true;
+
+                    that.cameras.main.fadeOut(200);
+                    that.scene.get("onlineLobby").time.addEvent({delay: 210, callback: function(){that.scene.start('onlinegame');}, callbackScope:this, loop:false});              
                 }      
             })
 
