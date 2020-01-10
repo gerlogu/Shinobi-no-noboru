@@ -22,9 +22,11 @@ class onlinegame extends Phaser.Scene{
    * como la barra de carga
    */
   preload(){
+
     //Codigo de numero aleatorio con la semilla, y la declaracion de la misma
     this.seed = Math.floor(Math.random() * (1000 - 1)) + 1;
     var that = this;
+    //Metodo que devuelve numero aleatorio de la semilla
     this.rand= function( min, max, seed ) {
       min = min || 0;
       max = max || 1;
@@ -38,6 +40,7 @@ class onlinegame extends Phaser.Scene{
       } else {
         rand  = Math.floor( Math.random() * ( max - min + 1 ) ) + min;
       }
+      //Aumento la semilla, para que no siga siendo la misma.
       this.seed++;
       return rand;
     }
@@ -219,39 +222,52 @@ class onlinegame extends Phaser.Scene{
    * Método que se ejecuta al comienzo del juego, cuandos se ha creado todo.
    */
   create(){
+    //
     this.logsCoordX;
     this.logsCoordY;
-  //varibles necesarias en el proyecto final (websockets)
+  //varibles necesarias en el proyecto final (websockets) (la primera, es un booleano que comprueba si se ha establecido el playerId, la segunda es el playerId en si, el cual se recibe del servidor)
     this.playeridDefined = false;
     this.playerid;
     var that = this;
     //código de websockets (pasar al proyecto final)
     this.connection = new WebSocket('ws://192.168.68.114:8080/juegoOnline');
+    //Cuando se inicia la conexion
     this.connection.onopen = function () {
       console.log("Conexion establecida");
     }
+    //Cuando la conexion da un error
     this.connection.onerror = function(e) {
       console.log("WS error: " + e);
     }
+    //Cuando se cierra la conexion, se muestra el codigo del motivo, para poder solucionarlo si esto ha sido no intencionadamente.
     this.connection.onclose = function(e){
       console.log("Motivo del cierre: " + e.code);
     }
+
+    //Se ejecuta al recibir un mensaje. Ese mensaje se convierte a un objeto JS y despues se comprueba que atributos contiene (en funcion de cuales se hayan enviado como coordenadas del jugador, de los troncos...)
     this.connection.onmessage = function(message) {
       var parsedMessage = JSON.parse(message.data);
+
+      //Si se ha enviado el playerId, se ejecuta.
       if(parsedMessage.playerID != null){     
         that.playerid = parsedMessage.playerID;
         console.log("Id de la sesion: " + parsedMessage.playerID);
         console.log("ID establecido: " + that.playerid);
       }
+
+      //Si se ha enviado el index de un tronco, se ejecuta.
       if(parsedMessage.index != null){
         that.cols[that.cols.length - parsedMessage.index].setGravityY(0);
         console.log("Se recibe el index.");
       }
+
       if(parsedMessage.colsX!=null){
-        //Se colocan los troncos tal y como le aparecen al jugador 1. Si faltan troncos, estos se crean.  (websockets)
+        //Se copian los arrays de coordenadas de troncos, en las variables correspondientes. En el update, se actualiza la posición si se es el jugador 2, a las del jugador 1.
         that.logsCoordX = parsedMessage.colsX;   
         that.logsCoordY = parsedMessage.colsY;     
       }
+
+      //i se ha enviado las coordenadas del jugador y su velocidad, se trabaja con ello
       if(parsedMessage.Xvel!=null){
         //console.log("Coordenadas del otro ninja: X=" + parsedMessage.Xcoord + " Y=" + parsedMessage.Ycoord);
         if(that.playerid == 1){
@@ -799,7 +815,7 @@ class onlinegame extends Phaser.Scene{
   }
 
   /**
-   * Inicializa los spawns de los troncos (parte superior de la cascada)
+   * Inicializa los spawns de los troncos (parte superior de la cascada) utilizando la funcion rand, que va con una semilla (this.seed)
    */
   InitSpawns(){
       // #region spawnAreas
@@ -1263,9 +1279,8 @@ class onlinegame extends Phaser.Scene{
     var that = this;
     //Comprobacion necesaria y activacion de los envios de datos por websockets. Se mandan las coordenadas de los jugadores, y el array de troncos
     if(!this.playeridDefined){
-      
-
       if(this.playerid != undefined){
+        //Se configura el envio de datos, en funcion de si es el jugador 1 o 2
         this.playeridDefined = true;
         if(this.playerid==1){
           console.log('Jugador 1 manda coordenadas');
@@ -1278,8 +1293,7 @@ class onlinegame extends Phaser.Scene{
                 Xcoord : this.player1.x,
                 Ycoord : this.player1.y
               }
-
-            
+        
               var colsCoords = {
                 colsX : [],
                 colsY : []
@@ -1302,6 +1316,7 @@ class onlinegame extends Phaser.Scene{
             this.scene.get("onlinegame").time.addEvent({
               delay: 33,                // ms
               callback: function(){
+
                 var coords = {
                   Xvel : this.player2.body.velocity.x,
                   Yvel : this.player2.body.velocity.y,
