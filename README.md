@@ -295,3 +295,21 @@ Para la ejecución de la aplicación unicamente será necesario el archivo "jar"
 
 ![DiagramaEstados](https://user-images.githubusercontent.com/44704611/70209935-c2f69e00-1731-11ea-9a39-a46b5c23cfab.jpeg)
 
+
+##Fase 4
+
+### Protocolo (explicación y capturas)
+#### Parte de spring tool suite:
+![Captura 1 de los métodos de la clase GameHandler](https://user-images.githubusercontent.com/44704611/72186100-bdf1d200-33f4-11ea-9e88-1dccb599e903.PNG)
+
+![Captura 2 de los métodos de la clase GameHandler](https://user-images.githubusercontent.com/44704611/72186116-c6e2a380-33f4-11ea-8b28-c45f9804786c.PNG)
+
+#### Parte de javascript:
+![Captura 1 de los metodos de websockets en js](https://user-images.githubusercontent.com/44704611/72186110-c3e7b300-33f4-11ea-9e7c-1def009bb6a5.PNG)
+
+![Captura 2 de los metodos de websockets en js](https://user-images.githubusercontent.com/44704611/72186121-c944fd80-33f4-11ea-9147-b0700050abee.PNG)
+
+### Diagrama de clases actualizado
+
+
+### Video de 2 minutos 
