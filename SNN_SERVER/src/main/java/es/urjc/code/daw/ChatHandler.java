@@ -22,7 +22,8 @@ public class ChatHandler extends TextWebSocketHandler {
 	private int idTwo = 2;
 	private ObjectMapper mapper = new ObjectMapper();
 
-	
+	//Método que se ejecuta tras establecerse la conexión.
+	//Si la sesión del "jugador 1" está vacía, se guardá la sesión ahí. Si no, se guardá en el jugador 2. Si ambos están llenos, no se guardá pues no pueden entrar más jugadores.
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("New user: " + session.getId());
@@ -42,6 +43,8 @@ public class ChatHandler extends TextWebSocketHandler {
 		
 	}
 	
+	//Método que se ejecuta tras cerrar la conexión
+	//Si la sesión cerrada es igual a la sesión 1, esta se borra, sino se borra la 2.
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		System.out.println("Session closed: " + session.getId());
@@ -52,6 +55,8 @@ public class ChatHandler extends TextWebSocketHandler {
 		}
 	}
 	
+	//Método que gestiona los mensajes que llegan
+	//En función del contenido del mensaje se ejecuta un método u otro
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
@@ -66,7 +71,8 @@ public class ChatHandler extends TextWebSocketHandler {
 		}
 	}
 	
-
+	//Método que se ejecuta cuando se envían las coordenadas de los jugadores.
+	//Se crea un nuevo objecto, y se envía al otro jugador.
 	private void sendCoordsOtherParticipants(WebSocketSession session, JsonNode node) throws IOException {
 
 		//System.out.println("Message sent: " + node.toString());
@@ -85,6 +91,8 @@ public class ChatHandler extends TextWebSocketHandler {
 			
 	}
 	
+	//Método que se ejecuta cuando se envía un índice de un tronco para que caiga.
+	//Se crea un nuevo objecto, y se envía al otro jugador.
 	private void sendIndexOtherParticipants(WebSocketSession session, JsonNode node) throws IOException {
 
 		System.out.println("Message sent: " + node.toString());
@@ -99,6 +107,9 @@ public class ChatHandler extends TextWebSocketHandler {
 		}
 	}
 	
+	
+	//Método que se ejecuta cuando se envían las coordenadas de los coordenadas.
+	//Se crea un nuevo objecto, y se envía al otro jugador.
 	private void sendColsOtherParticipants(WebSocketSession session, JsonNode node) throws IOException {
 
 		System.out.println("Message sent: " + node.toString());
