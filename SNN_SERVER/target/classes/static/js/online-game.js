@@ -267,7 +267,7 @@ class onlinegame extends Phaser.Scene{
         that.logsCoordY = parsedMessage.colsY;     
       }
 
-      //i se ha enviado las coordenadas del jugador y su velocidad, se trabaja con ello
+      //Si se ha enviado las coordenadas del jugador y su velocidad, se trabaja con ello
       if(parsedMessage.Xvel!=null){
         //console.log("Coordenadas del otro ninja: X=" + parsedMessage.Xcoord + " Y=" + parsedMessage.Ycoord);
         if(that.playerid == 1){

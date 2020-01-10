@@ -26,7 +26,7 @@ public class Application implements WebSocketConfigurer{
 	}
 	
 	@Bean
-	public ChatHandler createChatHandler() {
-		return new ChatHandler();
+	public GameHandler createChatHandler() {
+		return new GameHandler();
 	}
 }

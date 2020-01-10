@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public class ChatHandler extends TextWebSocketHandler {
+public class GameHandler extends TextWebSocketHandler {
 
 	private WebSocketSession sessionOne;
 	private WebSocketSession sessionTwo;
@@ -39,8 +39,7 @@ public class ChatHandler extends TextWebSocketHandler {
 			session.sendMessage(new TextMessage(newNode.toString()));
 		}else {
 			System.out.println("Impossible to establish connection. The lobby is full, so the session with id: " + session.getId() + " can't connect.");
-		}	
-		
+		}		
 	}
 	
 	//Método que se ejecuta tras cerrar la conexión
@@ -74,9 +73,7 @@ public class ChatHandler extends TextWebSocketHandler {
 	//Método que se ejecuta cuando se envían las coordenadas de los jugadores.
 	//Se crea un nuevo objecto, y se envía al otro jugador.
 	private void sendCoordsOtherParticipants(WebSocketSession session, JsonNode node) throws IOException {
-
 		//System.out.println("Message sent: " + node.toString());
-		
 		ObjectNode newNode = mapper.createObjectNode();
 		newNode.put("Xvel", node.get("Xvel").asDouble());
 		newNode.put("Yvel", node.get("Yvel").asDouble());
@@ -94,7 +91,7 @@ public class ChatHandler extends TextWebSocketHandler {
 	//Método que se ejecuta cuando se envía un índice de un tronco para que caiga.
 	//Se crea un nuevo objecto, y se envía al otro jugador.
 	private void sendIndexOtherParticipants(WebSocketSession session, JsonNode node) throws IOException {
-
+		
 		System.out.println("Message sent: " + node.toString());
 		
 		ObjectNode newNode = mapper.createObjectNode();
@@ -124,5 +121,4 @@ public class ChatHandler extends TextWebSocketHandler {
 			sessionOne.sendMessage(new TextMessage(newNode.toString()));
 		}
 	}
-
 }
