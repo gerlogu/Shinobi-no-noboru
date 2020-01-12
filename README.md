@@ -318,10 +318,12 @@ Estos son los posibles métodos, uno por cada tipo de dato contenido en el mensa
 
 #### Parte de javascript:
 
-
-Nada más crearse la partida, el cliente inicia una conexión con el websocket
+Nada más crearse la partida, el cliente inicia una conexión con el websocket.
+Si se conecta, se muestra por consola. Si se desconecta, se muestra por pantalla el código del motivo, y lo mismo en caso de error. Además se crea un método para gestionar los mensajes recibidos, ya que en función del contenido de los mismos, se usarán para una cosa o para otra.
 
 ![Captura 2 de los metodos de websockets en js](https://user-images.githubusercontent.com/44704611/72186121-c944fd80-33f4-11ea-9147-b0700050abee.PNG)
+
+Nada más empezar, se recibirá el playerID, el cual se guardará en una variable local, y se utilizará para decidir que personaje puede controlar el jugador. También servirá para decidir que datos se envían al jugador rival (si el jugador es el jugador 1, se enviarán las coordenadas del ninja 1, y el jugador 2 al recibirlas, sabrá gracias a su propio playerID, que esas coordenadas pertenecen al ninja 1. Además, el ninja 1 envía constantemente las coordenadas de los troncos al jugador 2, y si los troncos están descoordenados, se colocaran en la posición correspondiente).
 
 ### Diagrama de clases actualizado
 
