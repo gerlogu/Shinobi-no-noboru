@@ -60,13 +60,15 @@ public class GameHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
-		System.out.println("Message received: " + message.getPayload());
+		//System.out.println("Message received: " + message.getPayload());
 		JsonNode node = mapper.readTree(message.getPayload());
 		if(node.get("index") != null) {
 			sendIndexOtherParticipants(session, node);
 		}else if(node.get("colsX")!=null){
 			sendColsOtherParticipants(session, node);
-		}else {
+		}else if(node.get("jumped") != null) {
+			sendJumpedOtherParticipants(session, node);
+		}else{
 			sendCoordsOtherParticipants(session, node);
 		}
 	}
@@ -122,4 +124,20 @@ public class GameHandler extends TextWebSocketHandler {
 			sessionOne.sendMessage(new TextMessage(newNode.toString()));
 		}
 	}
+	
+	//Método que se ejecuta cuando se envía la señal de que un ninja ha saltado sobre el otro.
+		//Se crea un nuevo objecto, y se envía al otro jugador.
+		private void sendJumpedOtherParticipants(WebSocketSession session, JsonNode node) throws IOException {
+
+			System.out.println("Message sent: " + node.toString());
+			
+			ObjectNode newNode = mapper.createObjectNode();
+			newNode.put("jumped", node.get("jumped"));
+			
+			if(session.equals(sessionOne) && sessionTwo != null) {
+				sessionTwo.sendMessage(new TextMessage(newNode.toString()));
+			}else if(session.equals(sessionTwo) && sessionOne != null) {
+				sessionOne.sendMessage(new TextMessage(newNode.toString()));
+			}
+		}
 }

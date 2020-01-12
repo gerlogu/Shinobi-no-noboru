@@ -264,14 +264,14 @@ class onlinegame extends Phaser.Scene{
           method: 'DELETE',
           url: that.url + '/server/players/deletePlayer' + itemId
       }).done(function (item) {
-          
+        console.log("Personajes borrados");
       })
       //callback(item); 
       //console.log("Deleted item " + itemId)    
     }
 
     
-    that.scene.get("onlinegame").time.addEvent({delay: 300, callback: function(){that.deletePlayer(1); that.deletePlayer(2); console.log("Personajes borrados");}, callbackScope:this, loop:false});
+    that.scene.get("onlinegame").time.addEvent({delay: 300, callback: function(){that.deletePlayer(1); that.deletePlayer(2);}, callbackScope:this, loop:false});
 
     this.url = game.url2;
 
@@ -314,6 +314,32 @@ class onlinegame extends Phaser.Scene{
         that.logsCoordY = parsedMessage.colsY;     
       }
 
+      //Se recibe que el ninja rival ha saltado sobre el del jugador, y se ejecutan las acciones correspondientes
+      if(parsedMessage.jumped){
+        that.ninjaScream = that.screamPool[Math.floor(Math.random() * 5)];
+        that.ninjaScream.play();
+        // Salto
+        if(that.playerid == 2){
+          that.particles.emitParticleAt(that.player1.x,that.player1.y+40,50);
+          that.player2.setVelocityY(-that.jumpForce/2);
+          that.fallingP2 = true;
+          console.log("Siempre entra aqui");
+          that.scene.get("onlinegame").time.addEvent({delay: 400, callback: function(){that.fallingP2 = false}, callbackScope:that, loop:false});
+        }else{
+          // Salto
+          that.particles.emitParticleAt(that.player2.x,that.player2.y+40,50);
+          that.player1.setVelocityY(-that.jumpForce/2);
+          that.fallingP1 = true;
+          console.log("¿Aqui no entra verdad?");
+          that.scene.get("onlinegame").time.addEvent({delay: 400, callback: function(){that.fallingP1 = false}, callbackScope:that, loop:false});
+        }
+        //Sonido de salto
+        that.jumpaudio.play({
+          volume: 0.2
+        });
+
+      }
+
       //Si se ha enviado las coordenadas del jugador y su velocidad, se trabaja con ello
       if(parsedMessage.Xvel!=null){
         //console.log("Coordenadas del otro ninja: X=" + parsedMessage.Xcoord + " Y=" + parsedMessage.Ycoord);
@@ -325,9 +351,7 @@ class onlinegame extends Phaser.Scene{
             that.player2.x = parsedMessage.Xcoord;
             that.player2.y = parsedMessage.Ycoord;
           }
-
           
-
           //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
           if(that.platformRight.body != undefined && parsedMessage.Xvel != 0){
             that.platformRight.body.immovable = false;
@@ -382,27 +406,29 @@ class onlinegame extends Phaser.Scene{
 
             //Si el otro jugador no salta en 2 segundos,su plataforma se cae, y el salta automaticamente una vez, para así iniciar la partida.
             that.scene.get("onlinegame").time.addEvent({delay: 2000, callback: function(){
-            if(!that.player1CanMove){
-              that.player1CanMove = true;
-              that.player1.setVelocityY(this.jumpForce);
-            }
-            //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
-            if(that.platformLeft.body != undefined){
-              that.platformLeft.body.immovable = false;
-              that.platformLeft.body.allowGravity = true;
+              if(!that.player2CanMove){
+                that.player2CanMove = true;
+                that.player2.setVelocityY(that.jumpForce);
+              }
+              //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
 
-              that.platformLeft.setGravityY(0);
-              that.platform_left_background.setGravityY(0);
-            }
+              if(that.platformRight.body){
+                  if(that.platformRight.body.immovable)
+                  that.platformRight.body.immovable = false;
+                  that.platformRight.body.allowGravity = true;
+                  that.platformRight.setGravityY(0);
+                  that.platform_right_background.setGravityY(0);
+              }
+
               
 
-            //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
-            that.scene.get("onlinegame").time.addEvent({delay: 500, callback: function(){
-              that.platformLeft.destroy();
-              that.platform_left_background.destroy();
-            }, callbackScope:that, loop:false});
+              //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
+              that.scene.get("onlinegame").time.addEvent({delay: 500, callback: function(){
+                that.platformRight.destroy();
+                that.platform_right_background.destroy();
+              }, callbackScope:that, loop:false});
 
-          }, callbackScope:that, loop:false});
+            }, callbackScope:that, loop:false});
           }
         }
       }
@@ -973,7 +999,7 @@ class onlinegame extends Phaser.Scene{
 
     var playersCollide = function players(){
       
-      if(Phaser.Input.Keyboard.JustDown(this.WButton)){
+      if(Phaser.Input.Keyboard.JustDown(this.WButton) && this.playerid == 1){
 
         this.ninjaScream = this.screamPool[Math.floor(Math.random() * 5)];
         this.ninjaScream.play();
@@ -986,11 +1012,17 @@ class onlinegame extends Phaser.Scene{
           volume: 0.2
         });
 
+        //Se manda la señal al otro jugador de que se ha efectuado un salto
+        var jump = {
+          jumped : true
+        } 
+        this.connection.send(JSON.stringify(jump));
+
         this.fallingP2 = true;
         this.scene.get("onlinegame").time.addEvent({delay: 400, callback: function(){this.fallingP2 = false}, callbackScope:this, loop:false});
       }
 
-      if(Phaser.Input.Keyboard.JustDown(this.upButton)){
+      if(Phaser.Input.Keyboard.JustDown(this.upButton) && this.playerid == 2){
 
         this.ninjaScream = this.screamPool[Math.floor(Math.random() * 5)];
         this.ninjaScream.play();
@@ -1002,6 +1034,13 @@ class onlinegame extends Phaser.Scene{
         this.jumpaudio.play({
           volume: 0.2
         });
+
+         //Se manda la señal al otro jugador de que se ha efectuado un salto
+         var jump = {
+          jumped : true
+        } 
+        this.connection.send(JSON.stringify(jump));
+
         this.fallingP1 = true;
         this.scene.get("onlinegame").time.addEvent({delay: 400, callback: function(){this.fallingP1 = false}, callbackScope:this, loop:false});
       }
@@ -1537,10 +1576,10 @@ class onlinegame extends Phaser.Scene{
           if(this.platformLeft.body){
             if(this.platformLeft.body.immovable)
               this.platformLeft.body.immovable = false;
-          this.platformLeft.body.allowGravity = true;
+              this.platformLeft.body.allowGravity = true;
 
-          this.platformLeft.setGravityY(0);
-          this.platform_left_background.setGravityY(0);
+              this.platformLeft.setGravityY(0);
+              this.platform_left_background.setGravityY(0);
           }
           
 
