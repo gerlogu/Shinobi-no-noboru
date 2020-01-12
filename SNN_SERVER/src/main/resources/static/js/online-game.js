@@ -67,9 +67,7 @@ class onlinegame extends Phaser.Scene{
     this.maxLifes              = 5;
     this.screamPool            = [];
 
-    this.DButton = this.input.keyboard.addKey('D');
-    this.AButton = this.input.keyboard.addKey('A');
-    this.WButton = this.input.keyboard.addKey('W');
+
 
     this.rightButton = this.input.keyboard.addKey('right');
     this.leftButton  = this.input.keyboard.addKey('left');
@@ -222,6 +220,10 @@ class onlinegame extends Phaser.Scene{
    * Método que se ejecuta al comienzo del juego, cuandos se ha creado todo.
    */
   create(){
+    this.DButton = this.input.keyboard.addKey('D');
+    this.AButton = this.input.keyboard.addKey('A');
+    this.WButton = this.input.keyboard.addKey('W');
+
     //
     this.logsCoordX;
     this.logsCoordY;
@@ -229,7 +231,6 @@ class onlinegame extends Phaser.Scene{
     this.playeridDefined = false;
     this.playerid;
     var that = this;
-
 
 
 
@@ -324,6 +325,19 @@ class onlinegame extends Phaser.Scene{
             that.player2.x = parsedMessage.Xcoord;
             that.player2.y = parsedMessage.Ycoord;
           }
+
+          
+
+          //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
+          if(that.platformRight.body != undefined && parsedMessage.Xvel != 0){
+            that.platformRight.body.immovable = false;
+            that.platformRight.body.allowGravity = true;
+
+            that.platformRight.setGravityY(0);
+            that.platform_right_background.setGravityY(0);
+            that.player2CanMove = true;
+          }
+
         }else{
           that.player1.body.velocity.x = parsedMessage.Xvel;
           that.player1.body.velocity.y = parsedMessage.Yvel;
@@ -331,6 +345,16 @@ class onlinegame extends Phaser.Scene{
           if(that.player1.x > (parsedMessage.Xcoord+15) || that.player1.x < (parsedMessage.Xcoord+15)){
             that.player1.x = parsedMessage.Xcoord;
             that.player1.y = parsedMessage.Ycoord;
+          }
+
+          //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
+          if(that.platformLeft.body != undefined && parsedMessage.Xvel != 0){
+            that.platformLeft.body.immovable = false;
+            that.platformLeft.body.allowGravity = true;
+
+            that.platformLeft.setGravityY(0);
+            that.platform_left_background.setGravityY(0);
+            that.player1CanMove = true;
           }
         }
       }

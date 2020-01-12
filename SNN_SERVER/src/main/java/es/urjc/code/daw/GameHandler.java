@@ -49,7 +49,8 @@ public class GameHandler extends TextWebSocketHandler {
 		System.out.println("Session closed: " + session.getId());
 		if(session.equals(sessionOne)) {
 			sessionOne = null;
-		}else if(session.equals(sessionTwo)){
+		}
+		if(session.equals(sessionTwo)){
 			sessionTwo = null;
 		}
 	}
