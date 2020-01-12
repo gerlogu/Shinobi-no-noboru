@@ -328,6 +328,7 @@ class mainMenu extends Phaser.Scene{
 
                 that.url = 'http://'+inputText.value.toString() + ":8080";
                 game.url = that.url;
+                game.url2 = inputText.value.toString() + ":8080";
                 //  Populate the text with whatever they typed in
                 // text.setText('Welcome ' + inputText.value);
                 // console.log('Welcome ' + inputText.value);

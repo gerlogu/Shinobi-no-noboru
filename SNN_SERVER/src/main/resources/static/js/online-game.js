@@ -229,8 +229,54 @@ class onlinegame extends Phaser.Scene{
     this.playeridDefined = false;
     this.playerid;
     var that = this;
+
+
+
+
+
+    this.url = game.url;
+
+    this.updateGameStarted = function(gameS) {
+        
+      $.ajax({
+          method: "PUT",
+          url: that.url + '/server/updateGameStarted',
+          data: JSON.stringify(gameS),
+          processData: false,
+          headers: {
+              "Content-Type": "application/json"
+          }
+          }).done(function (newText) {
+              //console.log("new text chat: " + newText);
+              //that.victoriesText2.setText("Purple victories: " + purpleVictories); 
+      })
+    }
+
+    
+
+    this.updateGameStarted(false);
+
+
+    this.deletePlayer=function(itemId) {
+                
+      $.ajax({
+          method: 'DELETE',
+          url: that.url + '/server/players/deletePlayer' + itemId
+      }).done(function (item) {
+          
+      })
+      //callback(item); 
+      //console.log("Deleted item " + itemId)    
+    }
+
+    
+    that.scene.get("onlinegame").time.addEvent({delay: 300, callback: function(){that.deletePlayer(1); that.deletePlayer(2); console.log("Personajes borrados");}, callbackScope:this, loop:false});
+
+    this.url = game.url2;
+
+
     //código de websockets (pasar al proyecto final)
-    this.connection = new WebSocket('ws://192.168.68.114:8080/juegoOnline');
+    this.connection = new WebSocket('ws://' + this.url + '/juegoOnline');
     //Cuando se inicia la conexion
     this.connection.onopen = function () {
       console.log("Conexion establecida");
@@ -928,7 +974,7 @@ class onlinegame extends Phaser.Scene{
       this.playagainButton.on('pointerup', function(){
           that.sound2.play();
           that.cameras.main.fadeOut(200);
-          that.scene.get("onlinegame").time.addEvent({delay: 210, callback: function(){that.scene.start('localgame');}, callbackScope:this, loop:false});
+          that.scene.get("onlinegame").time.addEvent({delay: 210, callback: function(){that.scene.start('mainMenu');}, callbackScope:this, loop:false});
       });
 
       this.returnButton = this.physics.add.sprite(this.width/1.85,this.height/1.72,'Return').setGravityY(-1000).setGravityX(0).setInteractive();
@@ -939,7 +985,8 @@ class onlinegame extends Phaser.Scene{
       this.returnButton.on('pointerup', function(){
           that.sound2.play();
           that.cameras.main.fadeOut(200);
-          that.scene.get("onlinegame").time.addEvent({delay: 210, callback: function(){that.scene.start('mainMenu');}, callbackScope:this, loop:false});
+          that.connection.close();
+          that.scene.get("onlinegame").time.addEvent({delay: 210, callback: function(){that.scene.start('mainMenu'); }, callbackScope:this, loop:false});
       });
 
       this.anims.create({
