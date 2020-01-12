@@ -302,10 +302,24 @@ Para la ejecución de la aplicación unicamente será necesario el archivo "jar"
 #### Parte de spring tool suite:
 ![Captura 1 de los métodos de la clase GameHandler](https://user-images.githubusercontent.com/44704611/72186100-bdf1d200-33f4-11ea-9e88-1dccb599e903.PNG)
 
+El protocolo funciona de la siguiente manera: se almacenan dos sesiones en el servidor, una por jugador. Cuando entra un jugador nuevo, se comprueba si la sesión uno está vacía, en ese caso se guarda la nueva sesión ahí, en caso contrario se comprueba si la sesión 2 está vacía y si se cumple, se guarda la nueva sesión ahí. En caso de que ambas estén llenas no se guarda la sesión. Cuando se cierra una conexión, se comprueba a cual de las 2 sesiones corresponde, y se elimina dicha sesión.
+
+Además de las sesiones, se utilizan dos integers como ids de los jugadores. En el caso de que una nueva conexión sea del jugador uno, se le envía a dicha sesión el id 1 (y lo mismo si es el jugador 2), que el cliente del jugador recibe y usa para saber que ninja puede controlar dicho jugador, y que ninja no. Además se utilizará también para otros comportamientos que se explican más adelante.
+
+Cuando se recibe un mensaje, se comprueba el contenido y en función del mismo, se ejecuta un método u otro, pudiendo ser el contenido del mensaje:
+	- El índice de un tronco que debe caer.
+	- Las coordenadas de el otro jugador, junto a la velocidad tanto horizontal como vertical.
+	- Las coordenadas de posición de los troncos del jugador 1, para comprobar si el jugador 2 tiene los troncos en la misma 	   posición. En caso contrario, sus troncos se colocan en la posición correcta, para evitar que las partidas 			  funcionen de forma desigual.
+
 ![Captura 2 de los métodos de la clase GameHandler](https://user-images.githubusercontent.com/44704611/72186116-c6e2a380-33f4-11ea-8b28-c45f9804786c.PNG)
 
+Estos son los posibles métodos, uno por cada tipo de dato contenido en el mensaje (los mismos descritos anteriormente). En cada caso, se creará un nuevo objeto JSON con los atributos necesarios, y se le enviará al jugador contrario al que hizo el envío, si es que este segundo jugador está conectado.
+
+
 #### Parte de javascript:
-![Captura 1 de los metodos de websockets en js](https://user-images.githubusercontent.com/44704611/72186110-c3e7b300-33f4-11ea-9e7c-1def009bb6a5.PNG)
+
+
+Nada más crearse la partida, el cliente inicia una conexión con el websocket
 
 ![Captura 2 de los metodos de websockets en js](https://user-images.githubusercontent.com/44704611/72186121-c944fd80-33f4-11ea-9147-b0700050abee.PNG)
 
