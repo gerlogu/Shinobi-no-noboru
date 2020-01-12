@@ -220,9 +220,9 @@ class onlinegame extends Phaser.Scene{
    * Método que se ejecuta al comienzo del juego, cuandos se ha creado todo.
    */
   create(){
-    // this.DButton = this.input.keyboard.addKey('D');
-    // this.AButton = this.input.keyboard.addKey('A');
-    // this.WButton = this.input.keyboard.addKey('W');
+    this.DButton = this.input.keyboard.addKey('D');
+    this.AButton = this.input.keyboard.addKey('A');
+    this.WButton = this.input.keyboard.addKey('W');
 
     //
     this.logsCoordX;
@@ -336,6 +336,30 @@ class onlinegame extends Phaser.Scene{
             that.platformRight.setGravityY(0);
             that.platform_right_background.setGravityY(0);
             that.player2CanMove = true;
+
+              //Si el otro jugador no salta en 2 segundos,su plataforma se cae, y el salta automaticamente una vez, para así iniciar la partida.
+              that.scene.get("onlinegame").time.addEvent({delay: 2000, callback: function(){
+                if(!that.player1CanMove){
+                  that.player1CanMove = true;
+                  that.player1.setVelocityY(that.jumpForce);
+                }
+                //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
+                if(that.platformLeft.body != undefined){
+                  that.platformLeft.body.immovable = false;
+                  that.platformLeft.body.allowGravity = true;
+
+                  that.platformLeft.setGravityY(0);
+                  that.platform_left_background.setGravityY(0);
+                }
+                  
+
+                //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
+                that.scene.get("onlinegame").time.addEvent({delay: 500, callback: function(){
+                  that.platformLeft.destroy();
+                  that.platform_left_background.destroy();
+                }, callbackScope:that, loop:false});
+
+              }, callbackScope:that, loop:false});
           }
 
         }else{
@@ -355,6 +379,30 @@ class onlinegame extends Phaser.Scene{
             that.platformLeft.setGravityY(0);
             that.platform_left_background.setGravityY(0);
             that.player1CanMove = true;
+
+            //Si el otro jugador no salta en 2 segundos,su plataforma se cae, y el salta automaticamente una vez, para así iniciar la partida.
+            that.scene.get("onlinegame").time.addEvent({delay: 2000, callback: function(){
+            if(!that.player1CanMove){
+              that.player1CanMove = true;
+              that.player1.setVelocityY(this.jumpForce);
+            }
+            //Cuando el jugador salta una vez empieza la partida, la plataforma deja de ser inmovible e inmune a la gravedad,y por lo tanto cae
+            if(that.platformLeft.body != undefined){
+              that.platformLeft.body.immovable = false;
+              that.platformLeft.body.allowGravity = true;
+
+              that.platformLeft.setGravityY(0);
+              that.platform_left_background.setGravityY(0);
+            }
+              
+
+            //Añadimos un evento de tiempo, que borrara la plataforma del juego tras medio segundo, para que esta desapareza cuando ya el jugador no la vea. Así liberamos memoria
+            that.scene.get("onlinegame").time.addEvent({delay: 500, callback: function(){
+              that.platformLeft.destroy();
+              that.platform_left_background.destroy();
+            }, callbackScope:that, loop:false});
+
+          }, callbackScope:that, loop:false});
           }
         }
       }
