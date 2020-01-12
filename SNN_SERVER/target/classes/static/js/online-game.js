@@ -314,6 +314,10 @@ class onlinegame extends Phaser.Scene{
         that.logsCoordY = parsedMessage.colsY;     
       }
 
+      if(parsedMessage.time!=null){
+        that.cont = parsedMessage.time;
+      }
+
       //Se recibe que el ninja rival ha saltado sobre el del jugador, y se ejecutan las acciones correspondientes
       if(parsedMessage.jumped){
         that.ninjaScream = that.screamPool[Math.floor(Math.random() * 5)];
@@ -1243,17 +1247,27 @@ class onlinegame extends Phaser.Scene{
     this.timer = this.add.text(this.width/2, this.height/1.98, '3', { fontFamily: '""', fontSize: 50 });
     this.timer.setDepth(7000);
 
+    
     function AdvanceTimer(){
       if(this.cont >= 0){
-        this.cont--;
+
+        if(this.playerid != undefined && this.playerid == 1){
+          this.cont--;
+          var initialTimer = {
+            time : this.cont
+          }
+          this.connection.send(JSON.stringify(initialTimer));
+        }
+
         this.timer.setText(parseInt(this.cont));
         console.log(this.cont);
       }
-      if(this.cont === 0){
+      if(this.cont <= 0){
         this.isPlayable = true;
+        this.timer.setText(parseInt(''));
       }
-      if(this.cont <= 0)
-      this.timer.setText(parseInt(''));
+      // if(this.cont <= 0)
+      // this.timer.setText(parseInt(''));
     }
 
     // Llamamos a la animacion de "ocultacion" del background del contador
@@ -1456,6 +1470,9 @@ class onlinegame extends Phaser.Scene{
                 colsX : [],
                 colsY : []
               }
+
+              
+              
               
               for(var i =0; i<this.cols.length; i++){
                 colsCoords.colsX[i] = this.cols[i].x;
@@ -1464,6 +1481,7 @@ class onlinegame extends Phaser.Scene{
               //console.log("Coordenadas del ultimo tronco: " + this.cols[this.cols.length-1].y);
               this.connection.send(JSON.stringify(coords));
               this.connection.send(JSON.stringify(colsCoords));
+              
             },
             //args: [],
             callbackScope: this,
