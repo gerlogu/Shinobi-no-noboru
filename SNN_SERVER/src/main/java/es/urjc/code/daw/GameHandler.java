@@ -114,7 +114,7 @@ public class GameHandler extends TextWebSocketHandler {
 	//Se crea un nuevo objecto, y se envía al otro jugador.
 	private void sendColsOtherParticipants(WebSocketSession session, JsonNode node) throws IOException {
 
-		System.out.println("Message sent: " + node.toString());
+		//System.out.println("Message sent: " + node.toString());
 		
 		ObjectNode newNode = mapper.createObjectNode();
 		newNode.put("colsX", node.get("colsX"));

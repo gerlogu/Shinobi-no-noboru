@@ -59,6 +59,7 @@ class onlineLobby extends Phaser.Scene{
     
 
     create(){
+
         this.width  = 800;
         this.height = 600;
         this.url = game.url;

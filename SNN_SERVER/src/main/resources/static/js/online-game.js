@@ -304,6 +304,13 @@ class onlinegame extends Phaser.Scene{
 
       //Si se ha enviado el index de un tronco, se ejecuta.
       if(parsedMessage.index != null){
+        if(that.playerid==1){
+          that.particles.emitParticleAt(that.player2.x,that.player2.y+40,50);
+        }else{
+          that.particles.emitParticleAt(that.player1.x,that.player1.y+40,50);
+        }
+        
+
         that.cols[that.cols.length - parsedMessage.index].setGravityY(0);
         console.log("Se recibe el index.");
       }
@@ -316,6 +323,12 @@ class onlinegame extends Phaser.Scene{
 
       if(parsedMessage.time!=null){
         that.cont = parsedMessage.time;
+        that.timer.setText(parseInt(that.cont));
+
+        if(that.cont <= 0){
+          that.isPlayable = true;
+          that.timer.setText(parseInt(''));
+        }
       }
 
       //Se recibe que el ninja rival ha saltado sobre el del jugador, y se ejecutan las acciones correspondientes
@@ -1100,7 +1113,10 @@ class onlinegame extends Phaser.Scene{
       this.returnButton.on('pointerup', function(){
           that.sound2.play();
           that.cameras.main.fadeOut(200);
+          that.playeridDefined=false;
+          that.playerid = null;
           that.connection.close();
+
           that.scene.get("onlinegame").time.addEvent({delay: 210, callback: function(){that.scene.start('mainMenu'); }, callbackScope:this, loop:false});
       });
 
