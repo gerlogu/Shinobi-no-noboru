@@ -639,6 +639,22 @@ public class PlayersController {
 		if(Player2 == null) {
 			timer2 = 10;
 		}
-	}		
+	}	
+	
+	@GetMapping("/setToDefault")
+	void resetData() {
+		 Player1 = null;
+		 Player2 = null;
+		 player1Exists = false;
+		 player2Exists = false;
+		 playerReady[0] = false;
+		 playerReady[1] = false;
+		 gameReady = false;
+		 gameStarted = false;
+		
+		 line1 = "";
+		 line2 = "";
+		 line3 = "";
+	}
 	
 }

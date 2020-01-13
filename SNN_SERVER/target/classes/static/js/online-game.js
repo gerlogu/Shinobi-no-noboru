@@ -220,9 +220,9 @@ class onlinegame extends Phaser.Scene{
    * Método que se ejecuta al comienzo del juego, cuandos se ha creado todo.
    */
   create(){
-    this.DButton = this.input.keyboard.addKey('right');
-    this.AButton = this.input.keyboard.addKey('left');
-    this.WButton = this.input.keyboard.addKey('up');
+    this.DButton = this.input.keyboard.addKey('D');
+    this.AButton = this.input.keyboard.addKey('A');
+    this.WButton = this.input.keyboard.addKey('W');
 
     //
     this.logsCoordX;
@@ -237,25 +237,33 @@ class onlinegame extends Phaser.Scene{
 
     this.url = game.url;
 
-    this.updateGameStarted = function(gameS) {
+    // this.updateGameStarted = function(gameS) {
         
-      $.ajax({
-          method: "PUT",
-          url: that.url + '/server/updateGameStarted',
-          data: JSON.stringify(gameS),
-          processData: false,
-          headers: {
-              "Content-Type": "application/json"
-          }
-          }).done(function (newText) {
-              //console.log("new text chat: " + newText);
-              //that.victoriesText2.setText("Purple victories: " + purpleVictories); 
-      })
-    }
+    //   $.ajax({
+    //       method: "PUT",
+    //       url: that.url + '/server/updateGameStarted',
+    //       data: JSON.stringify(gameS),
+    //       processData: false,
+    //       headers: {
+    //           "Content-Type": "application/json"
+    //       }
+    //       }).done(function (newText) {
+    //           //console.log("new text chat: " + newText);
+    //           //that.victoriesText2.setText("Purple victories: " + purpleVictories); 
+    //   })
+    // }
 
+    this.resetAPIREST = function(){
+      $.ajax({
+          url: that.url + '/server/setToDefault'
+      }).done(function (items) {
+          console.log('reseteado');      
+      })
+
+  }
     
 
-    this.updateGameStarted(false);
+    this.resetAPIREST();
 
 
     this.deletePlayer=function(itemId) {
@@ -1016,7 +1024,7 @@ class onlinegame extends Phaser.Scene{
 
     var playersCollide = function players(){
       
-      if(Phaser.Input.Keyboard.JustDown(this.upButton) && this.playerid == 1){
+      if(Phaser.Input.Keyboard.JustDown(this.WButton) && this.playerid == 1){
 
         this.ninjaScream = this.screamPool[Math.floor(Math.random() * 5)];
         this.ninjaScream.play();

@@ -237,25 +237,33 @@ class onlinegame extends Phaser.Scene{
 
     this.url = game.url;
 
-    this.updateGameStarted = function(gameS) {
+    // this.updateGameStarted = function(gameS) {
         
-      $.ajax({
-          method: "PUT",
-          url: that.url + '/server/updateGameStarted',
-          data: JSON.stringify(gameS),
-          processData: false,
-          headers: {
-              "Content-Type": "application/json"
-          }
-          }).done(function (newText) {
-              //console.log("new text chat: " + newText);
-              //that.victoriesText2.setText("Purple victories: " + purpleVictories); 
-      })
-    }
+    //   $.ajax({
+    //       method: "PUT",
+    //       url: that.url + '/server/updateGameStarted',
+    //       data: JSON.stringify(gameS),
+    //       processData: false,
+    //       headers: {
+    //           "Content-Type": "application/json"
+    //       }
+    //       }).done(function (newText) {
+    //           //console.log("new text chat: " + newText);
+    //           //that.victoriesText2.setText("Purple victories: " + purpleVictories); 
+    //   })
+    // }
 
+    this.resetAPIREST = function(){
+      $.ajax({
+          url: that.url + '/server/setToDefault'
+      }).done(function (items) {
+          console.log('reseteado');      
+      })
+
+  }
     
 
-    this.updateGameStarted(false);
+    this.resetAPIREST();
 
 
     this.deletePlayer=function(itemId) {
