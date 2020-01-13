@@ -310,6 +310,9 @@ Cuando se recibe un mensaje, se comprueba el contenido y en función del mismo, 
 	- El índice de un tronco que debe caer.
 	- Las coordenadas de el otro jugador, junto a la velocidad tanto horizontal como vertical.
 	- Las coordenadas de posición de los troncos del jugador 1, para comprobar si el jugador 2 tiene los troncos en la misma 	   posición. En caso contrario, sus troncos se colocan en la posición correcta, para evitar que las partidas 			  funcionen de forma desigual.
+	-El número actual del contador inicial (el que baja desde 3 hasta 1 para indicar cuando empieza la partida).
+	-Un indicador de que un ninja ha saltado sobre el otro.
+	-Un indicador de que un ninja ha dado el primer salto (esto es importante, para controlar el aspecto visual de las 		 plataformas donde, al comienzo de la partida, los ninjas están de pie esperando).
 
 ![Captura 2 de los métodos de la clase GameHandler](https://user-images.githubusercontent.com/44704611/72186116-c6e2a380-33f4-11ea-8b28-c45f9804786c.PNG)
 
@@ -323,8 +326,8 @@ Si se conecta, se muestra por consola. Si se desconecta, se muestra por pantalla
 
 ![Captura 2 de los metodos de websockets en js](https://user-images.githubusercontent.com/44704611/72186121-c944fd80-33f4-11ea-9147-b0700050abee.PNG)
 
-Nada más empezar, se recibirá el playerID, el cual se guardará en una variable local, y se utilizará para decidir que personaje puede controlar el jugador. También servirá para decidir que datos se envían al jugador rival (si el jugador es el jugador 1, se enviarán las coordenadas del ninja 1, y el jugador 2 al recibirlas, sabrá gracias a su propio playerID, que esas coordenadas pertenecen al ninja 1. Además, el ninja 1 envía constantemente las coordenadas de los troncos al jugador 2, y si los troncos están descoordenados, se colocaran en la posición correspondiente).
-
+Nada más empezar, se recibirá el playerID, el cual se guardará en una variable local, y se utilizará para decidir que personaje puede controlar el jugador. También servirá para decidir que datos se envían al jugador rival (si el jugador es el jugador 1, se enviarán las coordenadas del ninja 1, y el jugador 2 al recibirlas, sabrá gracias a su propio playerID, que esas coordenadas pertenecen al ninja 1. Además, el ninja 1 envía constantemente las coordenadas de los troncos al jugador 2, y si los troncos están descoordenados, se colocaran en la posición correspondiente). Nada más empezar, los ninjas se encuentran situados en plataformas, y cuando uno salta, envía una señal que el otro jugador recibe y se traduce en mostrar por pantalla que el ninja ha saltado y la plataforma ha caido. Además, si tras esta señal, a los 2 segundos el otro jugador no ha saltado, saltará automaticamente. Si durante la partida un jugador salta sobre el ninja rival, este último será impulsado ligeramente
+hacia abajo. Esto también ocurre con una señal que el jugador que ha saltado envía y el rival recibe.
 ### Diagrama de clases actualizado
 
 ![UML juegos en red](https://user-images.githubusercontent.com/55192425/72223994-63cc4a80-3575-11ea-9cad-c1321da46d8c.png)
