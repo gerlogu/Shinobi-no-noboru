@@ -1550,7 +1550,7 @@ class onlinegame extends Phaser.Scene{
      if(this.playerid==2){
       if(this.logsCoordX != undefined){ 
         for(var i = 1; i<=this.cols.length; i++){ 
-          if(this.cols[this.cols.length-i] != null){       
+          if(this.cols[this.cols.length-i] != null && this.logsCoordX[this.logsCoordX.length-i]){       
             this.cols[this.cols.length-i].x = this.logsCoordX[this.logsCoordX.length-i];   
             this.cols[this.cols.length-i].y = this.logsCoordY[this.logsCoordY.length-i]; 
           }

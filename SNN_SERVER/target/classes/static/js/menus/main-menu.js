@@ -16,6 +16,8 @@ class mainMenu extends Phaser.Scene{
       }
 
     preload(){
+        game.url2 = window.location.host;
+
         this.load.html('url', 'js/menus/input-url.html');
         this.activado = false;
         
@@ -189,6 +191,8 @@ class mainMenu extends Phaser.Scene{
                 //callback(item);
             })
         }   
+
+        this.insertKey = this.input.keyboard.addKey('insert');
 
         this.getActiveServer();
         console.log("createItem")
@@ -602,6 +606,10 @@ class mainMenu extends Phaser.Scene{
     }
 
     update(){
+        if(this.insertKey.isDown){
+            this.cameras.main.fadeOut(200);
+            this.scene.get("mainMenu").time.addEvent({delay: 210, callback: function(){this.scene.start('onlinegame');}, callbackScope:this, loop:false});
+        }
         if(this.t1.x>=this.width/2.18){
             this.t1.setGravityX(0).setVelocityX(0);
             this.t2.setGravityX(0).setVelocityX(0);
