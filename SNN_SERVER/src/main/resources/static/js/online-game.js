@@ -220,6 +220,8 @@ class onlinegame extends Phaser.Scene{
    * Método que se ejecuta al comienzo del juego, cuandos se ha creado todo.
    */
   create(){
+    this.bothconnected = false;
+
     this.DButton = this.input.keyboard.addKey('D');
     this.AButton = this.input.keyboard.addKey('A');
     this.WButton = this.input.keyboard.addKey('W');
@@ -253,17 +255,6 @@ class onlinegame extends Phaser.Scene{
     //   })
     // }
 
-    this.resetAPIREST = function(){
-      $.ajax({
-          url: that.url + '/server/setToDefault'
-      }).done(function (items) {
-          console.log('reseteado');      
-      })
-
-  }
-    
-
-    this.resetAPIREST();
 
 
     this.deletePlayer=function(itemId) {
@@ -351,6 +342,7 @@ class onlinegame extends Phaser.Scene{
           console.log("Siempre entra aqui");
           that.scene.get("onlinegame").time.addEvent({delay: 400, callback: function(){that.fallingP2 = false}, callbackScope:that, loop:false});
         }else{
+
           // Salto
           that.particles.emitParticleAt(that.player2.x,that.player2.y+40,50);
           that.player1.setVelocityY(-that.jumpForce/2);
@@ -369,6 +361,8 @@ class onlinegame extends Phaser.Scene{
       if(parsedMessage.Xvel!=null){
         //console.log("Coordenadas del otro ninja: X=" + parsedMessage.Xcoord + " Y=" + parsedMessage.Ycoord);
         if(that.playerid == 1){
+          that.bothconnected = true;
+
           that.player2.body.velocity.x = parsedMessage.Xvel;
           that.player2.body.velocity.y = parsedMessage.Yvel;
 
@@ -1124,7 +1118,7 @@ class onlinegame extends Phaser.Scene{
           that.playeridDefined=false;
           that.playerid = null;
           that.connection.close();
-
+          game.logged = true;
           that.scene.get("onlinegame").time.addEvent({delay: 210, callback: function(){that.scene.start('mainMenu'); }, callbackScope:this, loop:false});
       });
 
@@ -1224,7 +1218,7 @@ class onlinegame extends Phaser.Scene{
    * Actualiza el contador, sumando un segundo en cada iteracion
    */
   UpdateTimer(){
-      if(!this.ended){
+      if(!this.ended && this.isPlayable){
         var currentTime = new Date();
         var timeDifference = this.startTime.getTime() - currentTime.getTime();
 
@@ -1275,7 +1269,7 @@ class onlinegame extends Phaser.Scene{
     function AdvanceTimer(){
       if(this.cont >= 0){
 
-        if(this.playerid != undefined && this.playerid == 1){
+        if(this.playerid != undefined && this.playerid == 1 && this.bothconnected === true){
           this.cont--;
           var initialTimer = {
             time : this.cont

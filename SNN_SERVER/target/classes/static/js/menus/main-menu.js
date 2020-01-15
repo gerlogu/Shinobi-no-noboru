@@ -128,6 +128,20 @@ class mainMenu extends Phaser.Scene{
     
     create(){
         var that = this;
+
+        this.resetAPIREST = function(){
+            $.ajax({
+                url: that.url + '/server/setToDefault'
+            }).done(function (items) {
+                console.log('reseteado');      
+            })
+      
+        }
+        if(game.logged != undefined && game.logged === true){
+            this.resetAPIREST();
+            game.logged=false;
+        }
+
         this.url = 'http://localhost:8080';
         this.fullLobby = false;
 
