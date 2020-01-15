@@ -300,8 +300,11 @@ Para la ejecución de la aplicación unicamente será necesario el archivo "jar"
 
 ### Protocolo (explicación y capturas)
 #### Parte de spring tool suite:
-![Captura2](https://user-images.githubusercontent.com/55192425/72438534-4bdb0d80-37a5-11ea-8e34-b948078823bd.PNG)
-![Captura3](https://user-images.githubusercontent.com/55192425/72438562-5ac1c000-37a5-11ea-95e1-cbba54c5d3b6.PNG)
+![Captura 1 de los métodos de la clase GameHandler](https://user-images.githubusercontent.com/44704611/72465815-1ef41e00-37d8-11ea-9b5a-ac98dfe3c210.PNG)
+![Captura 2 de los métodos de la clase GameHandler](https://user-images.githubusercontent.com/44704611/72465810-1e5b8780-37d8-11ea-9b6b-9a2fcfdecdc8.PNG)
+![Captura 3 de los métodos de la clase GameHandler](https://user-images.githubusercontent.com/44704611/72465812-1e5b8780-37d8-11ea-9a25-89859b765a64.PNG)
+![Captura 4 de los métodos de la clase GameHandler](https://user-images.githubusercontent.com/44704611/72465813-1ef41e00-37d8-11ea-8467-90c0652a7c7a.PNG)
+![Captura 5 de los métodos de la clase GameHandler](https://user-images.githubusercontent.com/44704611/72465814-1ef41e00-37d8-11ea-8e65-c89f4fd4716a.PNG)
 
 El protocolo funciona de la siguiente manera: se almacenan dos sesiones en el servidor, una por jugador. Cuando entra un jugador nuevo, se comprueba si la sesión uno está vacía, en ese caso se guarda la nueva sesión ahí, en caso contrario se comprueba si la sesión 2 está vacía y si se cumple, se guarda la nueva sesión ahí. En caso de que ambas estén llenas no se guarda la sesión. Cuando se cierra una conexión, se comprueba a cual de las 2 sesiones corresponde, y se elimina dicha sesión.
 
@@ -315,18 +318,18 @@ Cuando se recibe un mensaje, se comprueba el contenido y en función del mismo, 
 	-Un indicador de que un ninja ha saltado sobre el otro.
 	-Un indicador de que un ninja ha dado el primer salto (esto es importante, para controlar el aspecto visual de las 		 plataformas donde, al comienzo de la partida, los ninjas están de pie esperando).
 
-![Captura4](https://user-images.githubusercontent.com/55192425/72438584-67461880-37a5-11ea-8020-c692992ac4d0.PNG)
-
-Estos son los posibles métodos, uno por cada tipo de dato contenido en el mensaje (los mismos descritos anteriormente). En cada caso, se creará un nuevo objeto JSON con los atributos necesarios, y se le enviará al jugador contrario al que hizo el envío, si es que este segundo jugador está conectado.
+En los distintos posibles métodos, uno por cada tipo de dato contenido en el mensaje (los mismos descritos anteriormente) se creará un nuevo objeto JSON con los atributos necesarios, y se le enviará al jugador contrario al que hizo el envío, si es que este segundo jugador está conectado.
 
 
 #### Parte de javascript:
+![Captura 5 de los metodos de websockets en js](https://user-images.githubusercontent.com/44704611/72466437-28ca5100-37d9-11ea-9dbd-fdb59ff06ed1.PNG)
+![Captura 1 de los metodos de websockets en js](https://user-images.githubusercontent.com/44704611/72465886-45b25480-37d8-11ea-851e-8e14cab4fc74.PNG)
+![Captura 2 de los metodos de websockets en js](https://user-images.githubusercontent.com/44704611/72465887-45b25480-37d8-11ea-8192-4ebbef0bef3c.PNG)
+![Captura 3 de los metodos de websockets en js](https://user-images.githubusercontent.com/44704611/72465889-464aeb00-37d8-11ea-8419-c3ee69271759.PNG)
+![Captura 4 de los metodos de websockets en js](https://user-images.githubusercontent.com/44704611/72465883-45b25480-37d8-11ea-91d5-deeb12622284.PNG)
 
 Nada más crearse la partida, el cliente inicia una conexión con el websocket.
 Si se conecta, se muestra por consola. Si se desconecta, se muestra por pantalla el código del motivo, y lo mismo en caso de error. Además se crea un método para gestionar los mensajes recibidos, ya que en función del contenido de los mismos, se usarán para una cosa o para otra.
-
-![Captura 2 de los metodos de websockets en js](https://user-images.githubusercontent.com/44704611/72186121-c944fd80-33f4-11ea-9147-b0700050abee.PNG)
-
 Nada más empezar, se recibirá el playerID, el cual se guardará en una variable local, y se utilizará para decidir que personaje puede controlar el jugador. También servirá para decidir que datos se envían al jugador rival (si el jugador es el jugador 1, se enviarán las coordenadas del ninja 1, y el jugador 2 al recibirlas, sabrá gracias a su propio playerID, que esas coordenadas pertenecen al ninja 1. Además, el ninja 1 envía constantemente las coordenadas de los troncos al jugador 2, y si los troncos están descoordenados, se colocaran en la posición correspondiente). Nada más empezar, los ninjas se encuentran situados en plataformas, y cuando uno salta, envía una señal que el otro jugador recibe y se traduce en mostrar por pantalla que el ninja ha saltado y la plataforma ha caido. Además, si tras esta señal, a los 2 segundos el otro jugador no ha saltado, saltará automaticamente. Si durante la partida un jugador salta sobre el ninja rival, este último será impulsado ligeramente
 hacia abajo. Esto también ocurre con una señal que el jugador que ha saltado envía y el rival recibe.
 ### Diagrama de clases actualizado
