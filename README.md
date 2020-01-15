@@ -172,7 +172,13 @@ El menú inicial contará con una opción para acceder menú opciones para confi
 
 - Distancia recorrida por los jugadores (in game).
 
---------------
+------------------
+
+### Video de 2 minutos solicitado en la fase 4
+
+https://youtu.be/vXm2N0OkYEs
+
+------------------
 
 ## Fase 2
 
@@ -331,7 +337,7 @@ En los distintos posibles métodos, uno por cada tipo de dato contenido en el me
 Nada más crearse la partida, el cliente inicia una conexión con el websocket.
 Si se conecta, se muestra por consola. Si se desconecta, se muestra por pantalla el código del motivo, y lo mismo en caso de error. Además se crea un método para gestionar los mensajes recibidos, ya que en función del contenido de los mismos, se usarán para una cosa o para otra.
 Nada más empezar, se recibirá el playerID, el cual se guardará en una variable local, y se utilizará para decidir que personaje puede controlar el jugador. También servirá para decidir que datos se envían al jugador rival (si el jugador es el jugador 1, se enviarán las coordenadas del ninja 1, y el jugador 2 al recibirlas, sabrá gracias a su propio playerID, que esas coordenadas pertenecen al ninja 1. Además, el ninja 1 envía constantemente las coordenadas de los troncos al jugador 2, y si los troncos están descoordenados, se colocaran en la posición correspondiente). Nada más empezar, los ninjas se encuentran situados en plataformas, y cuando uno salta, envía una señal que el otro jugador recibe y se traduce en mostrar por pantalla que el ninja ha saltado y la plataforma ha caido. Además, si tras esta señal, a los 2 segundos el otro jugador no ha saltado, saltará automaticamente. Si durante la partida un jugador salta sobre el ninja rival, este último será impulsado ligeramente
-hacia abajo. Esto también ocurre con una señal que el jugador que ha saltado envía y el rival recibe.
+hacia abajo. Esto también ocurre con una señal que el jugador que ha saltado envía y el rival recibe. Al final, cuando termina la partida se puede ver quien ha ganado, y el tiempo que han aguantado (este tiempo se toma del contador que tiene el jugador 1 quien lo envía al jugador 2 para garantizar que ambos muestran el mismo tiempo).
 ### Diagrama de clases actualizado
 
 ![UML juegos en red](https://user-images.githubusercontent.com/55192425/72223994-63cc4a80-3575-11ea-9cad-c1321da46d8c.png)
@@ -339,3 +345,7 @@ hacia abajo. Esto también ocurre con una señal que el jugador que ha saltado e
 En la parte de cliente primero encontramos el index.html tiene una agregacion del phaser.js y game.js; ya que se incluyen con la etiqueta de <script>. Tambien se podria decir que las otras escenas tambien actuan como agregados del index, pero en realidad son clases que actuan como agregados del propio game.js ya que este contiene la configuracion de todo el juego y por tanto tambien maneja las diversas escenas (main-menu, credits-menu, controls-menu, local-menu, online-game y online-lobby). Por otra parte, existe una asociacion entre la escena del main-menu y las escenas del menu de creditos, controles, local y menu ya que podemos acceder desde el main a las otras escenas. Por ultimo, en online-lobby encontramos como agregados input.html, input-url.html e input-chat.html ya que contienen los input que se hacen uso dentro de esta escena, y ademas una asociacion a online-game.js ya que te lleva a la sesion de multijugador. En la parte de servidor tenemos cuatro clases. Primero aplication.java, esta clase se encarga del correcto funcionamiento de toda la aplicacion. Se trata de una clase independiente por lo que no encontramos ninguna composicion ni agregacion, pero existe una agregacion con players-controlers ya que consigue que esta clase funcione adecuadamente dentro de la aplicacion, y tambien gamehandler que contiene todas las funciones con relacion a websockets. Player-controlers a su vez tiene una asociacion de composicion con players pues si este se elimina players-controlers no podria existir.
 
 ### Video de 2 minutos 
+
+https://youtu.be/vXm2N0OkYEs
+
+Aclaración sobre el video: se menciona que ambos jugadores envían sus temporizadores al otro para evitar descoordinaciones. Esto no es correcto ya que solo el jugador 1 envía su temporizador al jugador 2, pero debido a problemas técnicos no hemos podido grabar esa parte de nuevo.
