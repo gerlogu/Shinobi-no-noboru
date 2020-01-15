@@ -300,7 +300,8 @@ Para la ejecución de la aplicación unicamente será necesario el archivo "jar"
 
 ### Protocolo (explicación y capturas)
 #### Parte de spring tool suite:
-![Captura 1 de los métodos de la clase GameHandler](https://user-images.githubusercontent.com/44704611/72186100-bdf1d200-33f4-11ea-9e88-1dccb599e903.PNG)
+![Captura2](https://user-images.githubusercontent.com/55192425/72438534-4bdb0d80-37a5-11ea-8e34-b948078823bd.PNG)
+![Captura3](https://user-images.githubusercontent.com/55192425/72438562-5ac1c000-37a5-11ea-95e1-cbba54c5d3b6.PNG)
 
 El protocolo funciona de la siguiente manera: se almacenan dos sesiones en el servidor, una por jugador. Cuando entra un jugador nuevo, se comprueba si la sesión uno está vacía, en ese caso se guarda la nueva sesión ahí, en caso contrario se comprueba si la sesión 2 está vacía y si se cumple, se guarda la nueva sesión ahí. En caso de que ambas estén llenas no se guarda la sesión. Cuando se cierra una conexión, se comprueba a cual de las 2 sesiones corresponde, y se elimina dicha sesión.
 
@@ -314,7 +315,7 @@ Cuando se recibe un mensaje, se comprueba el contenido y en función del mismo, 
 	-Un indicador de que un ninja ha saltado sobre el otro.
 	-Un indicador de que un ninja ha dado el primer salto (esto es importante, para controlar el aspecto visual de las 		 plataformas donde, al comienzo de la partida, los ninjas están de pie esperando).
 
-![Captura 2 de los métodos de la clase GameHandler](https://user-images.githubusercontent.com/44704611/72186116-c6e2a380-33f4-11ea-8b28-c45f9804786c.PNG)
+![Captura4](https://user-images.githubusercontent.com/55192425/72438584-67461880-37a5-11ea-8020-c692992ac4d0.PNG)
 
 Estos son los posibles métodos, uno por cada tipo de dato contenido en el mensaje (los mismos descritos anteriormente). En cada caso, se creará un nuevo objeto JSON con los atributos necesarios, y se le enviará al jugador contrario al que hizo el envío, si es que este segundo jugador está conectado.
 
