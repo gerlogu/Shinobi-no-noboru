@@ -1254,6 +1254,7 @@ class onlinegame extends Phaser.Scene{
         }else{
           result = this.tiempofinalRecibido;
         }
+        this.finaltextoftime = result;
         this.timerText.text = result;
       }
 
@@ -1481,6 +1482,10 @@ class onlinegame extends Phaser.Scene{
    * Método que se ejecuta constantemente, en el de momento solo están los controles de movimiento.
    */
   update(delta){
+    if(this.ended){
+      this.timerText.text = this.finaltextoftime;
+    }
+
     var that = this;
     //Comprobacion necesaria y activacion de los envios de datos por websockets. Se mandan las coordenadas de los jugadores, y el array de troncos
     if(!this.playeridDefined){
