@@ -349,3 +349,26 @@ En la parte de cliente primero encontramos el index.html tiene una agregacion de
 https://youtu.be/vXm2N0OkYEs
 
 Aclaración sobre el video: se menciona que ambos jugadores envían sus temporizadores al otro para evitar descoordinaciones. Esto no es correcto ya que solo el jugador 1 envía su temporizador al jugador 2, pero debido a problemas técnicos no hemos podido grabar esa parte de nuevo.
+
+
+##Fase 5
+
+### Mejoras
+Hemos añadido un menú de opciones para permitirle al usuario modificar el volumen de la música y los efectos de sonido.
+![unknown](https://user-images.githubusercontent.com/55363746/72475114-887d2800-37ea-11ea-9f2b-a7c1d92ce4c7.png)
+![menu de opciones](https://user-images.githubusercontent.com/55363746/72475159-acd90480-37ea-11ea-97a0-ae13843c5536.png)
+
+Además hemos incluido un menú antes de iniciar partida para que el usuario pueda personalizar la partida, modificando las vidas de los personajes y la velocidad de bajada de los troncos.
+![modificaciondepartida](https://user-images.githubusercontent.com/55363746/72475342-ff1a2580-37ea-11ea-9a56-017415cbfeab.png)
+![partidamodificada](https://user-images.githubusercontent.com/55363746/72475392-16f1a980-37eb-11ea-9691-0eda3ceb8ad5.png)
+
+### Subida a páginas
+También hemos publicado el juego en 5 páginas de videojuegos:
+- itch.io: https://kamasideteam.itch.io/shinobi-no-noboru
+- kongregate: https://www.kongregate.com/games/KamaSideTeam/shinobi-no-noboru
+- newgrounds: https://www.newgrounds.com/portal/view/746121
+- gamejolt: https://gamejolt.com/games/Shinobi_no_noboru/462879
+- play.idevgames: https://play.idevgames.co.uk/game/shinobi-no-noboru
+
+### Conclusiones
+Ha sido una fase útil ya que hemos conseguido hacer un videojuego que ofrece una mejor experiencia de usuario aunque nos habría gustado añadir más mejoras ya que consideramos que es un proyecto con bastante potencial.
