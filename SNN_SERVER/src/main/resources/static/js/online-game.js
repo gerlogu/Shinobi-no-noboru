@@ -222,9 +222,9 @@ class onlinegame extends Phaser.Scene{
   create(){
     this.bothconnected = false;
 
-    this.DButton = this.input.keyboard.addKey('D');
-    this.AButton = this.input.keyboard.addKey('A');
-    this.WButton = this.input.keyboard.addKey('W');
+    // this.DButton = this.input.keyboard.addKey('right');
+    // this.AButton = this.input.keyboard.addKey('left');
+    // this.WButton = this.input.keyboard.addKey('up');
 
     //
     this.logsCoordX;
@@ -1022,51 +1022,51 @@ class onlinegame extends Phaser.Scene{
     this.wall_right.setAlpha(0);
 
     var playersCollide = function players(){
-      
-      if(Phaser.Input.Keyboard.JustDown(this.WButton) && this.playerid == 1){
+      if(Phaser.Input.Keyboard.JustDown(this.upButton)){
+          if(this.playerid == 1){
 
-        this.ninjaScream = this.screamPool[Math.floor(Math.random() * 5)];
-        this.ninjaScream.play();
-        // Salto
-        this.player1.setVelocityY(this.jumpForce);
-        this.particles.emitParticleAt(this.player1.x,this.player1.y+40,50);
-        this.player2.setVelocityY(-this.jumpForce/2);
-        //Sonido de salto
-        this.jumpaudio.play({
-          volume: 0.2
-        });
+            this.ninjaScream = this.screamPool[Math.floor(Math.random() * 5)];
+            this.ninjaScream.play();
+            // Salto
+            this.player1.setVelocityY(this.jumpForce);
+            this.particles.emitParticleAt(this.player1.x,this.player1.y+40,50);
+            this.player2.setVelocityY(-this.jumpForce/2);
+            //Sonido de salto
+            this.jumpaudio.play({
+              volume: 0.2
+            });
 
-        //Se manda la señal al otro jugador de que se ha efectuado un salto
-        var jump = {
-          jumped : true
-        } 
-        this.connection.send(JSON.stringify(jump));
+            //Se manda la señal al otro jugador de que se ha efectuado un salto
+            var jump = {
+              jumped : true
+            } 
+            this.connection.send(JSON.stringify(jump));
 
-        this.fallingP2 = true;
-        this.scene.get("onlinegame").time.addEvent({delay: 400, callback: function(){this.fallingP2 = false}, callbackScope:this, loop:false});
-      }
+            this.fallingP2 = true;
+            this.scene.get("onlinegame").time.addEvent({delay: 400, callback: function(){this.fallingP2 = false}, callbackScope:this, loop:false});
+          }
+          if(this.playerid == 2){
+            console.log("Entra al segundo if??")
+            this.ninjaScream = this.screamPool[Math.floor(Math.random() * 5)];
+            this.ninjaScream.play();
+            // Salto
+            this.player2.setVelocityY(this.jumpForce);
+            this.particles.emitParticleAt(this.player2.x,this.player2.y+40,50);
+            this.player1.setVelocityY(-this.jumpForce/2);
+            //Sonido de salto
+            this.jumpaudio.play({
+              volume: 0.2
+            });
 
-      if(Phaser.Input.Keyboard.JustDown(this.upButton) && this.playerid == 2){
+            //Se manda la señal al otro jugador de que se ha efectuado un salto
+            var jump = {
+              jumped : true
+            } 
+            this.connection.send(JSON.stringify(jump));
 
-        this.ninjaScream = this.screamPool[Math.floor(Math.random() * 5)];
-        this.ninjaScream.play();
-        // Salto
-        this.player2.setVelocityY(this.jumpForce);
-        this.particles.emitParticleAt(this.player2.x,this.player2.y+40,50);
-        this.player1.setVelocityY(-this.jumpForce/2);
-        //Sonido de salto
-        this.jumpaudio.play({
-          volume: 0.2
-        });
-
-         //Se manda la señal al otro jugador de que se ha efectuado un salto
-         var jump = {
-          jumped : true
-        } 
-        this.connection.send(JSON.stringify(jump));
-
-        this.fallingP1 = true;
-        this.scene.get("onlinegame").time.addEvent({delay: 400, callback: function(){this.fallingP1 = false}, callbackScope:this, loop:false});
+            this.fallingP1 = true;
+            this.scene.get("onlinegame").time.addEvent({delay: 400, callback: function(){this.fallingP1 = false}, callbackScope:this, loop:false});
+          }
       }
     };
 
@@ -1591,12 +1591,12 @@ class onlinegame extends Phaser.Scene{
 
       // #region Teclas y movimiento
       if(this.playerid==1){//Se comprueba si el jugador es 1 o 2, para que no pueda mover el personaje del contrincante
-        if(this.AButton.isDown){
+        if(this.leftButton.isDown){
 
           if(this.player1CanMove)
             this.player1.setVelocityX(-this.xSpeed);
 
-        }else if(this.DButton.isDown){
+        }else if(this.rightButton.isDown){
 
           if(this.player1CanMove)
             this.player1.setVelocityX(this.xSpeed);
@@ -1625,8 +1625,8 @@ class onlinegame extends Phaser.Scene{
         }
       }
       // #endregion
-      if(this.WButton.isDown && this.playerid==1){
-        this.ForPlayer(this.player1, this.WButton);
+      if(this.upButton.isDown && this.playerid==1){
+        this.ForPlayer(this.player1, this.upButton);
         if(!this.player1CanMove){
           this.player1CanMove = true;
 

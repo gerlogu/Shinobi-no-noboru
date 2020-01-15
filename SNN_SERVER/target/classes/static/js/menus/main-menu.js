@@ -323,30 +323,30 @@ class mainMenu extends Phaser.Scene{
         this.OnlineGameButton.on('pointerup', function(){
             
             that.blackBackground.visible = true;
-            var text = that.add.text(300, 10, 'Please enter a valid IP', { color: 'white', fontSize: '20px '});
+            //var text = that.add.text(300, 10, 'Please enter a valid IP', { color: 'white', fontSize: '20px '});
 
-            var input = that.add.dom(400,300).createFromCache('url');
+            // var input = that.add.dom(400,300).createFromCache('url');
 
-            input.addListener('click');
+            // input.addListener('click');
 
-            input.on('click', function (event) {
+            // input.on('click', function (event) {
 
-            if (event.target.name === 'find-out')
-            {
-                var inputText = this.getChildByName('url');
+            // if (event.target.name === 'find-out')
+            // {
+            //     var inputText = this.getChildByName('url');
 
-            //  Have they entered anything?
-            if (inputText.value !== '')
-            {
-                //  Turn off the click events
-                this.removeListener('click');
+            // //  Have they entered anything?
+            // if (inputText.value !== '')
+            // {
+            //     //  Turn off the click events
+            //     this.removeListener('click');
 
-                //  Hide the login element
-                this.setVisible(false);
+            //     //  Hide the login element
+            //     this.setVisible(false);
 
-                that.url = 'http://'+inputText.value.toString() + ":8080";
+                that.url = 'http://'+ game.url2;
                 game.url = that.url;
-                game.url2 = inputText.value.toString() + ":8080";
+            //     game.url2 = inputText.value.toString() + ":8080";
                 //  Populate the text with whatever they typed in
                 // text.setText('Welcome ' + inputText.value);
                 // console.log('Welcome ' + inputText.value);
@@ -384,15 +384,8 @@ class mainMenu extends Phaser.Scene{
                     }
                     console.log(that.activado);
                 }, callbackScope:this, loop:false});
-
-
-            }
-            
-            }
-
+                      
             });
-
-        });
 
         this.ControlsButton = this.add.sprite(this.width/2,this.height/1.35,'Controls').setInteractive();
         this.ControlsButton.displayWidth = 230;
