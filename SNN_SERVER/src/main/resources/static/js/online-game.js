@@ -301,6 +301,11 @@ class onlinegame extends Phaser.Scene{
         console.log("ID establecido: " + that.playerid);
       }
 
+      if(parsedMessage.tiempoFinal != null){
+        that.tiempofinalRecibido = parsedMessage.tiempoFinal;
+        console.log(that.tiempofinalRecibido);
+      }
+
       //Si se ha enviado el index de un tronco, se ejecuta.
       if(parsedMessage.index != null){
         if(that.playerid==1){
@@ -325,7 +330,7 @@ class onlinegame extends Phaser.Scene{
         that.timer.setText(parseInt(that.cont));
 
         if(that.cont <= 0){
-          that.isPlayable = true;
+          //that.isPlayable = true;
           that.timer.setText(parseInt(''));
         }
       }
@@ -1218,7 +1223,7 @@ class onlinegame extends Phaser.Scene{
    * Actualiza el contador, sumando un segundo en cada iteracion
    */
   UpdateTimer(){
-      if(!this.ended && this.isPlayable){
+      if(!this.ended && this.isPlayable===true){
         var currentTime = new Date();
         var timeDifference = this.startTime.getTime() - currentTime.getTime();
 
@@ -1233,12 +1238,22 @@ class onlinegame extends Phaser.Scene{
         var seconds = Math.floor(this.currentTime) - (60 * minutes);
 
         var result = "Time survived: "
+        
         //Display minutes, add a 0 to the start if less than 10
         result += (minutes < 10) ? "0" + minutes : minutes;
 
         //Display seconds, add a 0 to the start if less than 10
         result += (seconds < 10) ? ":0" + seconds : ":" + seconds;
 
+        if(this.playerid == 1){
+          var tiempofinal = {
+            tiempoFinal : result
+          }
+
+          this.connection.send(JSON.stringify(tiempofinal));
+        }else{
+          result = this.tiempofinalRecibido;
+        }
         this.timerText.text = result;
       }
 
@@ -1492,9 +1507,11 @@ class onlinegame extends Phaser.Scene{
               
               
               
-              for(var i =0; i<this.cols.length; i++){
-                colsCoords.colsX[i] = this.cols[i].x;
-                colsCoords.colsY[i] = this.cols[i].y;
+              for(var i = (this.cols.length-101); i<this.cols.length; i++){
+                if(this.cols[i] != null){
+                  colsCoords.colsX[i-(this.cols.length-101)] = this.cols[i].x;
+                  colsCoords.colsY[i-(this.cols.length-101)] = this.cols[i].y;
+                }             
               }
               //console.log("Coordenadas del ultimo tronco: " + this.cols[this.cols.length-1].y);
               this.connection.send(JSON.stringify(coords));

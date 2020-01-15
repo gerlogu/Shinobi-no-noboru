@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: SNN_GrupoC_Fase4
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: i.atance.2017
+Built-By: darkmad
 Implementation-Vendor-Id: es.urjc.code
-Build-Jdk: 1.8.0_211
+Build-Jdk: 1.8.0_144
 Implementation-URL: http://projects.spring.io/spring-boot/SNN_GrupoC_F
  ase4/
 Created-By: Maven Integration for Eclipse

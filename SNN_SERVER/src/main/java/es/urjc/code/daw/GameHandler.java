@@ -70,7 +70,9 @@ public class GameHandler extends TextWebSocketHandler {
 			sendJumpedOtherParticipants(session, node);
 		}else if(node.get("time") != null) {
 			sendTimeOtherParticipants(session, node);
-		}else{
+		}else if(node.get("tiempoFinal") != null){
+			sendFinalTimerOtherParticipants(session, node);
+		}else {
 			sendCoordsOtherParticipants(session, node);
 		}
 	}
@@ -151,6 +153,22 @@ public class GameHandler extends TextWebSocketHandler {
 					
 				ObjectNode newNode = mapper.createObjectNode();
 				newNode.put("time", node.get("time"));
+					
+				if(session.equals(sessionOne) && sessionTwo != null) {
+					sessionTwo.sendMessage(new TextMessage(newNode.toString()));
+				}else if(session.equals(sessionTwo) && sessionOne != null) {
+					sessionOne.sendMessage(new TextMessage(newNode.toString()));
+				}
+			}
+			
+			//Método que se ejecuta cuando se recibe el timer de la partida del jugador 1. Se le envía al jugador 2
+			//Se crea un nuevo objecto, y se envía al otro jugador.
+			private void sendFinalTimerOtherParticipants(WebSocketSession session, JsonNode node) throws IOException {
+
+				System.out.println("Message sent: " + node.toString());
+					
+				ObjectNode newNode = mapper.createObjectNode();
+				newNode.put("tiempoFinal", node.get("tiempoFinal"));
 					
 				if(session.equals(sessionOne) && sessionTwo != null) {
 					sessionTwo.sendMessage(new TextMessage(newNode.toString()));
